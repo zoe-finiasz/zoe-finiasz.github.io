@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zoe Finiasz — Research Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EFE9DC; --panel:#F8F5EC;
+    --ink:#2B2620; --ink-soft:#6B6355;
+    --rust:#7A4B3A; --moss:#4B6B54;
+    --line:#D3C9B4;
+    --radius:2px; --maxw:960px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Source Sans 3', sans-serif; font-size:17px; line-height:1.6;}
+  h1,h2{font-family:'Fraunces', serif; font-weight:600; margin:0;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  a{color:var(--rust);}
+  :focus-visible{outline:2px solid var(--moss); outline-offset:2px;}
+
+  .hero{padding:92px 0 56px; border-bottom:1px dashed var(--line);}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--moss); margin-bottom:16px;}
+  h1{font-size:clamp(34px,5vw,52px); line-height:1.08; letter-spacing:-.01em;}
+  .hero-sub{margin-top:20px; font-size:18px; color:var(--ink-soft); max-width:60ch;}
+  .contact-row{margin-top:28px; display:flex; flex-wrap:wrap; gap:8px 22px; font-family:'IBM Plex Mono', monospace; font-size:13px;}
+  .contact-row a{color:var(--rust); text-decoration:none; border-bottom:1px solid var(--rust);}
+
+  section{padding:50px 0;}
+  .section-label{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--moss); letter-spacing:.06em; margin-bottom:8px;}
+  .section-title{font-size:26px; max-width:32ch;}
+  .section-sub{margin-top:10px; color:var(--ink-soft); font-size:15.5px; max-width:66ch;}
+
+  .cs-grid{margin-top:32px; display:flex; flex-direction:column; gap:16px;}
+  .cs-card{
+    position:relative;
+    display:grid; grid-template-columns:1fr auto; align-items:start; gap:20px;
+    background:var(--panel); border:1px solid var(--line);
+    padding:26px 30px 26px 26px;
+  }
+  .cs-card::after{ /* torn/notch corner detail */
+    content:''; position:absolute; top:-1px; right:22px; width:14px; height:14px;
+    background:var(--bg); border-left:1px solid var(--line); border-bottom:1px solid var(--line);
+    transform:rotate(0deg);
+  }
+  .stamp{
+    font-family:'IBM Plex Mono', monospace; font-size:15px; font-weight:600; letter-spacing:.02em;
+    color:var(--rust); border:1.5px solid var(--rust); border-radius:50%;
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center; text-align:center;
+    transform:rotate(-4deg); opacity:.9; flex:none; line-height:1;
+  }
+  .cs-card.wip .stamp{ color:var(--ink-soft); border-color:var(--line); }
+  .cs-body{display:flex; gap:18px; align-items:flex-start;}
+  .cs-num{font-family:'IBM Plex Mono', monospace; font-size:11.5px; color:var(--moss); letter-spacing:.05em; margin-bottom:8px; display:block;}
+  .cs-title{font-family:'Fraunces', serif; font-weight:600; font-size:21px; margin-bottom:9px;}
+  .cs-blurb{color:var(--ink-soft); font-size:15px; max-width:52ch; margin-bottom:14px;}
+  .cs-tags{display:flex; flex-wrap:wrap; gap:7px;}
+  .cs-tag{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); background:var(--bg); border:1px solid var(--line); padding:3px 8px;}
+  .cs-status{display:flex; flex-direction:column; align-items:flex-end; gap:9px; text-align:right; flex:none;}
+  .badge{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; padding:4px 10px; white-space:nowrap;}
+  .badge.live{background:var(--moss); color:#fff;}
+  .badge.wip{background:transparent; color:var(--ink-soft); border:1px solid var(--line);}
+  .cs-link{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--rust); text-decoration:none; border-bottom:1px solid var(--rust);}
+  @media (max-width:640px){
+    .cs-card{grid-template-columns:1fr;}
+    .cs-body{flex-direction:column;}
+    .cs-status{flex-direction:row; justify-content:space-between;}
+  }
+
+  footer{border-top:1px dashed var(--line); padding:30px 0 50px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft);}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Research Scientist &middot; Applied Learning &middot; Behavioral Science</div>
+    <h1>Zoe Finiasz, Ph.D.</h1>
+    <p class="hero-sub">I study how people learn — from museum exhibits to instructional language to public health messaging — and turn that research into decisions applied teams can use. Ph.D. in Psychology &amp; Neuroscience, Duke University. Each case study below walks through a real research question, the data behind it, and what it means in practice.</p>
+    <div class="contact-row">
+      <a href="mailto:zfiniasz@gmail.com">zfiniasz@gmail.com</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">resume (PDF)</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <div class="section-label">Case Studies</div>
+    <h2 class="section-title">Four projects, one throughline</h2>
+    <p class="section-sub">Each case study follows the same arc — research question, study design, data, analysis, finding, and what it means for practice — applied to a different domain and a different kind of data.</p>
+
+    <div class="cs-grid">
+      <div class="cs-card">
+        <div class="cs-body">
+          <div class="stamp">01</div>
+          <div>
+            <div class="cs-title">Supporting Learning at Science Museums</div>
+            <div class="cs-blurb">How parent&#8211;child interaction style shapes exploration and learning at a hands-on gears exhibit.</div>
+            <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">GLMM</span><span class="cs-tag">Behavioral Coding</span></div>
+          </div>
+        </div>
+        <div class="cs-status"><span class="badge live">Live</span><a class="cs-link" href="museum-case-study.html">Read &#8594;</a></div>
+      </div>
+
+      <div class="cs-card">
+        <div class="cs-body">
+          <div class="stamp">02</div>
+          <div>
+            <div class="cs-title">Instructional Language and Learning Generalization</div>
+            <div class="cs-blurb">How generic vs. specific phrasing shapes over-generalization from limited evidence.</div>
+            <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">Mixed-Effects Models</span></div>
+          </div>
+        </div>
+        <div class="cs-status"><span class="badge live">Live</span><a class="cs-link" href="generics-case-study.html">Read &#8594;</a></div>
+      </div>
+
+      <div class="cs-card">
+        <div class="cs-body">
+          <div class="stamp">03</div>
+          <div>
+            <div class="cs-title">Vaccine Attitudes Survey</div>
+            <div class="cs-blurb">Conspiracy-belief tracks with distrust of specific evidence sources, not evidence broadly.</div>
+            <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">Survey Design</span><span class="cs-tag">Tableau</span></div>
+          </div>
+        </div>
+        <div class="cs-status"><span class="badge live">Live</span><a class="cs-link" href="vaccine-attitudes.html">Read &#8594;</a></div>
+      </div>
+
+      <div class="cs-card wip">
+        <div class="cs-body">
+          <div class="stamp">04</div>
+          <div>
+            <div class="cs-title">How Children Learn From Others</div>
+            <div class="cs-blurb">A meta-analytic synthesis of 63 studies on who children trust when learning a new word.</div>
+            <div class="cs-tags"><span class="cs-tag">Meta-Analysis</span><span class="cs-tag">63 Studies</span></div>
+          </div>
+        </div>
+        <div class="cs-status"><span class="badge wip">In progress</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap">Zoe Finiasz, Ph.D. — Portfolio, August 2026</div></footer>
+
+</body>
+</html>
