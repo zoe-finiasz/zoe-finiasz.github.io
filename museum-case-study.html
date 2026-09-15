@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supporting Learning at Science Museums</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#2B2620;
+    --ink-dim:#48505F;
+    --ink-soft:#48505F;
+    --panel:#FFFFFF;
+    --card-tint:#E7F1EF;
+    --line:#C7D3E6;
+    --accent:#3E6E78;
+    --accent-dark:#2A4E56;
+    --accent-tint:#E7F1EF;
+    --accent-tint-2:#F5FAF8;
+    --parent-led:#4B7A5E;
+    --child-led:#4A6B8F;
+    --joint-led:#6C5B92;
+    --step1:#6FA8A6;
+    --step1-tint:#EEF6F5;
+    --step2:#3E6E78;
+    --step2-tint:#DCEBEA;
+    --step3:#2A4E56;
+    --step3-tint:#C9DFDD;
+    --parent-tint:#E4EFE8;
+    --child-tint:#E5EAF1;
+    --joint-tint:#EAE6F1;
+    --radius:14px;
+    --maxw:840px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--panel); color:var(--ink); font-family:'Source Sans 3', sans-serif; min-height:100vh;}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+  h1,h2,h3{font-family:'Source Serif 4', serif; color:var(--ink); text-wrap:balance;}
+  .container{max-width:var(--maxw); margin:0 auto; padding:0 5vw;}
+  @media (min-width:900px){ .container{padding:0 24px;} }
+
+  /* ---------- HEADER ---------- */
+  header{border-bottom:1px solid var(--line);}
+  .header-top{padding:34px 0 28px; background:var(--accent-dark);}
+  .header-bottom{padding:26px 0 30px; background:var(--panel);}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; letter-spacing:.18em; text-transform:uppercase; font-size:11px; color:#9FD3C7; margin-bottom:8px;}
+  .back-btn{display:inline-flex; align-items:center; gap:8px; padding:8px 20px; border:1.5px solid rgba(255,255,255,.5); border-radius:999px; color:#fff; font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:14px; text-decoration:none; margin-bottom:24px;}
+  .back-btn:hover{border-color:rgba(255,255,255,.85);}
+  h1{margin:0 0 14px; font-size:clamp(26px,3.6vw,40px); font-weight:700; letter-spacing:-0.01em; color:#fff; line-height:1.15;}
+  .sub{color:rgba(255,255,255,.86); font-size:15.5px; line-height:1.6;}
+  .header-grid{display:grid; grid-template-columns:repeat(2,minmax(180px,1fr)); gap:16px 28px; margin-top:26px;}
+  @media (max-width:480px){ .header-grid{grid-template-columns:1fr;} }
+  .header-field{border-left:2px solid var(--accent); padding:0 0 4px 16px;}
+  .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
+  .hf-value{font-size:15px; color:var(--ink); margin:0; line-height:1.4;}
+  .headline-finding{margin-top:22px; padding:18px 22px; background:linear-gradient(135deg,#CFE0DE,#BBD3CF); border-radius:10px; box-shadow:0 4px 16px rgba(42,78,86,0.18);}
+  .headline-finding .hl-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 7px;}
+  .headline-finding p.hl-text{font-family:'Source Serif 4', serif; font-size:16.5px; font-weight:600; color:var(--ink); margin:0; line-height:1.5;}
+
+  /* ---------- STICKY NAV ---------- */
+  .pathnav{position:sticky; top:0; z-index:5; background:rgba(255,255,255,0.92); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border-bottom:1px solid rgba(62,110,120,0.28);}
+  .pathnav-inner{display:flex; align-items:center; max-width:var(--maxw); margin:0 auto; padding:12px 5vw; gap:2px;}
+  @media (min-width:900px){ .pathnav-inner{padding:12px 24px;} }
+  .pathnav-item{display:flex; align-items:center; gap:8px; text-decoration:none; font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap; padding:5px 2px; transition:color .15s ease;}
+  .pathnav-dot{width:9px; height:9px; border-radius:50%; background:var(--line); flex-shrink:0; transition:background .15s ease, box-shadow .15s ease;}
+  .pathnav-item.active{color:var(--accent-dark); font-weight:700;}
+  .pathnav-item.active .pathnav-dot{background:var(--accent); box-shadow:0 0 0 4px rgba(62,110,120,.16);}
+  .pathnav-line{flex:1 1 auto; height:1px; background:var(--line); min-width:14px; margin:0 2px;}
+  @media (max-width:560px){ .pathnav-item{font-size:10px; gap:5px;} .pathnav-line{min-width:8px;} }
+
+  /* ---------- SECTIONS ---------- */
+  main{padding:0;}
+  .section{padding:46px 0 24px; border-top:1px solid var(--line); scroll-margin-top:60px;}
+  .section-head{margin-bottom:28px; padding:34px 0 14px; background:var(--accent-tint);}
+  #sec-insights{background:var(--accent-tint);}
+  .section-eyebrow{font-family:'IBM Plex Mono', monospace; letter-spacing:.12em; text-transform:uppercase; font-size:12.5px; font-weight:600; color:var(--accent-dark); margin-bottom:12px; display:flex; align-items:center;}
+  .num-badge{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; border:1.5px solid var(--accent); color:var(--accent-dark); font-family:'IBM Plex Mono', monospace; font-size:11.5px; transform:rotate(-6deg); margin-right:10px; flex-shrink:0; background:#fff;}
+  .section h2{font-size:clamp(20px,2.4vw,26px); margin:0 0 10px; font-weight:600; color:var(--ink);}
+  .section p.desc{font-size:16.5px; color:var(--ink-soft); line-height:1.65;}
+  .section p.desc + p.desc{margin-top:14px;}
+  .caption-note{font-size:11.5px; color:var(--ink-dim); opacity:.7; line-height:1.55; margin-top:14px; font-style:italic;}
+
+  /* ---------- FRAMEWORK DIAGRAM ---------- */
+  .framework{display:flex; align-items:stretch; gap:10px; margin-top:24px; flex-wrap:wrap;}
+  .fw-box{background:var(--card-tint); border:1px solid var(--line); border-radius:10px; padding:16px 18px; flex:1 1 200px;}
+  .fw-box.pf{background:var(--step1-tint); border-top:4px solid var(--step1);}
+  .fw-box.cb{background:var(--step2-tint); border-top:4px solid var(--step2);}
+  .fw-box.lo{background:var(--step3-tint); border-top:4px solid var(--step3);}
+  .fw-box.pf .fw-title{color:var(--step1);}
+  .fw-box.cb .fw-title{color:var(--step2);}
+  .fw-box.lo .fw-title{color:var(--step3);}
+  .fw-box .fw-title{font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-dim);}
+  .fw-box .fw-sub{font-family:'Source Serif 4', serif; font-weight:600; font-size:15.5px; color:var(--ink); margin-top:5px;}
+  .fw-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:20px; flex:0 0 auto;}
+  .fw-icon-frame{background:#fff; border-radius:12px; width:100%; max-width:170px; height:104px; margin:4px auto 12px; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(42,78,86,0.08);}
+  .fw-box.pf .fw-icon-frame{border:1.5px solid var(--step1);}
+  .fw-box.cb .fw-icon-frame{border:1.5px solid var(--step2);}
+  .fw-box.lo .fw-icon-frame{border:1.5px solid var(--step3);}
+  .fw-icon{display:block; width:82%; height:74%;}
+  @media (max-width:680px){ .framework{flex-direction:column;} .fw-box{flex:0 1 auto;} .fw-arrow{transform:rotate(90deg); padding:2px 0;} }
+
+  /* ---------- STAT ROW ---------- */
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin:24px 0 4px;}
+  .stat-card{background:var(--card-tint); border:1px solid var(--line); border-radius:10px; padding:14px 18px; min-width:130px; flex:1 1 150px;}
+  .stat-card .num{font-family:'Source Serif 4', serif; font-size:24px; font-weight:600; color:var(--accent-dark); font-variant-numeric:tabular-nums;}
+  .stat-card .lbl{font-size:12.5px; color:var(--ink-dim); margin-top:2px; line-height:1.4;}
+
+  /* ---------- CONSTRUCT CARDS ---------- */
+  .construct-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;}
+  @media (max-width:760px){ .construct-grid{grid-template-columns:1fr;} }
+  .construct-card{background:var(--card-tint); border:1px solid var(--line); border-top:4px solid var(--line); border-radius:10px; padding:16px 16px 14px;}
+  .construct-card.pf{border-top-color:var(--step1); background:var(--step1-tint);}
+  .construct-card.cb{border-color:var(--step2); background:var(--step2-tint);}
+  .construct-card.lo{border-top-color:var(--step3); background:var(--step3-tint);}
+  .construct-card .c-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.05em; text-transform:uppercase; margin-bottom:8px;}
+  .construct-card.pf .c-eyebrow{color:var(--step1);}
+  .construct-card.cb .c-eyebrow{color:var(--step2);}
+  .construct-card.lo .c-eyebrow{color:var(--step3);}
+  .construct-card .c-title{font-family:'Source Serif 4', serif; font-weight:600; font-size:15.5px; margin-bottom:8px;}
+  .construct-card .c-body{font-size:13.5px; color:var(--ink-dim); line-height:1.55;}
+  .construct-card ul{margin:8px 0 0; padding-left:16px;}
+  .construct-card li{font-size:12.5px; color:var(--ink-dim); margin-bottom:3px; display:flex; align-items:center; gap:6px;}
+  .dot-scale{display:inline-flex; gap:4px; margin-left:2px;}
+  .dot-scale span{width:8px; height:8px; border-radius:50%; background:var(--line); display:inline-block;}
+  .dot-scale span.filled{background:var(--step3);}
+
+  .cb-connector{display:flex; justify-content:center; position:relative; z-index:1; margin:0;}
+  .cb-connector svg{display:block; margin:-1px 0 -1px;}
+  .scoring-callout{background:var(--step2-tint); border:1px solid var(--line); border-top:4px solid var(--step2); border-radius:10px; padding:14px 18px; margin:0 auto 4px; width:fit-content; max-width:100%;}
+  @media (max-width:760px){
+    .cb-connector{display:none;}
+    .scoring-callout{width:100%; margin-top:20px;}
+  }
+  .scoring-callout .sc-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--step2); margin:0 0 10px;}
+  .scoring-callout p.sc-text{font-size:14.5px; color:var(--ink); margin:0; line-height:1.6;}
+  .sc-code{font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:0.85em; color:var(--accent-dark); background:#fff; border:1px solid var(--step2); border-radius:4px; padding:1px 6px;}
+  .score-steps{display:flex; align-items:stretch; gap:10px; margin-bottom:12px; flex-wrap:wrap;}
+  .score-step{flex:1 1 160px; border-radius:8px; padding:10px 12px; background:#fff; border:1.5px solid var(--accent-dark);}
+  .score-step span{display:block; font-family:'Source Serif 4', serif; font-weight:600; font-size:14px; color:var(--ink);}
+  .score-step small{display:block; font-size:11.5px; color:var(--ink-dim); margin-top:2px; line-height:1.3;}
+  .score-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:16px; flex:0 0 auto;}
+  @media (max-width:480px){ .score-arrow{transform:rotate(90deg); padding:2px 0;} }
+
+  /* ---------- INSIGHT BLOCKS ---------- */
+  .insight{padding:26px 26px 28px; background:var(--panel); border:1px solid var(--line); border-radius:12px; box-shadow:0 3px 14px rgba(42,78,86,0.06);}
+  .insight + .insight{margin-top:22px;}
+  .insight-banner{display:flex; align-items:center; gap:10px; margin:-26px -26px 20px; padding:11px 26px; background:var(--accent-dark); border-radius:11px 11px 0 0;}
+  .insight-banner-num{flex:0 0 auto; width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.2); color:#fff; font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+  .insight-banner-tag{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:#fff;}
+  .insight h3{font-size:18px; font-weight:600; color:var(--ink); margin:0 0 10px;}
+  .insight p.desc{font-size:15.5px;}
+
+  .insight-chart-title{font-family:'Source Serif 4', serif; font-size:14.5px; font-weight:600; color:var(--ink); margin:20px 0 4px;}
+  svg.insight-chart{width:100%; display:block; overflow:visible; margin-top:6px;}
+  .bar-value{font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:600; text-anchor:middle;}
+  .bar-group-label{font-size:13px; font-weight:600; text-anchor:middle; fill:var(--ink);}
+  .bar-axis-tick{font-size:11px; fill:var(--ink-dim); font-variant-numeric:tabular-nums;}
+  .chart-axis-line{stroke:var(--line); stroke-width:1;}
+  .chart-gridline{stroke:var(--line); stroke-width:1; opacity:.5;}
+
+  .applied-callout{margin-top:18px; padding:14px 18px; background:rgba(62,110,120,0.07); border-left:2px solid var(--accent); border-radius:0 6px 6px 0;}
+  .applied-callout .ac-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 6px;}
+  .applied-callout p.ac-text{font-size:15px; color:var(--ink); margin:0; line-height:1.6;}
+
+  /* ---------- RESULTS EXPLORER (retained interactive) ---------- */
+  .pathway{margin-top:20px; background:var(--card-tint); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 3px 14px rgba(42,78,86,0.06);}
+  .pathway-head{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:16px;}
+  .pci-toggle{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+  .pci-btn{font-family:'Source Sans 3', sans-serif; font-size:14px; font-weight:600; padding:10px 15px; border-radius:9px; border:1px solid var(--line); background:#fff; color:var(--ink-dim); cursor:pointer; transition:transform .12s, background .15s, border-color .15s, color .15s; flex:1 1 140px;}
+  .pci-btn:hover{transform:translateY(-1px);}
+  .pci-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .pci-btn[data-pci="parent"]{border-color:var(--parent-led); color:var(--parent-led);}
+  .pci-btn[data-pci="child"]{border-color:var(--child-led); color:var(--child-led);}
+  .pci-btn[data-pci="joint"]{border-color:var(--joint-led); color:var(--joint-led);}
+  .pci-btn.active[data-pci="parent"]{background:var(--parent-led); border-color:var(--parent-led); color:#fff;}
+  .pci-btn.active[data-pci="child"]{background:var(--child-led); border-color:var(--child-led); color:#fff;}
+  .pci-btn.active[data-pci="joint"]{background:var(--joint-led); border-color:var(--joint-led); color:#fff;}
+  .pathway-flow{display:flex; align-items:stretch; gap:8px; flex-wrap:wrap;}
+  .flow-box{flex:1 1 200px; background:#fff; border-radius:12px; padding:16px 16px 14px; border:1px solid var(--line);}
+  .flow-box .flow-label{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.05em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:10px;}
+  .flow-box .flow-value{font-family:'Source Serif 4', serif; font-size:15px; font-weight:600; color:var(--ink); min-height:20px;}
+  .flow-bar-track{background:var(--line); border-radius:5px; height:9px; margin-top:12px; overflow:hidden;}
+  .flow-bar-fill{height:100%; border-radius:5px; width:0%; transition:width .4s ease;}
+  .flow-stat{margin-top:10px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-dim); min-height:30px; line-height:1.4;}
+  .flow-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:18px; flex:0 0 auto;}
+  @media (max-width:760px){ .flow-arrow{transform:rotate(90deg); padding:2px 0;} }
+  .pathway-note{margin-top:18px; padding-top:14px; border-top:1px solid var(--line); font-size:11px; font-style:italic; color:var(--ink-dim); line-height:1.55;}
+
+  footer{padding:30px 0 44px; color:var(--ink-dim); font-size:12px; line-height:1.6; border-top:1px solid var(--line);}
+  .footer-block{margin-bottom:18px;}
+  .footer-block:last-child{margin-bottom:0;}
+  .footer-block p{margin:0;}
+  .footer-label{font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; color:var(--ink-dim); margin:0 0 4px !important;}
+  footer a{color:var(--accent-dark);}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <a class="back-btn" href="index.html">&larr; Portfolio</a>
+      <h1>Supporting Learning at Science Museums</h1>
+      <div class="sub">Across three children's museums, 325 families played at a hands-on gears exhibit. Whether the parent, the child, or both directed the play predicted how systematically children explored, and what they could later reconstruct on their own.</div>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="header-grid">
+        <div class="header-field"><p class="hf-label">Sample</p><p class="hf-value">325 parent&ndash;child dyads &middot; 3 museums (ages 3&ndash;6)</p></div>
+        <div class="header-field"><p class="hf-label">Method</p><p class="hf-value">Live observation &amp; video coding, 5-second intervals</p></div>
+      </div>
+      <div class="headline-finding">
+        <p class="hl-eyebrow">Headline finding</p>
+        <p class="hl-text">Dyads that were jointly-led or child-led explored more systematically and scored higher on a memory-based rebuild task; parent-led dyads scored lowest on both measures.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="pathnav" id="pathnav" aria-label="Case study sections">
+  <div class="pathnav-inner">
+    <a class="pathnav-item" data-target="sec-question" href="#sec-question"><span class="pathnav-dot"></span>Question</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" data-target="sec-methods" href="#sec-methods"><span class="pathnav-dot"></span>Methods</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" data-target="sec-insights" href="#sec-insights"><span class="pathnav-dot"></span>Insights</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="section" id="sec-question">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">01</span>The question</div>
+      <h2>How children learn from play may depend on how their parent helps them explore.</h2>
+      <p class="desc">Museums want families to leave a hands-on exhibit having learned something. Exhibit designers and learning researchers need to know whether a parent's facilitation style has any measurable effect on what a child learns.</p>
+      <p class="desc"><strong><em>Does a parent's facilitation style predict what a child explores at the exhibit, and what they learn from that exploration?</em></strong></p>
+    </div>
+  </div>
+  <div class="container">
+    <p class="desc" style="margin-bottom:10px;">One way to answer this question is to look at how the parent facilitated play, what the child actually did while playing, and what the child could demonstrate on a post-test task.</p>
+    <div class="framework">
+      <div class="fw-box pf">
+        <div class="fw-icon-frame"><svg class="fw-icon" viewBox="24 -14 186 170">
+          <path d="M60,-6 L170,-6 A20,20 0 0 1 190,14 L190,18 A20,20 0 0 1 170,38 L166,38 L175,92 L150,38 L76,38 L58,74 L60,38 A20,20 0 0 1 40,18 L40,14 A20,20 0 0 1 60,-6 Z" fill="var(--step1-tint)" stroke="var(--step1)" stroke-width="1.5" stroke-linejoin="round"/>
+          <circle cx="58" cy="95" r="18" fill="var(--step1)" opacity="0.85"/>
+          <path d="M32 148 Q32 113 58 113 Q84 113 84 148 Z" fill="var(--step1)" opacity="0.85"/>
+          <circle cx="175" cy="108" r="13" fill="var(--step3)" opacity="0.85"/>
+          <path d="M148 148 Q148 122 175 122 Q202 122 202 148 Z" fill="var(--step3)" opacity="0.85"/>
+        </svg></div>
+        <div class="fw-title">Parent Facilitation</div><div class="fw-sub">Who sets the goals for play?</div>
+      </div>
+      <div class="fw-arrow">→</div>
+      <div class="fw-box cb">
+        <div class="fw-icon-frame"><svg class="fw-icon" viewBox="20.5 14.5 101 78">
+          <g fill="var(--step2)">
+            <circle cx="55" cy="58" r="15" fill="none" stroke="var(--step2)" stroke-width="6"/>
+            <rect x="78.0" y="53.5" width="7" height="9" transform="rotate(90.0 81.5 58.0)" />
+            <rect x="70.2" y="72.2" width="7" height="9" transform="rotate(135.0 73.7 76.7)" />
+            <rect x="51.5" y="80.0" width="7" height="9" transform="rotate(180.0 55.0 84.5)" />
+            <rect x="32.8" y="72.2" width="7" height="9" transform="rotate(225.0 36.3 76.7)" />
+            <rect x="25.0" y="53.5" width="7" height="9" transform="rotate(270.0 28.5 58.0)" />
+            <rect x="32.8" y="34.8" width="7" height="9" transform="rotate(315.0 36.3 39.3)" />
+            <rect x="51.5" y="27.0" width="7" height="9" transform="rotate(360.0 55.0 31.5)" />
+            <rect x="70.2" y="34.8" width="7" height="9" transform="rotate(405.0 73.7 39.3)" />
+          </g>
+          <g fill="var(--step2)" opacity="0.6">
+            <circle cx="104" cy="40" r="9" fill="none" stroke="var(--step2)" stroke-width="4" opacity="0.6"/>
+            <rect x="118.5" y="36.5" width="6" height="7" transform="rotate(90.0 121.5 40.0)" />
+            <rect x="109.8" y="51.7" width="6" height="7" transform="rotate(150.0 112.8 55.2)" />
+            <rect x="92.2" y="51.7" width="6" height="7" transform="rotate(210.0 95.2 55.2)" />
+            <rect x="83.5" y="36.5" width="6" height="7" transform="rotate(270.0 86.5 40.0)" />
+            <rect x="92.2" y="21.3" width="6" height="7" transform="rotate(330.0 95.2 24.8)" />
+            <rect x="109.8" y="21.3" width="6" height="7" transform="rotate(390.0 112.8 24.8)" />
+          </g>
+        </svg></div>
+        <div class="fw-title">Child Behavior</div><div class="fw-sub">How the child explores the gears</div>
+      </div>
+      <div class="fw-arrow">→</div>
+      <div class="fw-box lo">
+        <div class="fw-icon-frame"><svg class="fw-icon" viewBox="20 -8 92 129">
+          <circle cx="45" cy="80" r="13" fill="var(--step3)" opacity="0.85"/>
+          <path d="M25 118 Q25 96 45 96 Q65 96 65 118 Z" fill="var(--step3)" opacity="0.85"/>
+          <circle cx="62" cy="58" r="3.5" fill="#A3C4C1"/>
+          <circle cx="70" cy="46" r="5" fill="#A3C4C1"/>
+          <g fill="#A3C4C1">
+            <circle cx="78" cy="26" r="19"/>
+            <circle cx="61" cy="18" r="14"/>
+            <circle cx="96" cy="20" r="14"/>
+            <circle cx="75" cy="5" r="13"/>
+            <circle cx="88" cy="4" r="8"/>
+          </g>
+          <g transform="translate(78,20) scale(1.3)">
+            <circle r="9" fill="none" stroke="var(--step3)" stroke-width="4" />
+            <rect x="9.5" y="-2.5" width="4" height="5" transform="rotate(90.0 11.5 0.0)" fill="var(--step3)"/>
+            <rect x="6.1" y="5.6" width="4" height="5" transform="rotate(135.0 8.1 8.1)" fill="var(--step3)"/>
+            <rect x="-2.0" y="9.0" width="4" height="5" transform="rotate(180.0 0.0 11.5)" fill="var(--step3)"/>
+            <rect x="-10.1" y="5.6" width="4" height="5" transform="rotate(225.0 -8.1 8.1)" fill="var(--step3)"/>
+            <rect x="-13.5" y="-2.5" width="4" height="5" transform="rotate(270.0 -11.5 0.0)" fill="var(--step3)"/>
+            <rect x="-10.1" y="-10.6" width="4" height="5" transform="rotate(315.0 -8.1 -8.1)" fill="var(--step3)"/>
+            <rect x="-2.0" y="-14.0" width="4" height="5" transform="rotate(360.0 -0.0 -11.5)" fill="var(--step3)"/>
+            <rect x="6.1" y="-10.6" width="4" height="5" transform="rotate(405.0 8.1 -8.1)" fill="var(--step3)"/>
+          </g>
+        </svg></div>
+        <div class="fw-title">Learning Outcome</div><div class="fw-sub">What the child can do afterward</div>
+      </div>
+    </div>
+    <p class="caption-note">Parent&ndash;child interaction style was coded from observed behavior, not experimentally assigned — these are naturally occurring differences in how families chose to play, not a randomized manipulation.</p>
+  </div>
+</section>
+
+<section class="section" id="sec-methods">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">02</span>Methodology &amp; scope</div>
+      <h2>325 families, coded five seconds at a time</h2>
+      <p class="desc">Parent&ndash;child dyads were video recorded during free play at a gears exhibit across three children's museums, then coded for behavior and interaction style at every 5-second interval.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="stat-row">
+      <div class="stat-card"><div class="num">325</div><div class="lbl">parent&ndash;child dyads, ages 3&ndash;6</div></div>
+      <div class="stat-card"><div class="num">3</div><div class="lbl">museums: Providence &middot; San Jose &middot; Austin</div></div>
+      <div class="stat-card"><div class="num">11,000+</div><div class="lbl">coded 5-second intervals</div></div>
+    </div>
+    <div class="construct-grid">
+      <div class="construct-card pf">
+        <div class="c-eyebrow">Parent Facilitation</div>
+        <div class="c-title">Interaction style</div>
+        <div class="c-body">Each interval was coded into one of three styles. The modal code was used to categorize each dyad:</div>
+        <ul>
+          <li><strong>Parent-led</strong> — parent sets goals, uses imperatives</li>
+          <li><strong>Child-led</strong> — child sets goals, parent scaffolds with questions</li>
+          <li><strong>Jointly-led</strong> — goals set together; parent hints or suggests</li>
+        </ul>
+      </div>
+      <div class="construct-card cb">
+        <div class="c-eyebrow">Child Behavior</div>
+        <div class="c-title">Systematic exploration</div>
+        <div class="c-body">Each interval was coded for a particular behavior. One sequence of coded intervals represented systematic exploration: the proportion of the session spent building a gear machine and then testing whether it worked.</div>
+      </div>
+      <div class="construct-card lo">
+        <div class="c-eyebrow">Learning Outcome</div>
+        <div class="c-title">Gear reconstruction score</div>
+        <div class="c-body">After free play, children had 5 minutes to rebuild a disassembled version of the toy from memory:</div>
+        <ul>
+          <li><strong>0</strong> &mdash; no pieces correct <span class="dot-scale"><span></span><span></span><span></span></span></li>
+          <li><strong>1</strong> &mdash; 1&ndash;2 pieces correct <span class="dot-scale"><span class="filled"></span><span></span><span></span></span></li>
+          <li><strong>2</strong> &mdash; 3&ndash;4 pieces correct <span class="dot-scale"><span class="filled"></span><span class="filled"></span><span></span></span></li>
+          <li><strong>3</strong> &mdash; all 5 correct <span class="dot-scale"><span class="filled"></span><span class="filled"></span><span class="filled"></span></span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cb-connector"><svg width="26" height="20" viewBox="0 0 26 20"><path d="M9,0 H17 V8 H23 L13,20 L3,8 H9 Z" fill="var(--step2)"/></svg></div>
+    <div class="scoring-callout">
+      <p class="sc-eyebrow">How exploration was scored</p>
+      <div class="score-steps">
+        <div class="score-step"><span>Connecting</span><small>joining gears into a machine</small></div>
+        <span class="score-arrow">&rarr;</span>
+        <div class="score-step"><span>Spinning / testing</span><small>turning it to see if it worked</small></div>
+      </div>
+      <p class="sc-text">Each pair of intervals coded <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> counted as one instance of systematic exploration.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="sec-insights">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">03</span>Insights &amp; recommendations</div>
+      <h2>Implications for understanding learning at science museums</h2>
+      <p class="desc">Two patterns in the coded data point to recommendations for parents and for museum exhibit design.</p>
+    </div>
+  </div>
+
+  <div class="container">
+  <div class="insight">
+    <div class="insight-banner">
+      <span class="insight-banner-num">1</span>
+      <span class="insight-banner-tag">Facilitation style</span>
+    </div>
+    <h3>Letting kids lead produced more systematic exploration during free play</h3>
+    <p class="desc">Dyads where the child helped set the goals (jointly led) or took leadership over the goals (child-led) showed significantly more of the <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration pattern than parent-led dyads, and scored higher on the reconstruction task. Explore how each style compares below.</p>
+
+    <div class="pathway">
+      <div class="pathway-head">Results explorer — select a facilitation style</div>
+      <div class="pci-toggle">
+        <button class="pci-btn" data-pci="parent" id="btn-parent">Parent-led</button>
+        <button class="pci-btn" data-pci="joint" id="btn-joint">Jointly-led</button>
+        <button class="pci-btn" data-pci="child" id="btn-child">Child-led</button>
+      </div>
+      <div class="pathway-flow">
+        <div class="flow-box">
+          <div class="flow-label">Parent Facilitation</div>
+          <div class="flow-value" id="fv-pf">Select a style above</div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">
+          <div class="flow-label">Child Behavior — systematic exploration</div>
+          <div class="flow-value" id="fv-cb">—</div>
+          <div class="flow-bar-track"><div class="flow-bar-fill" id="bar-cb"></div></div>
+          <div class="flow-stat" id="stat-cb"></div>
+        </div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">
+          <div class="flow-label">Learning Outcome — reconstruction score</div>
+          <div class="flow-value" id="fv-lo">—</div>
+          <div class="flow-bar-track"><div class="flow-bar-fill" id="bar-lo"></div></div>
+          <div class="flow-stat" id="stat-lo"></div>
+        </div>
+      </div>
+      <div class="pathway-note">Middle-panel bar heights are relative, not exact proportions. The published analysis reports significance, not group means, for that measure. Reconstruction-score bars use the study's actual group means (0&ndash;3 scale).</div>
+    </div>
+
+    <div class="applied-callout">
+      <p class="ac-eyebrow">Recommendation — for parents</p>
+      <p class="ac-text">Favor questions and hints over direct instruction at a hands-on exhibit. Letting a child help set the goals for play is linked to more of the <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration that predicted what they could later do on their own.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-banner">
+      <span class="insight-banner-num">2</span>
+      <span class="insight-banner-tag">What held up, controlling for age</span>
+    </div>
+    <h3>The exploration behavior mattered more than which style produced it</h3>
+    <p class="desc">Raw reconstruction scores did differ by facilitation style, but once children's age was controlled for, that group difference was no longer significant. Older children scored higher regardless of parent facilitation style. However, even with age in the model, systematic exploration during play was linked to high scores on the learning task.</p>
+
+    <p class="insight-chart-title">Gear reconstruction score by facilitation style (raw group means, 0&ndash;3 scale)</p>
+    <svg class="insight-chart" viewBox="0 0 500 260" role="img" aria-label="Bar chart of raw reconstruction score means by facilitation style: parent-led 1.23, jointly-led 1.55, child-led 1.75">
+      <line class="chart-axis-line" x1="40" x2="40" y1="20" y2="220"></line>
+      <line class="chart-axis-line" x1="40" x2="460" y1="220" y2="220"></line>
+      <line class="chart-gridline" x1="40" x2="460" y1="153.3" y2="153.3"></line>
+      <line class="chart-gridline" x1="40" x2="460" y1="86.7" y2="86.7"></line>
+      <text class="bar-axis-tick" x="34" y="224" text-anchor="end">0</text>
+      <text class="bar-axis-tick" x="34" y="157" text-anchor="end">1</text>
+      <text class="bar-axis-tick" x="34" y="90.7" text-anchor="end">2</text>
+      <text class="bar-axis-tick" x="34" y="24" text-anchor="end">3</text>
+
+      <rect x="75" y="138" width="70" height="82" rx="4" fill="var(--parent-led)"></rect>
+      <text class="bar-value" x="110" y="130" fill="var(--parent-led)">1.23</text>
+      <text class="bar-group-label" x="110" y="240">Parent-led</text>
+
+      <rect x="215" y="116.7" width="70" height="103.3" rx="4" fill="var(--joint-led)"></rect>
+      <text class="bar-value" x="250" y="108.7" fill="var(--joint-led)">1.55</text>
+      <text class="bar-group-label" x="250" y="240">Jointly-led</text>
+
+      <rect x="355" y="103.3" width="70" height="116.7" rx="4" fill="var(--child-led)"></rect>
+      <text class="bar-value" x="390" y="95.3" fill="var(--child-led)">1.75</text>
+      <text class="bar-group-label" x="390" y="240">Child-led</text>
+    </svg>
+    <p class="caption-note">Raw means shown here; see above for how this comparison changes once age is controlled for. Facilitation &rarr; behavior: Wald &chi;&sup2;(2) = 12.92, p = .002. Facilitation &rarr; outcome: significant on raw scores, but Wald &chi;&sup2;(2) = 4.04, p = .13 once age was controlled. Behavior &rarr; outcome held with age controlled: Wald &chi;&sup2;(1) = 3.65, p = .05.</p>
+    <div class="applied-callout">
+      <p class="ac-eyebrow">Recommendation — for museums</p>
+      <p class="ac-text">Design exhibits and staff prompts around facilitating systematic exploration behavior. The <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration predicted what children retained, providing a more reliable design target than facilitation style or child age alone.</p>
+    </div>
+  </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-block">
+      <p class="footer-label">Published as</p>
+      <p>Callanan, M. A., Legare, C. H., Sobel, D. M., Jaeger, G. J., Letourneau, S., McHugh, S. R., Willard, A., with Brinkman, A., Finiasz, Z., Rubio, E., Barnett, A., Gose, R., Martin, J. L., Meisner, R., &amp; Watson, J. (2020). Exploration, explanation, and parent&ndash;child interaction in museums. <em>Monographs of the Society for Research in Child Development, 85</em>(1). <a href="https://doi.org/10.1111/mono.12412" target="_blank" rel="noopener">doi.org/10.1111/mono.12412</a></p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">My role</p>
+      <p>Contributed to the RI-site data (n=112). Coordinated implementation and reliability testing of qualitative coding schemes. Study design and statistical analysis were led by the PI team, with named co-authors across all three sites.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">Where this fits</p>
+      <p>This case study extrapolates from a peer-reviewed monograph to make recommendations for exhibit design and parent guidance. The coding scheme developed for this project was co-designed with museum staff.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">Data use</p>
+      <p>Findings and statistics are drawn from the published monograph cited above. The results explorer reproduces the study's reported model estimates and group means; it does not plot raw per-child data. Funded by NSF Grants #1420548, #1420259, and #1420241.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var data = {
+    parent: {
+      label:"Parent-led", color:"var(--parent-led)", tint:"var(--parent-tint)",
+      cbValue:"Lowest of the three groups", cbBar:32,
+      cbStat:"Reference group in the model (β = 0 baseline)",
+      loValue:"1.23 / 3", loBar:(1.23/3*100),
+      loStat:"Lowest raw mean — significantly below child-led, p = .004"
+    },
+    joint: {
+      label:"Jointly-led", color:"var(--joint-led)", tint:"var(--joint-tint)",
+      cbValue:"Significantly higher than parent-led", cbBar:78,
+      cbStat:"β = .90, SE = .26, p < .001 vs. parent-led",
+      loValue:"1.55 / 3", loBar:(1.55/3*100),
+      loStat:"Marginally above parent-led, p = .07 (raw; n.s. once age controlled)"
+    },
+    child: {
+      label:"Child-led", color:"var(--child-led)", tint:"var(--child-tint)",
+      cbValue:"Directionally higher than parent-led", cbBar:64,
+      cbStat:"Difference vs. parent-led not significant in the primary model",
+      loValue:"1.75 / 3", loBar:(1.75/3*100),
+      loStat:"Highest raw mean — significantly above parent-led, p = .004 (n.s. once age controlled)"
+    }
+  };
+
+  var pathwayEl = document.querySelector('.pathway');
+  var buttons = document.querySelectorAll('.pci-btn');
+  var fvPf = document.getElementById('fv-pf');
+  var fvCb = document.getElementById('fv-cb');
+  var fvLo = document.getElementById('fv-lo');
+  var barCb = document.getElementById('bar-cb');
+  var barLo = document.getElementById('bar-lo');
+  var statCb = document.getElementById('stat-cb');
+  var statLo = document.getElementById('stat-lo');
+
+  function select(key){
+    var d = data[key];
+    buttons.forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-pci') === key);
+    });
+    pathwayEl.style.background = d.tint;
+    fvPf.textContent = d.label;
+    fvCb.textContent = d.cbValue;
+    fvLo.textContent = d.loValue;
+    barCb.style.width = d.cbBar + '%';
+    barCb.style.background = d.color;
+    barLo.style.width = d.loBar + '%';
+    barLo.style.background = d.color;
+    statCb.textContent = d.cbStat;
+    statLo.textContent = d.loStat;
+  }
+
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      select(b.getAttribute('data-pci'));
+    });
+  });
+
+  select('joint');
+})();
+
+// Sticky nav scroll-spy
+(function(){
+  var sections = document.querySelectorAll('main section[id]');
+  var navItems = document.querySelectorAll('.pathnav-item');
+  if (!('IntersectionObserver' in window) || !sections.length) return;
+
+  var map = {};
+  navItems.forEach(function(item){ map[item.getAttribute('data-target')] = item; });
+
+  var spy = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      var item = map[entry.target.id];
+      if (!item) return;
+      if (entry.isIntersecting){
+        navItems.forEach(function(i){ i.classList.remove('active'); });
+        item.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+
+  sections.forEach(function(s){ spy.observe(s); });
+})();
+</script>
+</body>
+</html>

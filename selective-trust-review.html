@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Children Learn From Others</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #2B2620;
+    --ink-soft: #48505F;
+    --ink-dim: #48505F;
+    --paper-a: #EAF2E4;
+    --paper-b: #DCEAD3;
+    --panel: #FFFFFF;
+    --card-tint: #EDF2FA;
+    --epistemic: #4B7A5E;
+    --nonepistemic: #6C5B92;
+    --mixed: #4A6B93;
+    --accent: #4A6B93;
+    --accent-dark: #33496B;
+    --line: #C7D3E6;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background: var(--panel);
+    color:var(--ink);
+    font-family: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height:100vh;
+  }
+  h1, h2, h3, .section h2 { font-family: 'Source Serif 4', Georgia, serif; text-wrap: balance; }
+  header{
+    border-bottom: 1px solid var(--line);
+  }
+  .container{ max-width: 840px; margin: 0 auto; }
+  .header-top{
+    padding: 34px 5vw 28px;
+    background: var(--accent-dark);
+  }
+  .back-link{
+    display:inline-flex; align-items:center; gap:6px; margin-bottom:20px;
+    font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:600;
+    color:#FFFFFF; text-decoration:none; border:1px solid rgba(255,255,255,0.4);
+    border-radius:20px; padding:7px 16px; transition:background .15s ease;
+  }
+  .back-link:hover{ background:rgba(255,255,255,0.12); }
+  .header-bottom{
+    padding: 26px 5vw 30px;
+    background: var(--panel);
+  }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  h1{
+    margin: 0 0 14px;
+    font-size: clamp(26px, 3.6vw, 40px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+  }
+  .sub{
+    color: rgba(255,255,255,0.82);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .header-grid{
+    display:grid;
+    grid-template-columns: repeat(2, minmax(180px,1fr));
+    gap: 0 28px;
+    margin-top: 26px;
+  }
+  .header-field{
+    border-left: 2px solid var(--accent);
+    padding: 0 0 20px 16px;
+  }
+  .hf-label{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+  .hf-value{
+    font-size: 15px;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .headline-finding{
+    margin-top: 6px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #D6E1F0, #C2D4E9);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(51,73,107,0.18);
+  }
+  .headline-finding .hl-eyebrow{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin: 0 0 7px;
+  }
+  .headline-finding p.hl-text{
+    font-size: 15.5px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    line-height: 1.55;
+  }
+  .cite{ margin-top:18px; font-size:12.5px; color:var(--ink-dim); }
+
+  html{ scroll-behavior: smooth; }
+
+  /* path tracker */
+  .pathnav{
+    position: sticky; top: 0; z-index: 5;
+    background: rgba(255,255,255,0.92);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(74,107,147,0.28);
+  }
+  .pathnav-inner{
+    display:flex; align-items:center;
+    max-width: 840px; margin: 0 auto;
+    padding: 12px 5vw;
+    gap: 2px;
+  }
+  .pathnav-item{
+    display:flex; align-items:center; gap:8px;
+    text-decoration:none;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 13.5px; font-weight: 600; letter-spacing:.08em; text-transform:uppercase;
+    color: var(--ink-dim);
+    white-space:nowrap;
+    padding: 5px 2px;
+    transition: color .15s ease;
+  }
+  .pathnav-item .pathnav-dot{
+    width:9px; height:9px; border-radius:50%;
+    background: var(--line);
+    flex-shrink:0;
+    transition: background .15s ease, box-shadow .15s ease;
+  }
+  .pathnav-item.active{ color: var(--accent-dark); font-weight:700; }
+  .pathnav-item.active .pathnav-dot{
+    background: var(--accent);
+    box-shadow: 0 0 0 4px rgba(74,107,147,.16);
+  }
+  .pathnav-line{
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--line);
+    min-width: 14px;
+    margin: 0 2px;
+  }
+  @media (max-width: 560px){
+    .pathnav-item{ font-size: 10px; gap:5px; }
+    .pathnav-line{ min-width: 8px; }
+  }
+
+  main{ padding: 0; }
+  .section{
+    padding: 46px 5vw 24px;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 60px;
+  }
+  .section-head{
+    margin: -46px -5vw 28px;
+    padding: 34px 5vw 14px;
+    background: #E8EEF6;
+  }
+  #sec-insights{ background: #E8EEF6; }
+  .section-eyebrow{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-bottom: 12px;
+    display:flex;
+    align-items:center;
+  }
+  .num-badge{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:30px; height:30px;
+    border-radius:50%;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 11.5px;
+    transform: rotate(-6deg);
+    margin-right: 10px;
+    flex-shrink:0;
+  }
+  .section h2{
+    font-size: clamp(20px, 2.4vw, 26px);
+    margin: 0 0 10px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .section p.desc{
+    font-size: 17px;
+    color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .section p.desc + p.desc{ margin-top: 14px; }
+  .caption-note{
+    font-size: 11.5px;
+    color: var(--ink-dim);
+    opacity: .6;
+    line-height: 1.55;
+    margin-top: 14px;
+    font-style: italic;
+  }
+
+  /* step reveal (paradigm) */
+  .steps-grid{
+    display:grid;
+    grid-template-columns: 1fr 28px 1fr 28px 1fr;
+    align-items:start;
+    margin-top: 22px;
+  }
+  @media (max-width: 720px){
+    .steps-grid{ grid-template-columns: 1fr; }
+    .step-arrow{ transform: rotate(90deg); padding: 4px 0; }
+  }
+  .step-col{ position:relative; }
+  .step-box{
+    background: var(--card-tint);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .step-box .lbl{ font-size:14px; font-weight:600; color:var(--ink); margin:0 0 3px; }
+  .step-box .sub2{ font-size:12.5px; color:var(--ink-dim); margin:0; }
+  .step-arrow{
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-dim); font-size:16px; padding-top:16px;
+  }
+  .step-info{
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--line);
+    text-align: center;
+  }
+  .step-term{ text-align: left; }
+  .step-term + .step-term{ margin-top: 12px; }
+  .step-info p.term{ font-size:13px; font-weight:600; color:var(--ink); margin:0 0 5px; }
+  .step-info p.def{ font-size:13.5px; color:var(--ink-soft); margin:0; line-height:1.5; }
+  .step-info p.def-solo{ font-size:14px; color:var(--ink-soft); margin:14px 0 0; line-height:1.55; }
+  .step-info .footnote{
+    font-size: 11px; color: var(--ink-dim); font-style: italic;
+    margin-top: 10px;
+  }
+  .step-info .footnote a{ color: var(--accent); }
+  .step-illus{
+    display:block; width: 150px; max-width:100%; height:auto;
+    margin: 14px auto 0;
+  }
+  .step-illus .bubble, .step-illus .tail{ fill: var(--card-tint); stroke: var(--line); stroke-width: 1px; }
+  .step-illus .tail{ stroke: none; }
+  .step-illus .head, .step-illus .body{ fill: var(--ink-dim); opacity: .5; }
+  .step-illus .head.dark, .step-illus .body.dark{ fill: var(--ink); opacity: .85; }
+  .step-illus .object-blob{ fill: #6C5B92; fill-opacity: .3; stroke: #6C5B92; stroke-opacity: .55; stroke-width: 1.2; }
+  .step-illus .label{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 13px; font-weight:600; fill: var(--accent-dark);
+  }
+
+  /* corpus visualization */
+  .controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    padding: 14px 0; margin-top: 8px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .toggle{
+    display:flex; align-items:center; gap:7px;
+    padding: 7px 13px; border-radius: 20px; border: 1px solid var(--line);
+    background: transparent; color: var(--ink-dim); font-size: 13px;
+    cursor:pointer; transition: all .15s ease; user-select:none;
+    font-family:inherit;
+  }
+  .toggle .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+  .toggle.active{ color: var(--ink); border-color: currentColor; background: var(--panel); }
+  .toggle[data-cat="epistemic"].active{border-color:var(--epistemic); color:var(--epistemic);}
+  .toggle[data-cat="nonepistemic"].active{border-color:var(--nonepistemic); color:var(--nonepistemic);}
+  .toggle[data-cat="mixed"].active{border-color:var(--mixed); color:var(--mixed);}
+  #search{
+    margin-left:auto; background: var(--panel); border: 1px solid var(--line);
+    color: var(--ink); padding: 8px 13px; border-radius: 20px; font-size: 13px;
+    font-family: inherit; width: 220px; outline:none;
+  }
+  #search::placeholder{color: var(--ink-dim);}
+  #search:focus{border-color:var(--accent);}
+  .hint{ font-size: 12.5px; color: var(--ink-dim); padding: 14px 0 0; }
+  .field-wrap{ position:relative; padding: 18px 0 30px; }
+  #field{ width:100%; height: 48vh; min-height: 360px; display:block; }
+  .node circle{
+    cursor:pointer; transition: opacity .15s ease, r .15s ease;
+    stroke: rgba(0,0,0,.35); stroke-width: 1;
+  }
+  .node.dim circle{ opacity: .12; }
+  .node.selected circle{ stroke: var(--ink); stroke-width: 2; }
+  .node text{
+    font-size: 9px; fill: var(--ink-dim); pointer-events:none; opacity:0;
+    transition: opacity .15s ease;
+  }
+  .node.dim text{ opacity:0 !important; }
+  .node:hover text, .node.selected text{ opacity: .85; }
+  .axis-label{ font-size: 13px; fill: var(--ink-dim); letter-spacing: .05em; }
+  .gridline{ stroke: var(--line); stroke-width: 1; }
+
+  #detail{
+    position: fixed; right: 0; top: 0; bottom: 0;
+    width: min(340px, 88vw);
+    background: var(--panel); border-left: 1px solid var(--line);
+    box-shadow: -8px 0 24px rgba(43,38,32,0.08);
+    transform: translateX(100%); transition: transform .25s ease;
+    padding: 26px 24px; overflow-y: auto; z-index: 10;
+  }
+  #detail.open{ transform: translateX(0); }
+  #detail .close{
+    position:absolute; top:18px; right:20px; background:none; border:none;
+    color:var(--ink-dim); font-size:20px; cursor:pointer; line-height:1;
+  }
+  #detail h2{ font-size: 19px; font-weight: 600; margin: 4px 0 2px; padding-right: 20px; }
+  #detail .year{ color: var(--accent); font-size:13px; font-family:'IBM Plex Mono','Courier New',monospace;}
+  #detail .stat{ margin-top:18px; font-size: 12px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: .08em; }
+  #detail ul{ list-style:none; margin: 8px 0 0; padding:0; }
+  #detail li{ padding: 8px 0; border-bottom: 1px dashed var(--line); font-size: 13.5px; display:flex; justify-content: space-between; gap:10px; }
+  #detail li span:last-child{ color: var(--ink-dim); font-family:'IBM Plex Mono','Courier New',monospace; font-size:12px; white-space:nowrap;}
+
+  .scoring-callout{
+    background: rgba(74,107,147,0.06);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin: 4px 0 24px;
+  }
+  .scoring-callout .sc-eyebrow{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 6px;
+  }
+  .scoring-callout p.sc-text{ font-size: 15px; color: var(--ink); margin: 0; line-height: 1.6; }
+
+  .subcat-block{ margin: 4px 0 0; }
+  .subcat-columns{ display:grid; grid-template-columns: 1fr 2fr; gap: 0 32px; align-items:start; }
+  .subcat-subgrid{ display:grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  @media (max-width: 900px){
+    .subcat-columns{ grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px){
+    .subcat-subgrid{ grid-template-columns: 1fr; }
+  }
+  .subcat-heading{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ink-dim); margin: 0 0 14px;
+  }
+  .subcat-group-label{
+    font-size: 12px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .04em; margin: 0 0 4px;
+  }
+  .subcat-group-label.epistemic{ color: var(--epistemic); }
+  .subcat-group-label.nonepistemic{ color: var(--nonepistemic); }
+  .subcat-row{ display:flex; gap:12px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .subcat-dot{ width:8px; height:8px; border-radius:50%; margin-top:6px; flex-shrink:0; }
+  .subcat-dot.epistemic{ background: var(--epistemic); }
+  .subcat-dot.nonepistemic{ background: var(--nonepistemic); }
+  .subcat-term{ font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0 0 2px; }
+  .subcat-def{ font-size: 13.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+  .subcat-eg{ font-size: 12.5px; color: var(--ink-dim); font-style: italic; margin: 3px 0 0; }
+  .subcat-eg strong{ font-style: normal; color: var(--ink); }
+
+  /* insight blocks */
+  .insight{
+    padding: 28px 30px 30px;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(43,58,84,0.06);
+  }
+  .insight + .insight{ margin-top: 22px; }
+  .insight-banner{
+    display:flex; align-items:center; gap: 10px;
+    margin: -28px -30px 20px;
+    padding: 11px 30px;
+    background: var(--accent-dark);
+    border-radius: 11px 11px 0 0;
+  }
+  .insight-banner-num{
+    flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%;
+    background: rgba(255,255,255,0.2); color: #fff;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 11px; font-weight: 700;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .insight-banner-tag{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    font-weight: 700; color: #fff;
+  }
+  .insight h3{ font-size: 18px; font-weight: 600; color:var(--ink); margin: 0 0 10px; }
+  .insight p.desc{ font-size: 16px; }
+  svg.chart{ width:100%; display:block; overflow: visible; margin-top: 18px; }
+  .chart-axis{ stroke: var(--line); stroke-width: 1; }
+  .chart-tick{ font-size: 13px; fill: var(--ink-dim); }
+  .chart-line{ fill:none; stroke-width: 2.5; }
+  .legend-row{ display:flex; flex-wrap:wrap; gap: 16px; margin: 14px 0 0; font-size: 12.5px; }
+  .legend-item{ display:flex; align-items:center; gap:7px; color: var(--ink-dim); cursor:pointer; user-select:none; }
+  .legend-item .sw{ width:14px; height:3px; border-radius:2px; }
+  .legend-item.off{ opacity:.35; }
+  .legend-item .sw.ref{ background:transparent; border:1px dashed var(--epistemic); height:8px; }
+
+  .bar-value{ font-size:13px; font-weight:600; fill:var(--ink); text-anchor:middle; font-family:'IBM Plex Mono','Courier New',monospace; }
+  .bar-group-label{ font-size:15px; font-weight:600; fill:var(--ink); text-anchor:middle; }
+  .bar-axis-tick{ font-size:13px; fill:var(--ink-dim); }
+
+  .null-panel{ max-width: 640px; margin-top: 18px; }
+  .null-header-row{
+    display:grid; grid-template-columns: 1fr repeat(3,72px); gap:6px;
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 10px; color: var(--ink-dim); text-transform:uppercase; letter-spacing:.05em;
+    padding-bottom: 8px;
+  }
+  .null-header-row div{ text-align:center; }
+  .null-header-row div:first-child{ text-align:left; }
+  .null-row{
+    display:grid; grid-template-columns: 1fr repeat(3,72px); gap:6px;
+    align-items:center; padding: 9px 0; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--ink);
+  }
+  .null-cell{ display:flex; align-items:center; justify-content:center; }
+  .null-dot{ width:10px; height:10px; border-radius:50%; }
+  .null-dot.null{ background: #CFE0D1; }
+  .null-dot.marginal{ background: #3E6B4E; }
+  .null-dot.sig{ background: var(--nonepistemic); }
+  .null-legend{ display:flex; gap:16px; margin-top:14px; font-size:11.5px; color:var(--ink-dim); flex-wrap:wrap; }
+  .null-legend .li{ display:flex; align-items:center; gap:6px; }
+
+  .applied-callout{
+    margin-top: 18px; padding: 14px 18px;
+    background: rgba(74,107,147,0.07);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+  }
+  .applied-callout .ac-eyebrow{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 6px;
+  }
+  .applied-callout p.ac-text{ font-size: 15.5px; color: var(--ink); margin: 0; line-height: 1.6; }
+
+  .rec-list{ display:flex; flex-direction:column; gap: 22px; margin: 6px 0 0; }
+  .rec-item{ border-left: 2px solid var(--accent); padding: 2px 0 2px 18px; }
+  .rec-item .rec-title{ font-family: 'Source Serif 4', Georgia, serif; font-size: 16px; font-weight: 600; color: var(--ink); margin: 0 0 6px; }
+  .rec-item .rec-body{ font-size: 15.5px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+
+  footer{
+    padding: 30px 5vw 44px;
+    color: var(--ink-dim);
+    font-size: 12px;
+    line-height:1.6;
+    border-top: 1px solid var(--line);
+  }
+  .footer-block{ margin-bottom: 18px; }
+  .footer-block:last-child{ margin-bottom: 0; }
+  .footer-block p{ margin: 0; }
+  .footer-label{
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    font-weight: 600; color: var(--ink-dim); margin: 0 0 4px !important;
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <a class="back-link" href="index.html">&larr; Portfolio</a>
+      <h1>How Children Learn From Others</h1>
+      <div class="sub">A systematic review and meta-analysis of 63 published studies (6,525 children, ages 2–8) on how children decide whom to trust when learning a new word.</div>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="header-grid">
+        <div class="header-field"><p class="hf-label">Sample</p><p class="hf-value">63 studies · 666 conditions · 6,525 children (ages 2–8)</p></div>
+        <div class="header-field"><p class="hf-label">Method</p><p class="hf-value">Systematic review &amp; meta-analysis</p></div>
+      </div>
+      <div class="headline-finding">
+        <p class="hl-eyebrow">Headline finding</p>
+        <p class="hl-text">Most superficial methodological choices (like presentation format) didn't affect performance, but question type and task complexity did. This has direct implications for how we assess young children's learning.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="pathnav" id="pathnav" aria-label="Case study sections">
+  <div class="pathnav-inner">
+    <a class="pathnav-item" data-target="sec-question" href="#sec-question"><span class="pathnav-dot"></span>Question</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" data-target="sec-methods" href="#sec-methods"><span class="pathnav-dot"></span>Methods</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" data-target="sec-insights" href="#sec-insights"><span class="pathnav-dot"></span>Insights</a>
+  </div>
+</nav>
+
+<main>
+
+<section class="section" id="sec-question">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">01</span>The question</div>
+      <h2>Source matters when deciding who to learn from</h2>
+      <p class="desc">Any time a child learns from someone else, they're weighing whether that source is worth trusting. Selective trust is the paradigm researchers use to study this directly.</p>
+      <p class="desc"><strong><em>What can this paradigm tell us about how we assess children's learning?</em></strong></p>
+    </div>
+  </div>
+  <div class="container">
+  <p class="desc" style="margin-bottom:22px;">Every study in this corpus runs a version of the same basic procedure, shown below:</p>
+  <div class="steps-grid">
+    <div class="step-col" id="s1">
+      <div class="step-box"><p class="lbl">1. Meet informants</p><p class="sub2">Two* speakers introduced</p></div>
+      <div class="step-info">
+        <svg class="step-illus" viewBox="0 0 220 110" aria-hidden="true">
+          <rect class="bubble" x="8" y="6" width="74" height="30" rx="14"/>
+          <path class="tail" d="M40 36 L45 50 L52 36 Z"/>
+          <text class="label" x="45" y="26" text-anchor="middle">star</text>
+          <circle class="head" cx="45" cy="70" r="13"/>
+          <path class="body" d="M25 108 Q25 82 45 82 Q65 82 65 108 Z"/>
+          <rect class="bubble" x="138" y="6" width="74" height="30" rx="14"/>
+          <path class="tail" d="M170 36 L175 50 L182 36 Z"/>
+          <text class="label" x="175" y="26" text-anchor="middle">cat</text>
+          <circle class="head dark" cx="175" cy="70" r="13"/>
+          <path class="body dark" d="M155 108 Q155 82 175 82 Q195 82 195 108 Z"/>
+          <path class="object-blob" d="M110 54 L113.8 64.7 L125.2 65.1 L116.2 72.0 L119.4 82.9 L110 76.5 L100.6 82.9 L103.8 72.0 L94.8 65.1 L106.2 64.7 Z"/>
+        </svg>
+        <p class="footnote">* Some studies presented informants one at a time instead of as a pair.</p>
+      </div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-col" id="s2">
+      <div class="step-box"><p class="lbl">2. Hear labels</p><p class="sub2">Both label the object</p></div>
+      <div class="step-info">
+        <svg class="step-illus" viewBox="0 0 220 110" aria-hidden="true">
+          <rect class="bubble" x="8" y="6" width="74" height="30" rx="14"/>
+          <path class="tail" d="M40 36 L45 50 L52 36 Z"/>
+          <text class="label" x="45" y="26" text-anchor="middle">dax</text>
+          <circle class="head" cx="45" cy="70" r="13"/>
+          <path class="body" d="M25 108 Q25 82 45 82 Q65 82 65 108 Z"/>
+          <rect class="bubble" x="138" y="6" width="74" height="30" rx="14"/>
+          <path class="tail" d="M170 36 L175 50 L182 36 Z"/>
+          <text class="label" x="175" y="26" text-anchor="middle">wug</text>
+          <circle class="head dark" cx="175" cy="70" r="13"/>
+          <path class="body dark" d="M155 108 Q155 82 175 82 Q195 82 195 108 Z"/>
+          <path class="object-blob" d="M107 49 C117 45 129 49 131 59 C133 66 125 66 129 74 C134 83 124 93 111 91 C104 96 92 93 89 84 C86 77 92 76 87 68 C82 60 88 51 97 52 C100 48 103 50 107 49 Z"/>
+        </svg>
+        <p class="def-solo">An informant points to an unfamiliar object and says, "That's a dax." The other informant calls the same object a "wug."</p>
+      </div>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-col" id="s3">
+      <div class="step-box"><p class="lbl">3. Test question</p><p class="sub2">One of three types asked</p></div>
+      <div class="step-info">
+        <div class="step-term"><p class="term">Ask</p><p class="def">"Whom would you ask to label this object?"<br><em>Metacognitive.</em></p></div>
+        <div class="step-term"><p class="term">Endorse</p><p class="def">"What is this called?"<br><em>Semantic use.</em></p></div>
+        <div class="step-term"><p class="term">Explicit judgment</p><p class="def">"Who's better at labeling objects?"<br><em>Trait inference.</em></p></div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="section" id="sec-methods">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">02</span>Methods</div>
+      <h2>Coding 63 studies into one comparable dataset</h2>
+      <p class="desc">Each study was coded for the traits tested, how the test question was framed, and various other methodological factors like participant age, sample size, and effect direction.</p>
+    </div>
+  </div>
+  <div class="container">
+  <div class="controls">
+    <button class="toggle active" data-cat="epistemic"><span class="dot" style="background:var(--epistemic)"></span>Epistemic only</button>
+    <button class="toggle active" data-cat="nonepistemic"><span class="dot" style="background:var(--nonepistemic)"></span>Nonepistemic only</button>
+    <button class="toggle active" data-cat="mixed"><span class="dot" style="background:var(--mixed)"></span>Both tested together</button>
+    <input id="search" type="text" placeholder="Search by author…">
+  </div>
+  <div class="hint">Each of the 63 studies manipulated the informant's traits — epistemic (accuracy, expertise), nonepistemic (accent, attractiveness, consensus), or both at once. When a study tested both together, the two traits either favored learning from two different informants (coded below as <strong>in conflict</strong> — e.g., the more accurate informant was also the less attractive one) or from the same informant (coded as <strong>no conflict</strong>). Click a node for the coded detail behind it.</div>
+  <div class="field-wrap">
+    <svg id="field"></svg>
+  </div>
+  <div class="scoring-callout">
+    <p class="sc-eyebrow">How performance is scored</p>
+    <p class="sc-text">A "correct" response means the child chose the informant who was accurate (epistemic traits) or who displayed the more socially desirable version of the trait (nonepistemic traits).</p>
+  </div>
+  <div class="subcat-block">
+    <div class="subcat-columns">
+      <div>
+        <p class="subcat-group-label epistemic">Epistemic</p>
+        <div class="subcat-row"><span class="subcat-dot epistemic"></span><div><p class="subcat-term">Accuracy</p><p class="subcat-def">Track record for labeling objects</p><p class="subcat-eg">e.g., <strong>correct</strong> vs. incorrect labeler</p></div></div>
+        <div class="subcat-row"><span class="subcat-dot epistemic"></span><div><p class="subcat-term">Expertise</p><p class="subcat-def">Demonstrated (domain-relevant) expertise</p><p class="subcat-eg">e.g., <strong>expert</strong> vs. non-expert</p></div></div>
+      </div>
+      <div>
+        <p class="subcat-group-label nonepistemic">Nonepistemic</p>
+        <div class="subcat-subgrid">
+          <div class="subcat-row"><span class="subcat-dot nonepistemic"></span><div><p class="subcat-term">Linguistic</p><p class="subcat-def">Accent, syntax, or pragmatics</p><p class="subcat-eg">e.g., <strong>native accent</strong> vs. unfamiliar accent</p></div></div>
+          <div class="subcat-row"><span class="subcat-dot nonepistemic"></span><div><p class="subcat-term">Type of informant</p><p class="subcat-def">Team or group membership</p><p class="subcat-eg">e.g., <strong>ingroup</strong> vs. outgroup</p></div></div>
+          <div class="subcat-row"><span class="subcat-dot nonepistemic"></span><div><p class="subcat-term">Consensus</p><p class="subcat-def">Number of informants</p><p class="subcat-eg">e.g., <strong>group agreeing</strong> vs. one informant</p></div></div>
+          <div class="subcat-row"><span class="subcat-dot nonepistemic"></span><div><p class="subcat-term">Perceptual valence &amp; confidence</p><p class="subcat-def">Informants display different traits</p><p class="subcat-eg">e.g., <strong>attractive</strong> vs. unattractive</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section class="section" id="sec-insights">
+  <div class="section-head">
+    <div class="container">
+      <div class="section-eyebrow"><span class="num-badge">03</span>Insights</div>
+      <h2>Implications for assessing learning in young children</h2>
+      <p class="desc">Three patterns in the coded corpus point to practical relevance for measurement and learning-material design.</p>
+    </div>
+  </div>
+
+  <div class="container">
+  <div class="insight">
+    <div class="insight-banner">
+      <span class="insight-banner-num">1</span>
+      <span class="insight-banner-tag">Task complexity</span>
+    </div>
+    <h3>Simplicity improves performance</h3>
+    <p class="desc">Using the epistemic-only studies as a reference point, a clear pattern emerges: pairing a consistent nonepistemic trait with epistemic information boosts performance above that baseline, while a conflicting one pulls performance below it, for every question type.</p>
+    <div class="legend-row">
+      <div class="legend-item"><span class="sw ref"></span>Epistemic only (reference)</div>
+      <div class="legend-item"><span class="sw" style="background:var(--nonepistemic)"></span>Traits in conflict</div>
+      <div class="legend-item"><span class="sw" style="background:var(--accent-dark)"></span>Traits consistent</div>
+    </div>
+    <svg class="chart" viewBox="0 0 900 320" role="img" aria-label="Bar chart of performance by question type, comparing epistemic-only conditions to conflicting and consistent trait pairings">
+      <line class="chart-axis" x1="44" x2="44" y1="20" y2="266"></line>
+      <line class="chart-axis" x1="44" x2="876" y1="266" y2="266"></line>
+      <line class="gridline" x1="44" x2="876" y1="204.5" y2="204.5" opacity="0.3"></line>
+      <line class="gridline" x1="44" x2="876" y1="143" y2="143" opacity="0.3"></line>
+      <line class="gridline" x1="44" x2="876" y1="81.5" y2="81.5" opacity="0.3"></line>
+      <text class="bar-axis-tick" x="38" y="270" text-anchor="end">0</text>
+      <text class="bar-axis-tick" x="38" y="208.5" text-anchor="end">.25</text>
+      <text class="bar-axis-tick" x="38" y="147" text-anchor="end">.5</text>
+      <text class="bar-axis-tick" x="38" y="85.5" text-anchor="end">.75</text>
+      <text class="bar-axis-tick" x="38" y="24" text-anchor="end">1.0</text>
+
+      <rect x="95" y="101.18" width="50" height="164.82" fill="var(--epistemic)" fill-opacity="0.18" stroke="var(--epistemic)" stroke-dasharray="3,3" stroke-width="1"></rect>
+      <text class="bar-value" x="120" y="93">.67</text>
+      <rect x="157" y="118.4" width="50" height="147.6" fill="var(--nonepistemic)"></rect>
+      <text class="bar-value" x="182" y="110">.60</text>
+      <rect x="219" y="66.74" width="50" height="199.26" fill="var(--accent-dark)"></rect>
+      <text class="bar-value" x="244" y="59">.81</text>
+      <text class="bar-group-label" x="182" y="292">Ask</text>
+
+      <rect x="372" y="101.18" width="50" height="164.82" fill="var(--epistemic)" fill-opacity="0.18" stroke="var(--epistemic)" stroke-dasharray="3,3" stroke-width="1"></rect>
+      <text class="bar-value" x="397" y="93">.67</text>
+      <rect x="434" y="130.7" width="50" height="135.3" fill="var(--nonepistemic)"></rect>
+      <text class="bar-value" x="459" y="122">.55</text>
+      <rect x="496" y="76.58" width="50" height="189.42" fill="var(--accent-dark)"></rect>
+      <text class="bar-value" x="521" y="69">.77</text>
+      <text class="bar-group-label" x="459" y="292">Endorse</text>
+
+      <rect x="649" y="74.12" width="50" height="191.88" fill="var(--epistemic)" fill-opacity="0.18" stroke="var(--epistemic)" stroke-dasharray="3,3" stroke-width="1"></rect>
+      <text class="bar-value" x="674" y="66">.78</text>
+      <rect x="711" y="118.4" width="50" height="147.6" fill="var(--nonepistemic)"></rect>
+      <text class="bar-value" x="736" y="110">.60</text>
+      <rect x="773" y="54.44" width="50" height="211.56" fill="var(--accent-dark)"></rect>
+      <text class="bar-value" x="798" y="47">.86</text>
+      <text class="bar-group-label" x="736" y="292">Explicit judgment</text>
+    </svg>
+    <p class="caption-note">The conflict/consistent categories draw on fewer conditions (5–30) than the epistemic-only reference (100–228); treat the pattern as directional, not definitive.</p>
+
+    <p class="desc" style="margin-top:26px;">The same complexity shows up across age. On the Endorse question, the youngest children (2–3 years) performed well above chance when they only had to track a single informant at a time, but were close to chance when two informants gave conflicting information. By age 4, that gap disappears and children handled both versions about equally well.</p>
+    <div class="legend-row" id="cross-legend"></div>
+    <svg class="chart" id="crossover" viewBox="0 0 900 280"></svg>
+    <p class="caption-note">Schematic reconstruction of the paper's reported interaction, built from the mean logit scores reported for the youngest age band; the exact convergence point at 4+ isn't given a precise value in the paper.</p>
+
+    <div class="applied-callout">
+      <p class="ac-eyebrow">Recommendation</p>
+      <p class="ac-text">Simpler, more consistent information may make it easier for children to show what they actually know. Reducing conflicting cues and competing informants could help avoid mistaking "can't manage competing options" for "can't use reliable information." This may be especially important for younger learners.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-banner">
+      <span class="insight-banner-num">2</span>
+      <span class="insight-banner-tag">Behavioral vs. self-report</span>
+    </div>
+    <h3>Behavioral measures showed competence earlier than self-report</h3>
+    <p class="desc">Performance on each test question changed differently with age. Even the youngest children in the corpus <strong style="color:#3E6E78">Endorsed</strong> the label produced by the accurate informant, but their tendency to <strong style="color:#4B7A5E">Ask</strong> the reliable informant only caught up years later. The lines below are regression fits for performance on each question type as a function of age; higher lines mean a higher likelihood of selecting the informant who gave accurate information.</p>
+    <div class="legend-row" id="traj-legend"></div>
+    <svg class="chart" id="trajectory" viewBox="0 0 900 320"></svg>
+    <div class="applied-callout">
+      <p class="ac-eyebrow">Recommendation</p>
+      <p class="ac-text">Ask, Endorse, and Explicit Judgment seem to tap into distinct capacities with different developmental timelines, so collapsing them into a single score risks masking this difference. An instrument covering a wide age range may benefit from validating each item type separately.</p>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div class="insight-banner">
+      <span class="insight-banner-num">3</span>
+      <span class="insight-banner-tag">What didn't matter</span>
+    </div>
+    <h3>Presentation format is a safe place to cut costs</h3>
+    <p class="desc">Across question types, most of the commonly-varied methodological choices didn't move performance — including how the informant was presented (photo, video, live actor, or puppet).</p>
+    <div class="null-panel">
+      <div class="null-header-row"><div></div><div>Ask</div><div>Endorse</div><div>Explicit judgment</div></div>
+      <div id="nullrows"></div>
+      <div class="null-legend">
+        <span class="li"><span class="null-dot null"></span>no effect</span>
+        <span class="li"><span class="null-dot marginal"></span>marginal, p&lt;.10</span>
+        <span class="li"><span class="null-dot sig"></span>significant, p&lt;.05</span>
+      </div>
+    </div>
+    <div class="applied-callout">
+      <p class="ac-eyebrow">Recommendation</p>
+      <p class="ac-text">Most methodological choices did not seem to affect performance. For instance, presentation format (video versus live) did not appear to change how well children tracked the more reliable informant. For a scalable or remote instrument, decisions may favor cost and logistics over presentation format.</p>
+    </div>
+  </div>
+
+  </div>
+</section>
+
+</main>
+
+<div id="detail">
+  <button class="close" onclick="closeDetail()">✕</button>
+  <div id="detail-body"></div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-block">
+      <p class="footer-label">Published as</p>
+      <p>Sobel, D. M., &amp; Finiasz, Z. (2020). How children learn from others: An analysis of selective word learning. <em>Child Development, 91</em>(6), e1134–e1161.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">My role</p>
+      <p>I led the systematic coding of the study corpus into a structured dataset. The statistical meta-analysis itself (including the models behind the findings in Sections 02–03) was run by the first author.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">Where this fits</p>
+      <p>This case study builds on the existing publication to give other researchers and instrument designers in this space a clearer read on which methodological choices matter — and which don't — before they build the next study or assessment.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">Data use</p>
+      <p>Data drawn from Tables 1–6 and Figure 1 of the paper cited above. Node categorization in the corpus follows the paper's own coding of epistemic vs. nonepistemic manipulations. The null-results panel (Insight 1) reproduces significance values reported in Tables 2–4 and 6; the age-by-question chart (Insight 2) reconstructs the paper's reported regression equations rather than plotting individual raw data points; the informant-count chart (Insight 3) is a schematic built from reported mean logit scores, not a raw regression fit.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const DATA = [
+{a:"Bascandziev & Harris",y:2014,n:4,b:"nonepistemic",cats:["Nonepistemic: perceptual valence (4)"]},
+{a:"Bascandziev & Harris",y:2016,n:12,b:"mixed",cats:["Epistemic (4)","Nonepistemic: perceptual valence (4)","Both in conflict: perceptual valence (4)"]},
+{a:"Bernard, Proust & Clément",y:2015,n:9,b:"mixed",cats:["Both in conflict: consensus (6)","Both no conflict: consensus (3)"]},
+{a:"Birch & Bloom",y:2002,n:12,b:"nonepistemic",cats:["Nonepistemic: linguistic (12)"]},
+{a:"Birch, Vauthier & Bloom",y:2007,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Brosseau-Liard, Cassels & Birch",y:2014,n:4,b:"mixed",cats:["Nonepistemic: confidence (2)","Both in conflict: confidence (2)"]},
+{a:"Brosseau-Liard et al.",y:2015,n:2,b:"mixed",cats:["Epistemic (1)","Nonepistemic: perceptual valence (1)"]},
+{a:"Canfield, Saudino & Ganea",y:2015,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Chen, Harris & Corriveau",y:2012,n:18,b:"nonepistemic",cats:["Nonepistemic: consensus (18)"]},
+{a:"Clément, Bernard, Grandjean & Sander",y:2013,n:9,b:"nonepistemic",cats:["Nonepistemic: type of informant (9)"]},
+{a:"Corriveau, Fusaro & Harris",y:2009,n:12,b:"nonepistemic",cats:["Nonepistemic: consensus (12)"]},
+{a:"Corriveau & Harris",y:2009,n:30,b:"mixed",cats:["Nonepistemic: type of informant (12)","Both in conflict: type of informant (9)","Both no conflict: type of informant (9)"]},
+{a:"Corriveau & Harris (b)",y:2009,n:38,b:"epistemic",cats:["Epistemic (38)"]},
+{a:"Corriveau, Kinzler & Harris",y:2013,n:15,b:"mixed",cats:["Epistemic (2)","Nonepistemic: linguistic (3)","Both in conflict: linguistic (5)","Both no conflict: linguistic (5)"]},
+{a:"Corriveau & Kurkul",y:2014,n:8,b:"epistemic",cats:["Epistemic (8)"]},
+{a:"Corriveau, Kurkul & Arunachalam",y:2016,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Corriveau et al.",y:2009,n:18,b:"epistemic",cats:["Epistemic (18)"]},
+{a:"Corriveau, Pickard & Harris",y:2011,n:16,b:"epistemic",cats:["Epistemic (16)"]},
+{a:"Danovitch & Alzahabi",y:2013,n:18,b:"epistemic",cats:["Epistemic (18)"]},
+{a:"Doebel & Koenig",y:2013,n:4,b:"nonepistemic",cats:["Nonepistemic: type of informant (4)"]},
+{a:"Doebel, Koenig & Rowell",y:2016,n:21,b:"epistemic",cats:["Epistemic (21)"]},
+{a:"Einav & Robinson",y:2010,n:13,b:"epistemic",cats:["Epistemic (13)"]},
+{a:"Einav & Robinson",y:2011,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Elashi & Mills",y:2014,n:32,b:"mixed",cats:["Both in conflict: type of informant (16)","Both no conflict: type of informant (16)"]},
+{a:"Fusaro, Corriveau & Harris",y:2011,n:2,b:"mixed",cats:["Epistemic (1)","Nonepistemic: perceptual valence (1)"]},
+{a:"Fusaro & Harris",y:2008,n:6,b:"epistemic",cats:["Epistemic (6)"]},
+{a:"Guerrero, Elenbaas, Enesco & Killen",y:2017,n:1,b:"nonepistemic",cats:["Nonepistemic: consensus (1)"]},
+{a:"Hermes et al.",y:2016,n:4,b:"mixed",cats:["Epistemic (2)","Nonepistemic: perceptual valence (2)"]},
+{a:"Jaffer & Ma",y:2015,n:2,b:"nonepistemic",cats:["Nonepistemic: perceptual valence (2)"]},
+{a:"Jaswal & Neely",y:2006,n:4,b:"mixed",cats:["Nonepistemic: type of informant (2)","Both in conflict: type of informant (1)","Both no conflict: type of informant (1)"]},
+{a:"Kim & Harris (a)",y:2014,n:2,b:"nonepistemic",cats:["Nonepistemic: other (2)"]},
+{a:"Kim & Harris (b)",y:2014,n:2,b:"nonepistemic",cats:["Nonepistemic: other (2)"]},
+{a:"Kim, Paulus & Kalish",y:2016,n:10,b:"epistemic",cats:["Epistemic (10)"]},
+{a:"Koenig, Clément & Harris",y:2004,n:6,b:"epistemic",cats:["Epistemic (6)"]},
+{a:"Koenig & Harris",y:2005,n:18,b:"epistemic",cats:["Epistemic (18)"]},
+{a:"Koenig & Jaswal",y:2011,n:12,b:"epistemic",cats:["Epistemic (12)"]},
+{a:"Koenig & Woodward",y:2010,n:11,b:"epistemic",cats:["Epistemic (11)"]},
+{a:"Koenig & Woodward",y:2012,n:8,b:"epistemic",cats:["Epistemic (8)"]},
+{a:"Kondrad & Jaswal",y:2012,n:8,b:"epistemic",cats:["Epistemic (8)"]},
+{a:"Krogh-Jespersen & Echols",y:2012,n:10,b:"epistemic",cats:["Epistemic (10)"]},
+{a:"Kushnir & Koenig",y:2017,n:5,b:"epistemic",cats:["Epistemic (5)"]},
+{a:"Landrum, Mills & Johnston",y:2013,n:16,b:"mixed",cats:["Epistemic (6)","Both in conflict: type of informant (8)","Both no conflict: type of informant (2)"]},
+{a:"Lane, Wellman & Gelman",y:2013,n:18,b:"nonepistemic",cats:["Nonepistemic: type of informant (18)"]},
+{a:"Lucas, Lewis, Pala, Wong & Berridge",y:2013,n:15,b:"epistemic",cats:["Epistemic (15)"]},
+{a:"Luchkina, Sobel & Morgan",y:2018,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Luu, de Rosnay & Harris",y:2013,n:27,b:"epistemic",cats:["Epistemic (27)"]},
+{a:"MacDonald, Schug, Chase & Barth",y:2013,n:9,b:"mixed",cats:["Epistemic (3)","Both in conflict: type of informant (3)","Both no conflict: type of informant (3)"]},
+{a:"McDonald & Ma",y:2015,n:2,b:"nonepistemic",cats:["Nonepistemic: perceptual valence (2)"]},
+{a:"Nurmsoo & Robinson",y:2009,n:8,b:"mixed",cats:["Epistemic (2)","Nonepistemic: other (4)","Both no conflict: other (2)"]},
+{a:"Pasquini et al.",y:2007,n:30,b:"epistemic",cats:["Epistemic (30)"]},
+{a:"Rakoczy, Hamann, Warneken & Tomasello",y:2010,n:2,b:"nonepistemic",cats:["Nonepistemic: type of informant (2)"]},
+{a:"Rakoczy, Warneken & Tomasello",y:2009,n:12,b:"epistemic",cats:["Epistemic (12)"]},
+{a:"Robinson, Fox & Einav",y:2013,n:6,b:"nonepistemic",cats:["Nonepistemic: linguistic (6)"]},
+{a:"Sabbagh, Wdowiak & Ottaway",y:2003,n:3,b:"epistemic",cats:["Epistemic (3)"]},
+{a:"Scofield & Behrend",y:2008,n:4,b:"epistemic",cats:["Epistemic (4)"]},
+{a:"Sobel & Corriveau",y:2010,n:10,b:"epistemic",cats:["Epistemic (10)"]},
+{a:"Sobel & Macris",y:2013,n:10,b:"epistemic",cats:["Epistemic (10)"]},
+{a:"Sobel, Sedivy, Buchanan & Hennessy",y:2012,n:12,b:"epistemic",cats:["Epistemic (12)"]},
+{a:"Stephens & Koenig",y:2015,n:6,b:"epistemic",cats:["Epistemic (6)"]},
+{a:"Taylor",y:2013,n:12,b:"mixed",cats:["Nonepistemic: type of informant (6)","Both in conflict: type of informant (3)","Both no conflict: type of informant (3)"]},
+{a:"Vanderbilt, Heyman & Liu",y:2014,n:12,b:"epistemic",cats:["Epistemic (12)"]},
+{a:"Vanderbilt, Ochoa & Heilbrun",y:2018,n:20,b:"epistemic",cats:["Epistemic (20)"]},
+{a:"Yow & Li",y:2018,n:6,b:"nonepistemic",cats:["Nonepistemic: linguistic (6)"]}
+];
+
+const colorHex = { epistemic:"#4B7A5E", nonepistemic:"#6C5B92", mixed:"#4A6B93" };
+
+const svg = document.getElementById('field');
+const ns = "http://www.w3.org/2000/svg";
+let W, H;
+const margin = {top: 30, right: 30, bottom: 40, left: 30};
+
+function yearX(y, w){
+  const minY = 2002, maxY = 2018.5;
+  return margin.left + (y - minY) / (maxY - minY) * (w - margin.left - margin.right);
+}
+
+function hash(str){
+  let h = 0;
+  for(let i=0;i<str.length;i++){ h = (h*31 + str.charCodeAt(i)) % 1000; }
+  return h/1000;
+}
+
+let nodes = [];
+
+function layout(){
+  W = svg.clientWidth || svg.parentElement.clientWidth;
+  H = svg.clientHeight || 420;
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const laneH = (H - margin.top - margin.bottom) / 3;
+  const laneOrder = {epistemic:0, nonepistemic:1, mixed:2};
+  nodes = DATA.map(d=>{
+    const lane = laneOrder[d.b];
+    const jitter = (hash(d.a+d.y) - 0.5) * (laneH*0.7);
+    return {
+      ...d,
+      px: yearX(d.y, W),
+      py: margin.top + lane*laneH + laneH/2 + jitter,
+      r: 4 + Math.sqrt(d.n)*2.1
+    };
+  });
+}
+
+function render(){
+  layout();
+  svg.innerHTML = '';
+
+  for(let yr=2002; yr<=2018; yr+=4){
+    const x = yearX(yr, W);
+    const line = document.createElementNS(ns,'line');
+    line.setAttribute('x1',x); line.setAttribute('x2',x);
+    line.setAttribute('y1',margin.top-10); line.setAttribute('y2',H-margin.bottom+6);
+    line.setAttribute('class','gridline');
+    svg.appendChild(line);
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x',x); t.setAttribute('y',H-margin.bottom+22);
+    t.setAttribute('class','axis-label'); t.setAttribute('text-anchor','middle');
+    t.textContent = yr;
+    svg.appendChild(t);
+  }
+
+  nodes.forEach(d=>{
+    const g = document.createElementNS(ns,'g');
+    g.setAttribute('class','node');
+    g.dataset.bucket = d.b;
+    g.dataset.author = d.a.toLowerCase();
+    const c = document.createElementNS(ns,'circle');
+    c.setAttribute('cx', d.px); c.setAttribute('cy', d.py); c.setAttribute('r', d.r);
+    c.setAttribute('fill', colorHex[d.b]);
+    c.setAttribute('fill-opacity', 0.85);
+    g.appendChild(c);
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x', d.px); t.setAttribute('y', d.py - d.r - 5);
+    t.setAttribute('text-anchor','middle');
+    t.textContent = `${d.a} (${d.y})`;
+    g.appendChild(t);
+    g.addEventListener('click', ()=>openDetail(d, g));
+    svg.appendChild(g);
+  });
+}
+
+const subcatPhrase = {
+  "linguistic": "linguistic trait (such as accent, syntax, or pragmatic appropriateness)",
+  "type of informant": "trait based on type of informant (such as group membership, e.g. adult vs. child, boy vs. girl)",
+  "consensus": "consensus trait (such as one informant vs. a group agreeing)",
+  "perceptual valence": "perceptual valence trait (such as visible appeal, e.g. attractiveness)",
+  "confidence": "confidence trait (such as how confidently the label was delivered)",
+  "other": "trait outside the paper's main subcategories (a study-specific manipulation)"
+};
+
+function getNote(d){
+  if(d.b === "epistemic"){
+    return "This study manipulated only epistemic traits (accuracy or expertise). It did not include a nonepistemic factor for comparison.";
+  }
+  if(d.b === "mixed"){
+    const hasConflict = d.cats.some(c=>/in conflict/i.test(c));
+    const hasNoConflict = d.cats.some(c=>/no conflict/i.test(c));
+    if(hasConflict && hasNoConflict){
+      return "This study manipulated both epistemic and nonepistemic traits, comparing conditions where the two pointed to different informants (in conflict) against conditions where they pointed to the same informant (no conflict).";
+    }
+    if(hasConflict){
+      return "This study manipulated both epistemic and nonepistemic traits, always in conflict — the two traits pointed to different informants.";
+    }
+    if(hasNoConflict){
+      return "This study manipulated both epistemic and nonepistemic traits with no conflict between them — both traits pointed to the same informant.";
+    }
+    return "This study manipulated both epistemic and nonepistemic traits, either presented consistently with each other or in direct conflict.";
+  }
+  const match = d.cats[0].match(/Nonepistemic:\s*([a-z ]+)\s*\(/i);
+  const key = match ? match[1].trim().toLowerCase() : null;
+  const phrase = subcatPhrase[key] || "trait";
+  return `This study manipulated a nonepistemic ${phrase}. It did not include an epistemic factor for comparison.`;
+}
+
+function openDetail(d, g){
+  document.querySelectorAll('.node').forEach(n=>n.classList.remove('selected'));
+  g.classList.add('selected');
+  const body = document.getElementById('detail-body');
+  body.innerHTML = `
+    <div class="year">${d.y}</div>
+    <h2>${d.a}</h2>
+    <div class="stat">${d.n} condition${d.n>1?'s':''} contributed to the analysis</div>
+    <ul>
+      ${d.cats.map(c=>{
+        const [label, count] = [c.replace(/\s*\(\d+\)$/,''), c.match(/\((\d+)\)/)?.[1]];
+        return `<li><span>${label}</span><span>${count} rows</span></li>`;
+      }).join('')}
+    </ul>
+    <div class="stat" style="margin-top:20px;">What this tells us</div>
+    <p style="font-size:13px; line-height:1.6; color:var(--ink); margin-top:8px;">${getNote(d)}</p>
+  `;
+  document.getElementById('detail').classList.add('open');
+}
+function closeDetail(){
+  document.getElementById('detail').classList.remove('open');
+  document.querySelectorAll('.node').forEach(n=>n.classList.remove('selected'));
+}
+
+function applyFilters(){
+  const active = [...document.querySelectorAll('.toggle.active')].map(b=>b.dataset.cat);
+  const q = document.getElementById('search').value.trim().toLowerCase();
+  document.querySelectorAll('.node').forEach(g=>{
+    const match = active.includes(g.dataset.bucket) && (!q || g.dataset.author.includes(q));
+    g.classList.toggle('dim', !match);
+  });
+}
+
+document.querySelectorAll('.toggle').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    btn.classList.toggle('active');
+    applyFilters();
+  });
+});
+document.getElementById('search').addEventListener('input', applyFilters);
+
+window.addEventListener('resize', render);
+render();
+
+/* ---------- Trajectory chart (Insight 1) ---------- */
+const TRAJ = [
+  {key:"ask", label:"Ask", color:"#4B7A5E", intercept:-0.43617, slope:0.023574, min:40, max:84},
+  {key:"endorse", label:"Endorse", color:"#3E6E78", intercept:0.47689, slope:0.0040953, min:18, max:92},
+  {key:"ej", label:"Explicit Judgment", color:"#6C5B92", intercept:0.41385, slope:0.017675, min:24, max:90}
+];
+let trajActive = new Set(TRAJ.map(t=>t.key));
+
+function renderTrajLegend(){
+  const el = document.getElementById('traj-legend');
+  el.innerHTML = TRAJ.map(t=>`
+    <div class="legend-item" data-key="${t.key}">
+      <span class="sw" style="background:${t.color}"></span>${t.label}
+    </div>`).join('');
+  el.querySelectorAll('.legend-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const k = item.dataset.key;
+      if(trajActive.has(k)) trajActive.delete(k); else trajActive.add(k);
+      renderTrajectory();
+    });
+  });
+}
+
+function renderTrajectory(){
+  const svg = document.getElementById('trajectory');
+  svg.innerHTML = '';
+  const W=900, H=320, m={top:20,right:30,bottom:44,left:95};
+  const xMin=18, xMax=92, yMin=0, yMax=1;
+  const X = age => m.left + (age-xMin)/(xMax-xMin) * (W-m.left-m.right);
+  const Y = p => H-m.bottom - (p-yMin)/(yMax-yMin) * (H-m.top-m.bottom);
+
+  const axis = document.createElementNS(ns,'line');
+  axis.setAttribute('x1',m.left); axis.setAttribute('x2',m.left);
+  axis.setAttribute('y1',m.top); axis.setAttribute('y2',H-m.bottom);
+  axis.setAttribute('class','chart-axis'); svg.appendChild(axis);
+  const axisB = document.createElementNS(ns,'line');
+  axisB.setAttribute('x1',m.left); axisB.setAttribute('x2',W-m.right);
+  axisB.setAttribute('y1',H-m.bottom); axisB.setAttribute('y2',H-m.bottom);
+  axisB.setAttribute('class','chart-axis'); svg.appendChild(axisB);
+
+  [0,.25,.5,.75,1].forEach(p=>{
+    const y = Y(p);
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x', m.left-8); t.setAttribute('y', y+3);
+    t.setAttribute('text-anchor','end'); t.setAttribute('class','chart-tick');
+    t.textContent = p.toFixed(2);
+    svg.appendChild(t);
+    if(p===.5) return;
+    const g = document.createElementNS(ns,'line');
+    g.setAttribute('x1',m.left); g.setAttribute('x2',W-m.right);
+    g.setAttribute('y1',y); g.setAttribute('y2',y);
+    g.setAttribute('class','gridline'); g.setAttribute('opacity', .25);
+    svg.appendChild(g);
+  });
+  [24,36,48,60,72,84].forEach(age=>{
+    const x = X(age);
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x',x); t.setAttribute('y',H-m.bottom+18);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('class','chart-tick');
+    t.textContent = Math.round(age/12*10)/10 + "y";
+    svg.appendChild(t);
+  });
+
+  TRAJ.forEach(t=>{
+    if(!trajActive.has(t.key)) return;
+    let d = "";
+    for(let age=t.min; age<=t.max; age+=1){
+      const logit = t.intercept + t.slope*age;
+      const p = 1/(1+Math.exp(-logit));
+      const cmd = age===t.min ? "M" : "L";
+      d += `${cmd}${X(age).toFixed(1)},${Y(p).toFixed(1)} `;
+    }
+    const path = document.createElementNS(ns,'path');
+    path.setAttribute('d', d);
+    path.setAttribute('class','chart-line');
+    path.setAttribute('stroke', t.color);
+    svg.appendChild(path);
+  });
+
+  const chanceY = Y(.5);
+  const chanceLine = document.createElementNS(ns,'line');
+  chanceLine.setAttribute('x1',m.left); chanceLine.setAttribute('x2',W-m.right);
+  chanceLine.setAttribute('y1',chanceY); chanceLine.setAttribute('y2',chanceY);
+  chanceLine.setAttribute('stroke','var(--ink-dim)'); chanceLine.setAttribute('stroke-dasharray','4 4');
+  chanceLine.setAttribute('opacity',.5);
+  svg.appendChild(chanceLine);
+
+  const chanceX = (m.left + (W-m.right)) / 2;
+  const chanceBg = document.createElementNS(ns,'rect');
+  chanceBg.setAttribute('x', chanceX-26); chanceBg.setAttribute('y', chanceY-10);
+  chanceBg.setAttribute('width', 52); chanceBg.setAttribute('height', 18);
+  chanceBg.setAttribute('fill', 'var(--panel)');
+  svg.appendChild(chanceBg);
+
+  const chanceLbl = document.createElementNS(ns,'text');
+  chanceLbl.setAttribute('x', chanceX); chanceLbl.setAttribute('y', chanceY+4);
+  chanceLbl.setAttribute('text-anchor','middle');
+  chanceLbl.setAttribute('class','chart-tick'); chanceLbl.setAttribute('fill','var(--ink-dim)');
+  chanceLbl.textContent = "chance";
+  svg.appendChild(chanceLbl);
+}
+renderTrajLegend();
+renderTrajectory();
+
+/* ---------- Informant-count x age crossover (Insight 2) ---------- */
+const CROSS = [
+  {key:"single", label:"Single informant", color:"#4B7A5E", points:[{x:0, v:0.73},{x:1, v:1.0}]},
+  {key:"multi", label:"Multiple, conflicting informants", color:"#6C5B92", points:[{x:0, v:0.45},{x:1, v:1.0}]}
+];
+let crossActive = new Set(CROSS.map(c=>c.key));
+
+function renderCrossLegend(){
+  const el = document.getElementById('cross-legend');
+  el.innerHTML = CROSS.map(c=>{
+    const swStyle = c.key==="multi"
+      ? `background-image: repeating-linear-gradient(to right, ${c.color} 0 3px, transparent 3px 5px);`
+      : `background:${c.color};`;
+    return `
+    <div class="legend-item" data-key="${c.key}">
+      <span class="sw" style="${swStyle}"></span>${c.label}
+    </div>`;
+  }).join('');
+  el.querySelectorAll('.legend-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      const k = item.dataset.key;
+      if(crossActive.has(k)) crossActive.delete(k); else crossActive.add(k);
+      renderCrossover();
+    });
+  });
+}
+
+function renderCrossover(){
+  const svg = document.getElementById('crossover');
+  svg.innerHTML = '';
+  const W=900, H=280, m={top:20,right:30,bottom:44,left:54};
+  const yMin=0, yMax=1.1;
+  const X = x => m.left + x*(W-m.left-m.right);
+  const Y = v => H-m.bottom - (v-yMin)/(yMax-yMin) * (H-m.top-m.bottom);
+
+  const axis = document.createElementNS(ns,'line');
+  axis.setAttribute('x1',m.left); axis.setAttribute('x2',m.left);
+  axis.setAttribute('y1',m.top); axis.setAttribute('y2',H-m.bottom);
+  axis.setAttribute('class','chart-axis'); svg.appendChild(axis);
+  const axisB = document.createElementNS(ns,'line');
+  axisB.setAttribute('x1',m.left); axisB.setAttribute('x2',W-m.right);
+  axisB.setAttribute('y1',H-m.bottom); axisB.setAttribute('y2',H-m.bottom);
+  axisB.setAttribute('class','chart-axis'); svg.appendChild(axisB);
+
+  const axisMidY = (m.top + (H-m.bottom)) / 2;
+  const yLbl = document.createElementNS(ns,'text');
+  yLbl.setAttribute('x', 18); yLbl.setAttribute('y', axisMidY);
+  yLbl.setAttribute('text-anchor','middle'); yLbl.setAttribute('class','chart-tick');
+  yLbl.setAttribute('transform', `rotate(-90, 18, ${axisMidY})`);
+  yLbl.textContent = "performance (logit)";
+  svg.appendChild(yLbl);
+
+  ["2–3 years","4+ years"].forEach((label,i)=>{
+    const x = X(i);
+    const t = document.createElementNS(ns,'text');
+    t.setAttribute('x',x); t.setAttribute('y',H-m.bottom+22);
+    t.setAttribute('text-anchor','middle'); t.setAttribute('class','chart-tick');
+    t.textContent = label;
+    svg.appendChild(t);
+    const g = document.createElementNS(ns,'line');
+    g.setAttribute('x1',x); g.setAttribute('x2',x);
+    g.setAttribute('y1',m.top); g.setAttribute('y2',H-m.bottom);
+    g.setAttribute('class','gridline'); g.setAttribute('opacity',.25);
+    svg.appendChild(g);
+  });
+
+  CROSS.forEach(c=>{
+    if(!crossActive.has(c.key)) return;
+    const d = c.points.map((pt,i)=>`${i===0?'M':'L'}${X(pt.x).toFixed(1)},${Y(pt.v).toFixed(1)}`).join(' ');
+    const path = document.createElementNS(ns,'path');
+    path.setAttribute('d', d);
+    path.setAttribute('class','chart-line');
+    path.setAttribute('stroke', c.color);
+    if(c.key==="multi") path.setAttribute('stroke-dasharray','6 4');
+    svg.appendChild(path);
+    c.points.forEach(pt=>{
+      const dot = document.createElementNS(ns,'circle');
+      dot.setAttribute('cx', X(pt.x)); dot.setAttribute('cy', Y(pt.v)); dot.setAttribute('r', 4);
+      dot.setAttribute('fill', c.color);
+      svg.appendChild(dot);
+    });
+  });
+
+  const chanceY = Y(0.5);
+  const chanceLine = document.createElementNS(ns,'line');
+  chanceLine.setAttribute('x1',m.left); chanceLine.setAttribute('x2',W-m.right);
+  chanceLine.setAttribute('y1',chanceY); chanceLine.setAttribute('y2',chanceY);
+  chanceLine.setAttribute('stroke','var(--ink-dim)'); chanceLine.setAttribute('stroke-dasharray','4 4');
+  chanceLine.setAttribute('opacity',.5);
+  svg.appendChild(chanceLine);
+
+  const chanceX = (m.left + (W-m.right)) / 2;
+  const chanceBg = document.createElementNS(ns,'rect');
+  chanceBg.setAttribute('x', chanceX-26); chanceBg.setAttribute('y', chanceY-10);
+  chanceBg.setAttribute('width', 52); chanceBg.setAttribute('height', 18);
+  chanceBg.setAttribute('fill', 'var(--panel)');
+  svg.appendChild(chanceBg);
+
+  const chanceLbl = document.createElementNS(ns,'text');
+  chanceLbl.setAttribute('x', chanceX); chanceLbl.setAttribute('y', chanceY+4);
+  chanceLbl.setAttribute('text-anchor','middle');
+  chanceLbl.setAttribute('class','chart-tick'); chanceLbl.setAttribute('fill','var(--ink-dim)');
+  chanceLbl.textContent = "chance";
+  svg.appendChild(chanceLbl);
+}
+renderCrossLegend();
+renderCrossover();
+
+/* ---------- Null-results panel (Insight 3) ---------- */
+const nullRowsData = [
+ {name:'Age (months)', cells:['sig','null','sig']},
+ {name:'Year of publication', cells:['null','null','null']},
+ {name:'Sample size of condition', cells:['null','null','null']},
+ {name:'Informant type (photo/video/live/puppet)', cells:['null','null','null']},
+ {name:'Number of informants (1 vs. 2)', cells:['null','marginal','sig']},
+ {name:'When EJ question was asked (order effect)', cells:['null','null','null']},
+];
+(function renderNullRows(){
+  const container = document.getElementById('nullrows');
+  nullRowsData.forEach(r => {
+    const row = document.createElement('div');
+    row.className = 'null-row';
+    const label = document.createElement('div');
+    label.textContent = r.name;
+    row.appendChild(label);
+    r.cells.forEach(c => {
+      const cell = document.createElement('div');
+      cell.className = 'null-cell';
+      const dot = document.createElement('span');
+      dot.className = 'null-dot ' + c;
+      cell.appendChild(dot);
+      row.appendChild(cell);
+    });
+    container.appendChild(row);
+  });
+})();
+
+window.addEventListener('resize', ()=>{ renderTrajectory(); renderCrossover(); });
+
+/* ---------- Path tracker (scrollspy) ---------- */
+(function(){
+  const items = [...document.querySelectorAll('.pathnav-item')];
+  const allSectionIds = ['sec-question','sec-methods','sec-insights'];
+  const targets = allSectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  if(!targets.length) return;
+  const setActive = (id) => {
+    items.forEach(item => item.classList.toggle('active', item.dataset.target === id));
+  };
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t=>io.observe(t));
+  setActive(targets[0].id);
+})();
+</script>
+</body>
+</html>
