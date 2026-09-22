@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How Children Learn From Others</title>
+<title>How Children Learn From Others — Zoe Finiasz</title>
+<meta name="description" content="63 published studies (6,525 children) coded into one dataset to show which assessment design choices change results, and which are safe to cut for cost.">
+<meta property="og:title" content="How Children Learn From Others — Zoe Finiasz">
+<meta property="og:description" content="A 63-study research synthesis on measurement design in children's learning.">
+<meta property="og:image" content="https://zoe-finiasz.github.io/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -73,7 +78,7 @@
   }
   .header-grid{
     display:grid;
-    grid-template-columns: repeat(2, minmax(180px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     gap: 0 28px;
     margin-top: 26px;
   }
@@ -306,7 +311,7 @@
   #search::placeholder{color: var(--ink-dim);}
   #search:focus{border-color:var(--accent);}
   .hint{ font-size: 12.5px; color: var(--ink-dim); padding: 14px 0 0; }
-  .field-wrap{ position:relative; padding: 18px 0 30px; }
+  .field-wrap{ position:relative; padding: 18px 0 30px; overflow-x:clip; }
   #field{ width:100%; height: 48vh; min-height: 360px; display:block; }
   .node circle{
     cursor:pointer; transition: opacity .15s ease, r .15s ease;
@@ -432,7 +437,7 @@
 
   .null-panel{ max-width: 640px; margin-top: 18px; }
   .null-header-row{
-    display:grid; grid-template-columns: 1fr repeat(3,72px); gap:6px;
+    display:grid; grid-template-columns: minmax(0,1fr) repeat(3,minmax(44px,72px)); gap:6px;
     font-family: 'IBM Plex Mono', 'Courier New', monospace;
     font-size: 10px; color: var(--ink-dim); text-transform:uppercase; letter-spacing:.05em;
     padding-bottom: 8px;
@@ -440,7 +445,7 @@
   .null-header-row div{ text-align:center; }
   .null-header-row div:first-child{ text-align:left; }
   .null-row{
-    display:grid; grid-template-columns: 1fr repeat(3,72px); gap:6px;
+    display:grid; grid-template-columns: minmax(0,1fr) repeat(3,minmax(44px,72px)); gap:6px;
     align-items:center; padding: 9px 0; border-top: 1px solid var(--line);
     font-size: 12.5px; color: var(--ink);
   }
@@ -452,6 +457,9 @@
   .null-legend{ display:flex; gap:16px; margin-top:14px; font-size:11.5px; color:var(--ink-dim); flex-wrap:wrap; }
   .null-legend .li{ display:flex; align-items:center; gap:6px; }
 
+  .translate-callout{margin-top:22px; padding:18px 22px; background:#fff; border:1px solid var(--line); border-top:4px solid var(--accent-dark); border-radius:12px;}
+  .translate-callout .tc-eyebrow{font-family:'IBM Plex Mono', 'Courier New', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 8px; font-weight:600;}
+  .translate-callout p{font-size:15.5px; line-height:1.6; margin:0; color:var(--ink);}
   .applied-callout{
     margin-top: 18px; padding: 14px 18px;
     background: rgba(74,107,147,0.07);
@@ -501,6 +509,7 @@
       <div class="header-grid">
         <div class="header-field"><p class="hf-label">Sample</p><p class="hf-value">63 studies · 666 conditions · 6,525 children (ages 2–8)</p></div>
         <div class="header-field"><p class="hf-label">Method</p><p class="hf-value">Systematic review &amp; meta-analysis</p></div>
+        <div class="header-field"><p class="hf-label">My role</p><p class="hf-value">Led systematic coding of the 63-study corpus (models run by first author)</p></div>
       </div>
       <div class="headline-finding">
         <p class="hl-eyebrow">Headline finding</p>
@@ -713,6 +722,10 @@
     <div class="applied-callout">
       <p class="ac-eyebrow">Recommendation</p>
       <p class="ac-text">Ask, Endorse, and Explicit Judgment seem to tap into distinct capacities with different developmental timelines, so collapsing them into a single score risks masking this difference. An instrument covering a wide age range may benefit from validating each item type separately.</p>
+    </div>
+    <div class="translate-callout">
+      <p class="tc-eyebrow">Why this matters beyond this study</p>
+      <p>Children showed what they knew through their choices before they could say it &mdash; a version of the say/do gap that shows up with adult users and consumers too. What people do and what they report often diverge, so pairing behavioral measures (choices, task success, usage) with self-report gives a truer read than either alone.</p>
     </div>
   </div>
 

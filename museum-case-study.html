@@ -3,7 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Supporting Learning at Science Museums</title>
+<title>Supporting Learning at Science Museums — Zoe Finiasz</title>
+<meta name="description" content="Field study of 325 families at 3 children's museums: how parent facilitation style shapes children's exploration and learning, with recommendations for exhibit design.">
+<meta property="og:title" content="Supporting Learning at Science Museums — Zoe Finiasz">
+<meta property="og:description" content="Field study of 325 families at 3 children's museums, with recommendations for exhibit design.">
+<meta property="og:image" content="https://zoe-finiasz.github.io/og-card.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -51,7 +56,7 @@
   .back-btn:hover{border-color:rgba(255,255,255,.85);}
   h1{margin:0 0 14px; font-size:clamp(26px,3.6vw,40px); font-weight:700; letter-spacing:-0.01em; color:#fff; line-height:1.15;}
   .sub{color:rgba(255,255,255,.86); font-size:15.5px; line-height:1.6;}
-  .header-grid{display:grid; grid-template-columns:repeat(2,minmax(180px,1fr)); gap:16px 28px; margin-top:26px;}
+  .header-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px 28px; margin-top:26px;}
   @media (max-width:480px){ .header-grid{grid-template-columns:1fr;} }
   .header-field{border-left:2px solid var(--accent); padding:0 0 4px 16px;}
   .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
@@ -165,6 +170,13 @@
   .applied-callout .ac-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 6px;}
   .applied-callout p.ac-text{font-size:15px; color:var(--ink); margin:0; line-height:1.6;}
 
+  .stats-details{margin-top:14px; font-size:13px; color:var(--ink-dim);}
+  .stats-details summary{cursor:pointer; font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-dark); font-weight:600;}
+  .stats-details ul{margin:10px 0 0; padding-left:18px; line-height:1.6;}
+  .translate-callout{margin-top:22px; padding:18px 22px; background:#fff; border:1px solid var(--line); border-top:4px solid var(--accent-dark); border-radius:12px;}
+  .translate-callout .tc-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 8px; font-weight:600;}
+  .translate-callout p{font-size:15.5px; line-height:1.6; margin:0; color:var(--ink);}
+
   /* ---------- RESULTS EXPLORER (retained interactive) ---------- */
   .pathway{margin-top:20px; background:var(--card-tint); border:1px solid var(--line); border-radius:16px; padding:24px 22px; box-shadow:0 3px 14px rgba(42,78,86,0.06);}
   .pathway-head{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-dim); margin-bottom:16px;}
@@ -186,7 +198,7 @@
   .flow-bar-fill{height:100%; border-radius:5px; width:0%; transition:width .4s ease;}
   .flow-stat{margin-top:10px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-dim); min-height:30px; line-height:1.4;}
   .flow-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:18px; flex:0 0 auto;}
-  @media (max-width:760px){ .flow-arrow{transform:rotate(90deg); padding:2px 0;} }
+  @media (max-width:760px){ .flow-arrow{transform:rotate(90deg); padding:2px 0; flex-basis:100%;} }
   .pathway-note{margin-top:18px; padding-top:14px; border-top:1px solid var(--line); font-size:11px; font-style:italic; color:var(--ink-dim); line-height:1.55;}
 
   footer{padding:30px 0 44px; color:var(--ink-dim); font-size:12px; line-height:1.6; border-top:1px solid var(--line);}
@@ -211,10 +223,11 @@
       <div class="header-grid">
         <div class="header-field"><p class="hf-label">Sample</p><p class="hf-value">325 parent&ndash;child dyads &middot; 3 museums (ages 3&ndash;6)</p></div>
         <div class="header-field"><p class="hf-label">Method</p><p class="hf-value">Live observation &amp; video coding, 5-second intervals</p></div>
+        <div class="header-field"><p class="hf-label">My role</p><p class="hf-value">Coding schemes &amp; reliability (&kappa;&nbsp;&gt;&nbsp;.90), coder training, museum-partner coordination</p></div>
       </div>
       <div class="headline-finding">
         <p class="hl-eyebrow">Headline finding</p>
-        <p class="hl-text">Dyads that were jointly-led or child-led explored more systematically and scored higher on a memory-based rebuild task; parent-led dyads scored lowest on both measures.</p>
+        <p class="hl-text">When children helped set the goals for play, they explored more systematically &mdash; and that build &rarr; test exploration predicted what they could rebuild from memory, even after accounting for age.</p>
       </div>
     </div>
   </div>
@@ -384,7 +397,7 @@
       <span class="insight-banner-tag">Facilitation style</span>
     </div>
     <h3>Letting kids lead produced more systematic exploration during free play</h3>
-    <p class="desc">Dyads where the child helped set the goals (jointly led) or took leadership over the goals (child-led) showed significantly more of the <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration pattern than parent-led dyads, and scored higher on the reconstruction task. Explore how each style compares below.</p>
+    <p class="desc">Dyads where parent and child set goals together (jointly-led) showed reliably more of the <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration pattern than parent-led dyads; child-led dyads trended the same way. Both groups also had higher raw scores on the reconstruction task. Explore how each style compares below.</p>
 
     <div class="pathway">
       <div class="pathway-head">Results explorer — select a facilitation style</div>
@@ -414,6 +427,14 @@
         </div>
       </div>
       <div class="pathway-note">Middle-panel bar heights are relative, not exact proportions. The published analysis reports significance, not group means, for that measure. Reconstruction-score bars use the study's actual group means (0&ndash;3 scale).</div>
+      <details class="stats-details">
+        <summary>Statistical details</summary>
+        <ul>
+          <li>Systematic exploration, jointly-led vs. parent-led: &beta; = .90, SE = .26, p &lt; .001</li>
+          <li>Systematic exploration, child-led vs. parent-led: not significant in the primary model</li>
+          <li>Reconstruction score (raw), child-led vs. parent-led: p = .004; jointly-led vs. parent-led: p = .07</li>
+        </ul>
+      </details>
     </div>
 
     <div class="applied-callout">
@@ -453,11 +474,24 @@
       <text class="bar-value" x="390" y="95.3" fill="var(--child-led)">1.75</text>
       <text class="bar-group-label" x="390" y="240">Child-led</text>
     </svg>
-    <p class="caption-note">Raw means shown here; see above for how this comparison changes once age is controlled for. Facilitation &rarr; behavior: Wald &chi;&sup2;(2) = 12.92, p = .002. Facilitation &rarr; outcome: significant on raw scores, but Wald &chi;&sup2;(2) = 4.04, p = .13 once age was controlled. Behavior &rarr; outcome held with age controlled: Wald &chi;&sup2;(1) = 3.65, p = .05.</p>
+    <p class="caption-note">Raw means shown. Once age is accounted for, the differences between facilitation styles are no longer reliable &mdash; but exploration still predicts scores.</p>
+    <details class="stats-details">
+      <summary>Statistical details</summary>
+      <ul>
+        <li>Facilitation style &rarr; exploration: Wald &chi;&sup2;(2) = 12.92, p = .002</li>
+        <li>Facilitation style &rarr; reconstruction score: significant on raw scores; Wald &chi;&sup2;(2) = 4.04, p = .13 with age controlled</li>
+        <li>Exploration &rarr; reconstruction score, age controlled: Wald &chi;&sup2;(1) = 3.65, p = .05</li>
+      </ul>
+    </details>
     <div class="applied-callout">
       <p class="ac-eyebrow">Recommendation — for museums</p>
       <p class="ac-text">Design exhibits and staff prompts around facilitating systematic exploration behavior. The <span class="sc-code">build</span> &rarr; <span class="sc-code">test</span> exploration predicted what children retained, providing a more reliable design target than facilitation style or child age alone.</p>
     </div>
+  </div>
+
+  <div class="translate-callout">
+    <p class="tc-eyebrow">Why this matters beyond the museum</p>
+    <p>Any experience meant to teach &mdash; product onboarding, tutorials, learning apps &mdash; faces the same choice between step-by-step direction and guided self-exploration. The lesson from this study is to identify the behavior that drives the outcome (here, build&nbsp;&rarr;&nbsp;test), then measure and design for that behavior directly rather than for the delivery style alone.</p>
   </div>
   </div>
 </section>
@@ -472,7 +506,7 @@
     </div>
     <div class="footer-block">
       <p class="footer-label">My role</p>
-      <p>Contributed to the RI-site data (n=112). Coordinated implementation and reliability testing of qualitative coding schemes. Study design and statistical analysis were led by the PI team, with named co-authors across all three sites.</p>
+      <p>Rhode Island site (n = 112 of 325 families): helped develop the qualitative and quantitative coding schemes with museum staff, trained undergraduate coders to inter-rater agreement of &kappa; &gt; .90, coordinated with museum partners, and supported recruitment and IRB work. Study design and statistical analysis were led by the PI team, with named co-authors across all three sites.</p>
     </div>
     <div class="footer-block">
       <p class="footer-label">Where this fits</p>
@@ -491,23 +525,23 @@
     parent: {
       label:"Parent-led", color:"var(--parent-led)", tint:"var(--parent-tint)",
       cbValue:"Lowest of the three groups", cbBar:32,
-      cbStat:"Reference group in the model (β = 0 baseline)",
+      cbStat:"Baseline for comparison",
       loValue:"1.23 / 3", loBar:(1.23/3*100),
-      loStat:"Lowest raw mean — significantly below child-led, p = .004"
+      loStat:"Lowest raw score of the three groups"
     },
     joint: {
       label:"Jointly-led", color:"var(--joint-led)", tint:"var(--joint-tint)",
       cbValue:"Significantly higher than parent-led", cbBar:78,
-      cbStat:"β = .90, SE = .26, p < .001 vs. parent-led",
+      cbStat:"Reliably more than parent-led dyads",
       loValue:"1.55 / 3", loBar:(1.55/3*100),
-      loStat:"Marginally above parent-led, p = .07 (raw; n.s. once age controlled)"
+      loStat:"Slightly above parent-led; gap disappears once age is accounted for"
     },
     child: {
       label:"Child-led", color:"var(--child-led)", tint:"var(--child-tint)",
       cbValue:"Directionally higher than parent-led", cbBar:64,
-      cbStat:"Difference vs. parent-led not significant in the primary model",
+      cbStat:"Same direction as jointly-led, but not a reliable difference",
       loValue:"1.75 / 3", loBar:(1.75/3*100),
-      loStat:"Highest raw mean — significantly above parent-led, p = .004 (n.s. once age controlled)"
+      loStat:"Highest raw score; gap disappears once age is accounted for"
     }
   };
 

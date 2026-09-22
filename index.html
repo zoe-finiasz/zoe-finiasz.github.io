@@ -3,7 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zoe Finiasz — Research Portfolio</title>
+<title>Zoe Finiasz, Ph.D. — Research Portfolio</title>
+<meta name="description" content="Behavioral researcher (Ph.D.) studying how people decide what to trust and how they learn — survey, experimental, and observational research translated into recommendations for product, UX, consumer insights, and learning teams.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://zoe-finiasz.github.io/">
+<meta property="og:title" content="Zoe Finiasz, Ph.D. — Research Portfolio">
+<meta property="og:description" content="Behavioral research case studies for UX, consumer insights, and learning science roles.">
+<meta property="og:image" content="https://zoe-finiasz.github.io/og-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -126,6 +135,20 @@
     .cs-row-bottom{align-items:flex-start;}
   }
 
+  .proof-row{margin-top:26px; display:flex; flex-wrap:wrap; gap:10px;}
+  .proof{background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:var(--radius); padding:10px 14px; flex:1 1 130px; min-width:0;}
+  .proof .n{font-family:'Source Serif 4', serif; font-weight:700; font-size:22px; color:var(--teal-dark); line-height:1.1; font-variant-numeric:tabular-nums;}
+  .proof .l{font-size:13px; color:var(--ink-soft); line-height:1.35; margin-top:3px;}
+  @media (max-width:780px){ .proof{text-align:left;} }
+
+  .cs-role{font-size:14px; color:var(--ink-soft); margin:-8px 0 16px;}
+  .cs-role b{font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent-dark, var(--ink-soft)); margin-right:6px;}
+
+  .cta{background:linear-gradient(180deg, var(--paper-a) 0%, var(--paper-b) 100%); border-top:1px solid var(--line); padding:44px 0;}
+  .cta h2{font-size:24px;}
+  .cta p{margin:10px 0 0; color:var(--ink-soft); max-width:62ch;}
+  .cta .contact-row{margin-top:20px;}
+
   footer{border-top:1px solid var(--line); padding:32px 0 52px; font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft);}
 </style>
 </head>
@@ -134,10 +157,15 @@
 <div class="hero">
   <div class="wrap">
     <div class="hero-text">
-      <div class="eyebrow">Research Scientist &middot; Applied Learning &middot; Behavioral Science</div>
+      <div class="eyebrow">Behavioral Research &middot; UX &amp; Consumer Insights &middot; Learning Science</div>
       <h1>Zoe Finiasz, Ph.D.</h1>
-      <p class="hero-sub">I am a behavioral research scientist who studies how people reason and make decisions. I use mixed-methods research to explore how we learn from museum exhibits, public health messaging, and others around us.</p>
-      <p class="hero-sub">I'm particularly interested in how children and adults decide who and what to trust when they are learning. My approach combines qualitative &amp; quantitative methodology with mixed-effects modeling to understand beliefs and behaviors.</p>
+      <p class="hero-sub">I'm a behavioral researcher who studies how people decide what to trust, how they learn, and why they believe what they do &mdash; and I turn those findings into recommendations for the teams designing products, experiences, and messages.</p>
+      <p class="hero-sub">I design surveys, experiments, and observational studies, analyze the data in R, and share results through dashboards and plain-language takeaways.</p>
+      <div class="proof-row">
+        <div class="proof"><div class="n">801</div><div class="l">adults in a national survey I designed &amp; fielded</div></div>
+        <div class="proof"><div class="n">63</div><div class="l">published studies coded into one dataset</div></div>
+        <div class="proof"><div class="n">16</div><div class="l">researchers mentored</div></div>
+      </div>
       <div class="contact-row">
         <a href="mailto:zfiniasz@gmail.com">zfiniasz@gmail.com</a>
         <a href="https://www.linkedin.com/in/zoe-finiasz/" target="_blank" rel="noopener">LinkedIn</a>
@@ -151,44 +179,46 @@
 <section>
   <div class="wrap">
     <div class="section-label">Featured Projects</div>
-    <h2 class="section-title">Case Studies in Learning &amp; Behavioral Science</h2>
-    <p class="section-sub">Explore each project below to see the questions asked, the methods used, and what the findings mean in practice.</p>
+    <h2 class="section-title">Research Case Studies</h2>
+    <p class="section-sub">Each case study covers the question, how the research was done, what I did, and what the findings mean for the people designing products, programs, and experiences.</p>
 
     <div class="cs-grid">
-      <div class="cs-card wip cs-vaccine">
-        <div class="cs-row-top">
-          <div class="stamp">01</div>
-          <div class="cs-title">Vaccine Attitudes Survey</div>
-          <span class="wip-badge">In progress</span>
-        </div>
-        <div class="cs-blurb">Conspiracy-belief tracks with distrust of specific evidence sources.</div>
-        <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">Survey Design</span><span class="cs-tag">Qualtrics</span><span class="cs-tag">Tableau</span></div>
-          <span class="cs-link-disabled">In progress</span>
-        </div>
-      </div>
-
       <div class="cs-card live cs-museum">
         <div class="cs-row-top">
-          <div class="stamp">02</div>
+          <div class="stamp">01</div>
           <div class="cs-title">Supporting Learning at Science Museums</div>
         </div>
-        <div class="cs-blurb">How parent&#8211;child interaction style shapes exploration and learning.</div>
+        <div class="cs-blurb">Field study of 325 families at 3 children&#8217;s museums: when kids helped lead play, they explored more systematically &mdash; and that exploration predicted what they could rebuild on their own.</div>
+        <div class="cs-role"><b>My role</b>Coding-scheme development &amp; reliability, coder training, museum-partner coordination</div>
         <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">Behavioral Coding</span><span class="cs-tag">Learning Outcomes</span><span class="cs-tag">Parent-Child Interaction</span></div>
+          <div class="cs-tags"><span class="cs-tag">Observational Research</span><span class="cs-tag">Qualitative Coding</span><span class="cs-tag">Inter-rater Reliability</span><span class="cs-tag">Field Research</span></div>
           <a class="cs-link" href="museum-case-study.html">Read &#8594;</a>
         </div>
       </div>
 
       <div class="cs-card live cs-swl">
         <div class="cs-row-top">
-          <div class="stamp">03</div>
+          <div class="stamp">02</div>
           <div class="cs-title">How Children Learn From Others</div>
         </div>
-        <div class="cs-blurb">A meta-analytic synthesis of 63 studies on who children trust when learning a new word.</div>
+        <div class="cs-blurb">63 published studies (6,525 children) coded into one dataset to show which assessment design choices change results &mdash; and which are safe to cut for cost.</div>
+        <div class="cs-role"><b>My role</b>Led systematic coding of the study corpus</div>
         <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">SPSS</span><span class="cs-tag">Secondary Research</span><span class="cs-tag">Systematic Coding</span></div>
+          <div class="cs-tags"><span class="cs-tag">Research Synthesis</span><span class="cs-tag">Data Structuring</span><span class="cs-tag">Measurement Design</span><span class="cs-tag">SPSS</span></div>
           <a class="cs-link" href="selective-trust-review.html">Read &#8594;</a>
+        </div>
+      </div>
+
+      <div class="cs-card wip cs-vaccine">
+        <div class="cs-row-top">
+          <div class="stamp">03</div>
+          <div class="cs-title">Vaccine Attitudes Survey</div>
+        </div>
+        <div class="cs-blurb">National survey of 801 adults, segmented by belief: conspiracy endorsers withheld trust from institutional sources specifically &mdash; not informal ones &mdash; with implications for who should carry a message.</div>
+        <div class="cs-role"><b>My role</b>Project lead &mdash; research question, survey design, fielding, analysis</div>
+        <div class="cs-row-bottom">
+          <div class="cs-tags"><span class="cs-tag">Survey Design</span><span class="cs-tag">Audience Segmentation</span><span class="cs-tag">Qualtrics</span><span class="cs-tag">R</span><span class="cs-tag">Tableau</span></div>
+          <span class="cs-link-disabled">Case study coming soon</span>
         </div>
       </div>
 
@@ -196,12 +226,12 @@
         <div class="cs-row-top">
           <div class="stamp">04</div>
           <div class="cs-title">Instructional Language and Learning</div>
-          <span class="wip-badge">In progress</span>
         </div>
-        <div class="cs-blurb">How phrasing changes what adults and children learn from their own observations.</div>
+        <div class="cs-blurb">Controlled experiments with children and adults: broad, generic phrasing led learners to over-generalize from limited evidence more than specific phrasing did.</div>
+        <div class="cs-role"><b>My role</b>Stimuli design, data collection, analysis &amp; writing (child studies)</div>
         <div class="cs-row-bottom">
           <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">Mixed-Effects Models</span><span class="cs-tag">A/B Testing</span><span class="cs-tag">Instructional Design</span></div>
-          <span class="cs-link-disabled">In progress</span>
+          <span class="cs-link-disabled">Case study coming soon</span>
         </div>
       </div>
     </div>
@@ -211,6 +241,18 @@
     </div>
   </div>
 </section>
+
+<div class="cta">
+  <div class="wrap">
+    <h2>Let&#8217;s talk</h2>
+    <p>I&#8217;m open to roles in UX research, consumer insights, market research, and learning science. If your team is trying to understand what people believe, trust, or learn, I&#8217;d love to hear from you.</p>
+    <div class="contact-row">
+      <a href="mailto:zfiniasz@gmail.com">zfiniasz@gmail.com</a>
+      <a href="https://www.linkedin.com/in/zoe-finiasz/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://drive.google.com/file/d/1naWusbUd_WFw_cvgHnXuFRsHi2Pc4_r8/view?usp=drive_link" target="_blank" rel="noopener">resume (PDF)</a>
+    </div>
+  </div>
+</div>
 
 <footer><div class="wrap">Zoe Finiasz, Ph.D. — Portfolio, 2026</div></footer>
 
