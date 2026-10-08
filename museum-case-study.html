@@ -49,21 +49,22 @@
 
   /* ---------- HEADER ---------- */
   header{border-bottom:1px solid var(--line);}
-  .header-top{padding:34px 0 28px; background:var(--accent-dark);}
+  .header-top{padding:34px 0 36px; background:var(--accent-dark);}
   .header-bottom{padding:26px 0 30px; background:var(--panel);}
   .eyebrow{font-family:'IBM Plex Mono', monospace; letter-spacing:.18em; text-transform:uppercase; font-size:11px; color:#9FD3C7; margin-bottom:8px;}
   .back-btn{display:inline-flex; align-items:center; gap:8px; padding:8px 20px; border:1.5px solid rgba(255,255,255,.5); border-radius:999px; color:#fff; font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:14px; text-decoration:none; margin-bottom:24px;}
   .back-btn:hover{border-color:rgba(255,255,255,.85);}
   h1{margin:0 0 14px; font-size:clamp(26px,3.6vw,40px); font-weight:700; letter-spacing:-0.01em; color:#fff; line-height:1.15;}
   .sub{color:rgba(255,255,255,.86); font-size:15.5px; line-height:1.6;}
-  .header-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px 28px; margin-top:26px;}
+  .header-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px 28px;}
   @media (max-width:480px){ .header-grid{grid-template-columns:1fr;} }
   .header-field{border-left:2px solid var(--accent); padding:0 0 4px 16px;}
   .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
   .hf-value{font-size:15px; color:var(--ink); margin:0; line-height:1.4;}
-  .headline-finding{margin-top:22px; padding:18px 22px; background:linear-gradient(135deg,#CFE0DE,#BBD3CF); border-radius:10px; box-shadow:0 4px 16px rgba(42,78,86,0.18);}
-  .headline-finding .hl-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 7px;}
-  .headline-finding p.hl-text{font-family:'Source Serif 4', serif; font-size:16.5px; font-weight:600; color:var(--ink); margin:0; line-height:1.5;}
+  .headline-finding{margin:4px 0 24px; padding:2px 0 2px 22px; border-left:3px solid #9FD3C7; max-width:44em;}
+  .headline-finding .hl-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9FD3C7; margin:0 0 10px;}
+  .headline-finding p.hl-text{font-family:'Source Serif 4', serif; font-size:clamp(20px,2.6vw,26px); font-weight:600; color:#fff; margin:0; line-height:1.38; text-wrap:pretty;}
+  .header-top .sub{color:rgba(255,255,255,.72);}
 
   /* ---------- STICKY NAV ---------- */
   .pathnav{position:sticky; top:0; z-index:5; background:rgba(255,255,255,0.92); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); border-bottom:1px solid rgba(62,110,120,0.28);}
@@ -108,10 +109,10 @@
   @media (max-width:680px){ .framework{flex-direction:column;} .fw-box{flex:0 1 auto;} .fw-arrow{transform:rotate(90deg); padding:2px 0;} }
 
   /* ---------- STAT ROW ---------- */
-  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin:24px 0 4px;}
-  .stat-card{background:var(--card-tint); border:1px solid var(--line); border-radius:10px; padding:14px 18px; min-width:130px; flex:1 1 150px;}
-  .stat-card .num{font-family:'Source Serif 4', serif; font-size:24px; font-weight:600; color:var(--accent-dark); font-variant-numeric:tabular-nums;}
-  .stat-card .lbl{font-size:12.5px; color:var(--ink-dim); margin-top:2px; line-height:1.4;}
+  .stat-row{display:flex; gap:28px; flex-wrap:wrap; margin:30px 0 10px;}
+  .stat-card{border-top:3px solid var(--accent); padding:14px 0 0; min-width:130px; flex:1 1 150px;}
+  .stat-card .num{font-family:'Source Serif 4', serif; font-size:clamp(40px,5.4vw,54px); font-weight:700; line-height:1; letter-spacing:-.02em; color:var(--accent-dark); font-variant-numeric:tabular-nums;}
+  .stat-card .lbl{font-size:14px; color:var(--ink-dim); margin-top:8px; line-height:1.4;}
 
   /* ---------- CONSTRUCT CARDS ---------- */
   .construct-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;}
@@ -166,6 +167,13 @@
   .chart-axis-line{stroke:var(--line); stroke-width:1;}
   .chart-gridline{stroke:var(--line); stroke-width:1; opacity:.5;}
 
+  /* ---------- MOTION (only when motion is allowed; see script at end) ---------- */
+  .insight-chart .bar{transform-box:fill-box; transform-origin:50% 100%; transition:transform .9s cubic-bezier(.2,.7,.2,1);}
+  .insight-chart .bar:nth-of-type(2){transition-delay:.12s;} .insight-chart .bar:nth-of-type(3){transition-delay:.24s;}
+  .insight-chart .bar-value{transition:opacity .4s ease .7s;}
+  .motion .insight-chart:not(.in-view) .bar{transform:scaleY(0);}
+  .motion .insight-chart:not(.in-view) .bar-value{opacity:0;}
+
   .applied-callout{margin-top:18px; padding:14px 18px; background:rgba(62,110,120,0.07); border-left:2px solid var(--accent); border-radius:0 6px 6px 0;}
   .applied-callout .ac-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 6px;}
   .applied-callout p.ac-text{font-size:15px; color:var(--ink); margin:0; line-height:1.6;}
@@ -207,6 +215,13 @@
   .footer-block p{margin:0;}
   .footer-label{font-family:'IBM Plex Mono', monospace; font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; color:var(--ink-dim); margin:0 0 4px !important;}
   footer a{color:var(--accent-dark);}
+
+  /* ---------- Headline finding: dark box under the header fields (same on all case studies) ---------- */
+  .headline-finding{margin:24px 0 0; padding:20px 24px; border:none; max-width:none; background:var(--accent-dark); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+  .headline-finding .hl-eyebrow, .headline-finding .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:#9FD3C7; margin:0 0 8px;}
+  .headline-finding p.hl-text, .headline-finding p{font-family:'Source Serif 4', serif; font-size:clamp(17px,2vw,19.5px); font-weight:600; color:#fff; margin:0; line-height:1.5; text-wrap:pretty;}
+  .stat-card .num{font-size:clamp(38px,5.2vw,52px);}
+  footer{font-size:12.5px;}
 </style>
 </head>
 <body>
@@ -214,6 +229,7 @@
   <div class="header-top">
     <div class="container">
       <a class="back-btn" href="index.html">&larr; Portfolio</a>
+      <div class="eyebrow">Applied learning research</div>
       <h1>Supporting Learning at Science Museums</h1>
       <div class="sub">Across three children's museums, 325 families played at a hands-on gears exhibit. Whether the parent, the child, or both directed the play predicted how systematically children explored, and what they could later reconstruct on their own.</div>
     </div>
@@ -223,7 +239,6 @@
       <div class="header-grid">
         <div class="header-field"><p class="hf-label">Sample</p><p class="hf-value">325 parent&ndash;child dyads &middot; 3 museums (ages 3&ndash;6)</p></div>
         <div class="header-field"><p class="hf-label">Method</p><p class="hf-value">Live observation &amp; video coding, 5-second intervals</p></div>
-        <div class="header-field"><p class="hf-label">My role</p><p class="hf-value">Coding schemes &amp; reliability (&kappa;&nbsp;&gt;&nbsp;.90), coder training, museum-partner coordination</p></div>
       </div>
       <div class="headline-finding">
         <p class="hl-eyebrow">Headline finding</p>
@@ -336,9 +351,9 @@
   </div>
   <div class="container">
     <div class="stat-row">
-      <div class="stat-card"><div class="num">325</div><div class="lbl">parent&ndash;child dyads, ages 3&ndash;6</div></div>
-      <div class="stat-card"><div class="num">3</div><div class="lbl">museums: Providence &middot; San Jose &middot; Austin</div></div>
-      <div class="stat-card"><div class="num">11,000+</div><div class="lbl">coded 5-second intervals</div></div>
+      <div class="stat-card"><div class="num" data-count="325">325</div><div class="lbl">parent&ndash;child dyads, ages 3&ndash;6</div></div>
+      <div class="stat-card"><div class="num" data-count="3">3</div><div class="lbl">museums: Providence &middot; San Jose &middot; Austin</div></div>
+      <div class="stat-card"><div class="num" data-count="11,000+">11,000+</div><div class="lbl">coded 5-second intervals</div></div>
     </div>
     <div class="construct-grid">
       <div class="construct-card pf">
@@ -452,7 +467,7 @@
     <p class="desc">Raw reconstruction scores did differ by facilitation style, but once children's age was controlled for, that group difference was no longer significant. Older children scored higher regardless of parent facilitation style. However, even with age in the model, systematic exploration during play was linked to high scores on the learning task.</p>
 
     <p class="insight-chart-title">Gear reconstruction score by facilitation style (raw group means, 0&ndash;3 scale)</p>
-    <svg class="insight-chart" viewBox="0 0 500 260" role="img" aria-label="Bar chart of raw reconstruction score means by facilitation style: parent-led 1.23, jointly-led 1.55, child-led 1.75">
+    <svg class="insight-chart" data-animate viewBox="0 0 500 260" role="img" aria-label="Bar chart of raw reconstruction score means by facilitation style: parent-led 1.23, jointly-led 1.55, child-led 1.75">
       <line class="chart-axis-line" x1="40" x2="40" y1="20" y2="220"></line>
       <line class="chart-axis-line" x1="40" x2="460" y1="220" y2="220"></line>
       <line class="chart-gridline" x1="40" x2="460" y1="153.3" y2="153.3"></line>
@@ -462,15 +477,15 @@
       <text class="bar-axis-tick" x="34" y="90.7" text-anchor="end">2</text>
       <text class="bar-axis-tick" x="34" y="24" text-anchor="end">3</text>
 
-      <rect x="75" y="138" width="70" height="82" rx="4" fill="var(--parent-led)"></rect>
+      <rect class="bar" x="75" y="138" width="70" height="82" rx="4" fill="var(--parent-led)"></rect>
       <text class="bar-value" x="110" y="130" fill="var(--parent-led)">1.23</text>
       <text class="bar-group-label" x="110" y="240">Parent-led</text>
 
-      <rect x="215" y="116.7" width="70" height="103.3" rx="4" fill="var(--joint-led)"></rect>
+      <rect class="bar" x="215" y="116.7" width="70" height="103.3" rx="4" fill="var(--joint-led)"></rect>
       <text class="bar-value" x="250" y="108.7" fill="var(--joint-led)">1.55</text>
       <text class="bar-group-label" x="250" y="240">Jointly-led</text>
 
-      <rect x="355" y="103.3" width="70" height="116.7" rx="4" fill="var(--child-led)"></rect>
+      <rect class="bar" x="355" y="103.3" width="70" height="116.7" rx="4" fill="var(--child-led)"></rect>
       <text class="bar-value" x="390" y="95.3" fill="var(--child-led)">1.75</text>
       <text class="bar-group-label" x="390" y="240">Child-led</text>
     </svg>
@@ -602,6 +617,62 @@
   }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
 
   sections.forEach(function(s){ spy.observe(s); });
+})();
+</script>
+<script>
+/* Scroll-in motion: charts draw in and big numbers count up when they enter view.
+   Skipped entirely when the visitor's system asks for reduced motion (or without IntersectionObserver),
+   so content always shows in its final state. */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('[data-animate]');
+  var counters = document.querySelectorAll('[data-count]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  document.documentElement.classList.add('motion');
+
+  function parse(el){
+    var text = el.getAttribute('data-count');
+    var m = text.match(/^([^0-9]*)([0-9][0-9,]*\.?[0-9]*)(.*)$/);
+    if (!m) return null;
+    var numStr = m[2];
+    return { text:text, prefix:m[1], suffix:m[3],
+             target:parseFloat(numStr.replace(/,/g,'')),
+             decimals:(numStr.split('.')[1] || '').length,
+             commas:numStr.indexOf(',') > -1 };
+  }
+  function fmt(c, v){
+    var s = c.commas
+      ? v.toLocaleString('en-US', {minimumFractionDigits:c.decimals, maximumFractionDigits:c.decimals})
+      : v.toFixed(c.decimals);
+    return c.prefix + s + c.suffix;
+  }
+  function countUp(el){
+    var c = parse(el); if (!c) return;
+    var start = null, dur = 1100;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = fmt(c, c.target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step); else el.textContent = c.text;
+    }
+    requestAnimationFrame(step);
+  }
+  counters.forEach(function(el){ var c = parse(el); if (c) el.textContent = fmt(c, 0); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      if (el.hasAttribute('data-count')) countUp(el);
+      else el.classList.add('in-view');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.35 });
+  targets.forEach(function(el){ io.observe(el); });
+  counters.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>

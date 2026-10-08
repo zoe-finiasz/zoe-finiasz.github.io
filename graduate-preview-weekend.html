@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Design and pre/post evaluation of a selective weekend program for prospective Ph.D. applicants: 89 applicants, 13 attendees, gains on all 12 survey items.">
+<title>Graduate Preview Weekend</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap">
+<style>
+  /* Layout: mirrors the live case-study pages: dark accent header, sticky 3-step path nav,
+     Challenge / Methodology & Scope / Insights & Recommendations, 4-block footer.
+     Single light theme on purpose, to match the rest of zoe-finiasz.github.io. */
+  :root{
+    color-scheme: light;
+    --ink:#2B2620;
+    --ink-dim:#48505F;
+    --panel:#FFFFFF;
+    --line:#C7D3E6;
+    --accent:#4A6B93;        /* slate blue: takes the card slot "How Children Learn From Others" held */
+    --accent-dark:#2F4A6B;
+    --accent-soft:#9DB7D6;
+    --accent-tint:#EEF2F8;
+    --card-tint:#F4F7FB;
+    --pre:#8C95A4;           /* pre-event marks: neutral */
+    --gold:#B07A2A;          /* single highlight for the program changes */
+    --gold-tint:#F8F0E2;
+    --radius:12px;
+    --maxw:840px;
+    --serif:'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --sans:'Source Sans 3', 'Segoe UI', Helvetica, Arial, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--panel); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.5;}
+  @media (prefers-reduced-motion: reduce){ *{transition-duration:.01ms !important; scroll-behavior:auto !important;} }
+  h1,h2,h3{font-family:var(--serif); color:var(--ink); text-wrap:balance;}
+  .container{max-width:var(--maxw); margin:0 auto; padding-inline:max(16px, 5vw);}
+  @media (min-width:900px){ .container{padding-inline:24px;} }
+
+  .draft-banner{background:var(--gold-tint); color:var(--ink); font-family:var(--mono); font-size:11.5px; letter-spacing:.06em; text-align:center; padding:8px 16px; border-bottom:1px solid #E6D3B0;}
+
+  /* header */
+  header{border-bottom:1px solid var(--line);}
+  .header-top{padding-block:34px 36px; background:var(--accent-dark);}
+  .header-bottom{padding-block:26px 30px;}
+  .back-btn{display:inline-flex; align-items:center; gap:8px; padding:8px 20px; border:1.5px solid rgba(255,255,255,.5); border-radius:999px; color:#fff; font-family:var(--mono); font-weight:600; font-size:14px; text-decoration:none; margin-bottom:24px;}
+  .back-btn:hover, .back-btn:focus-visible{border-color:#fff; outline:none;}
+  .eyebrow{font-family:var(--mono); letter-spacing:.18em; text-transform:uppercase; font-size:11px; color:var(--accent-soft); margin-bottom:8px;}
+  h1{text-wrap:pretty; margin:0 0 14px; font-size:clamp(26px,3.6vw,40px); font-weight:700; letter-spacing:-0.01em; color:#fff; line-height:1.15;}
+  .sub{color:rgba(255,255,255,.88); font-size:15.5px; line-height:1.6; margin:0; text-wrap:pretty;}
+  .header-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px 28px;}
+  .header-field{border-left:2px solid var(--accent); padding:0 0 4px 16px; min-width:0;}
+  .hf-label{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 6px;}
+  .hf-value{font-size:15px; margin:0; line-height:1.4;}
+  .headline-finding{margin:4px 0 24px; padding:2px 0 2px 22px; border-left:3px solid var(--accent-soft); max-width:44em;}
+  .hl-eyebrow{font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-soft); margin:0 0 10px;}
+  .hl-text{font-family:var(--serif); font-size:clamp(20px,2.6vw,26px); font-weight:600; color:#fff; margin:0; line-height:1.38; text-wrap:pretty;}
+  .header-top .sub{color:rgba(255,255,255,.72);}
+
+  /* path nav */
+  .pathnav{position:sticky; top:env(safe-area-inset-top, 0px); z-index:5; background:rgba(255,255,255,0.94); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border-bottom:1px solid var(--line);}
+  .pathnav-inner{display:flex; align-items:center; max-width:var(--maxw); margin:0 auto; padding:12px max(16px,5vw); gap:2px;}
+  @media (min-width:900px){ .pathnav-inner{padding-inline:24px;} }
+  .pathnav-item{display:flex; align-items:center; gap:8px; text-decoration:none; font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-dim); white-space:nowrap; padding:5px 2px;}
+  .pathnav-item:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:4px;}
+  .pathnav-dot{width:9px; height:9px; border-radius:50%; background:var(--line); flex-shrink:0;}
+  .pathnav-item.active{color:var(--accent-dark);}
+  .pathnav-item.active .pathnav-dot{background:var(--accent); box-shadow:0 0 0 4px rgba(74,107,147,.18);}
+  .pathnav-line{flex:1 1 auto; height:1px; background:var(--line); min-width:8px; margin:0 2px;}
+  @media (max-width:560px){ .pathnav-item{font-size:9.5px; gap:5px; letter-spacing:.04em;} }
+
+  /* sections */
+  .section{padding-block:0 44px; border-top:1px solid var(--line); scroll-margin-top:56px;}
+  .section-head{margin-bottom:26px; padding-block:34px 14px; background:var(--accent-tint);}
+  #sec-insights{background:var(--accent-tint);}
+  .section-eyebrow{font-family:var(--mono); letter-spacing:.12em; text-transform:uppercase; font-size:12.5px; font-weight:600; color:var(--accent-dark); margin-bottom:12px; display:flex; align-items:center;}
+  .num-badge{display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:50%; border:1.5px solid var(--accent); color:var(--accent-dark); font-size:11.5px; transform:rotate(-6deg); margin-right:10px; background:#fff;}
+  .section h2{font-size:clamp(20px,2.4vw,26px); margin:0 0 10px; font-weight:600;}
+  p.desc{font-size:16.5px; color:var(--ink-dim); line-height:1.65; margin:0; max-width:70ch;}
+  p.desc + p.desc{margin-top:14px;}
+  .caption-note{font-size:12px; color:var(--ink-dim); line-height:1.55; margin:12px 0 0; font-style:italic;}
+
+  /* program components */
+  .framework{display:flex; align-items:stretch; gap:10px; margin-top:24px; flex-wrap:wrap;}
+  .fw-box{background:var(--card-tint); border:1px solid var(--line); border-top:4px solid var(--accent-soft); border-radius:10px; padding:16px 18px; flex:1 1 200px; min-width:0;}
+  .fw-box:nth-child(3){border-top-color:var(--accent);}
+  .fw-box:nth-child(5){border-top-color:var(--accent-dark);}
+  .fw-title{font-family:var(--mono); font-weight:600; font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--accent-dark);}
+  .fw-sub{font-family:var(--serif); font-weight:600; font-size:15.5px; margin:5px 0 8px;}
+  .fw-box ul{margin:0; padding-left:17px; font-size:13.5px; color:var(--ink-dim); line-height:1.5;}
+  .fw-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:20px;}
+  .fw-icon-frame{background:#fff; border:1.5px solid var(--accent-soft); border-radius:12px; height:96px; margin:2px 0 12px; display:flex; align-items:center; justify-content:center; box-shadow:0 1px 3px rgba(47,74,107,0.08);}
+  .fw-box:nth-child(3) .fw-icon-frame{border-color:var(--accent);}
+  .fw-box:nth-child(5) .fw-icon-frame{border-color:var(--accent-dark);}
+  .fw-icon{display:block; width:auto; height:78px; max-width:88%;}
+  .fw-box p{margin:0; font-size:13.5px; color:var(--ink-dim); line-height:1.5;}
+  .weekend-tag{display:flex; align-items:center; gap:10px; margin-top:26px; font-family:var(--mono); font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--accent-dark); font-weight:600;}
+  .weekend-tag svg{flex:none;}
+  @media (max-width:680px){ .framework{flex-direction:column;} .fw-arrow{transform:rotate(90deg);} }
+
+  /* stats */
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin:4px 0 8px;}
+  @media (max-width:640px){ .stat-row{gap:22px 14px;} }
+  .stat-card{border-top:3px solid var(--accent); padding:14px 0 0; min-width:0;}
+  .stat-card .num{font-family:var(--serif); font-size:clamp(38px,5.2vw,52px); font-weight:700; line-height:1; letter-spacing:-.02em; color:var(--accent-dark); font-variant-numeric:tabular-nums;}
+  .stat-card .lbl{font-size:14px; color:var(--ink-dim); margin-top:8px; line-height:1.4;}
+  .insight .stat-row{grid-template-columns:repeat(2,minmax(0,220px)); margin:20px 0 6px;}
+  .stat-card.gold{border-top-color:var(--gold);} .stat-card.gold .num{color:var(--gold);}
+
+  .sub-h{font-family:var(--serif); font-size:17px; font-weight:600; margin:34px 0 4px;}
+
+  /* funnel */
+  .funnel{display:grid; gap:8px; margin-top:16px;}
+  .f-row{display:grid; grid-template-columns:minmax(0,190px) 1fr; gap:14px; align-items:center;}
+  .f-label{font-size:13.5px; color:var(--ink); line-height:1.3;}
+  .f-label small{display:block; color:var(--ink-dim); font-size:12px;}
+  .f-track{position:relative; height:28px;}
+  .f-bar{height:100%; background:var(--accent); border-radius:5px; display:flex; align-items:center; justify-content:flex-end; padding-right:9px; color:#fff; font-family:var(--mono); font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; min-width:34px;}
+  .f-row:nth-child(1) .f-bar{background:var(--accent-soft); color:var(--accent-dark);}
+  .f-row:nth-child(2) .f-bar{background:#7B98BC;}
+  .f-row:nth-child(4) .f-bar,.f-row:nth-child(5) .f-bar{background:var(--accent-dark);}
+  @media (max-width:520px){ .f-row{grid-template-columns:1fr; gap:4px;} }
+
+  /* evaluation design */
+  .eval-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:16px;}
+  @media (max-width:700px){ .eval-grid{grid-template-columns:1fr;} }
+  .eval-card{background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px 16px; min-width:0;}
+  .eval-card .e-k{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 6px;}
+  .eval-card p{margin:0; font-size:14px; line-height:1.5; color:var(--ink);}
+
+  /* budget */
+  .budget-bar{display:flex; height:30px; border-radius:6px; overflow:hidden; margin-top:16px; border:1px solid var(--line);}
+  .budget-bar span{display:block; height:100%;}
+  .b-travel{background:var(--accent-dark);} .b-food{background:var(--accent);} .b-gifts{background:var(--accent-soft);} .b-other{background:var(--line);}
+  .budget-legend{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin-top:10px;}
+  @media (max-width:600px){ .budget-legend{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .bl-item{font-size:13px; color:var(--ink-dim); line-height:1.35;}
+  .bl-item b{display:block; font-family:var(--mono); font-size:13px; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .bl-sw{display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:6px; vertical-align:baseline;}
+
+  /* insights */
+  .insight{padding:26px 26px 28px; background:var(--panel); border:1px solid var(--line); border-radius:12px; box-shadow:0 3px 14px rgba(47,74,107,0.06);}
+  .insight + .insight{margin-top:22px;}
+  @media (max-width:520px){ .insight{padding:20px 16px 22px;} .insight-banner{margin:-20px -16px 18px !important; padding-inline:16px !important;} }
+  .insight-banner{display:flex; align-items:center; gap:10px; margin:-26px -26px 20px; padding:11px 26px; background:var(--accent-dark); border-radius:11px 11px 0 0;}
+  .ib-num{width:20px; height:20px; border-radius:50%; background:rgba(255,255,255,0.2); color:#fff; font-family:var(--mono); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+  .ib-tag{font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; font-weight:700; color:#fff;}
+  .insight h3{font-size:18.5px; font-weight:600; margin:0 0 10px;}
+  .insight p.desc{font-size:15.5px;}
+  .applied-callout{margin-top:18px; padding:14px 18px; background:rgba(74,107,147,0.08); border-left:2px solid var(--accent); border-radius:0 6px 6px 0;}
+  .ac-eyebrow{font-family:var(--mono); font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 6px;}
+  .ac-text{font-size:15px; margin:0; line-height:1.6;}
+
+  /* dumbbell */
+  .chart-title{font-family:var(--serif); font-size:15px; font-weight:600; margin:22px 0 2px;}
+  .chart-key{display:flex; gap:18px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-dim); margin:6px 0 10px;}
+  .key-dot{display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:6px; vertical-align:-1px;}
+  .key-dot.pre{background:#fff; border:2px solid var(--pre);}
+  .key-dot.post{background:var(--accent);}
+  .db-group{margin-top:14px;}
+  .db-group-h{display:flex; justify-content:space-between; gap:12px; font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-dark); font-weight:600; padding-bottom:4px; border-bottom:1px solid var(--line);}
+  .db-group-h span:last-child{color:var(--ink-dim); font-weight:400; letter-spacing:.04em; text-transform:none; font-size:11.5px;}
+  .db-row{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 52px; gap:12px; align-items:center; padding:7px 0; border-bottom:1px dashed #E1E7F0;}
+  .db-label{font-size:13.5px; line-height:1.3; min-width:0;}
+  .db-track{position:relative; height:22px;}
+  .db-axis{position:absolute; left:0; right:0; top:50%; height:1px; background:var(--line);}
+  .db-span{position:absolute; top:50%; height:4px; margin-top:-2px; background:var(--accent-soft); border-radius:2px;}
+  .db-dot{position:absolute; top:50%; width:13px; height:13px; margin:-6.5px 0 0 -6.5px; border-radius:50%;}
+  .db-dot.pre{background:#fff; border:2px solid var(--pre);}
+  .db-dot.post{background:var(--accent);}
+  .db-gain{font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--accent-dark); text-align:right; font-variant-numeric:tabular-nums;}
+  .db-scale{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) 52px; gap:12px; margin-top:4px;}
+  .db-ticks{position:relative; height:16px; font-family:var(--mono); font-size:10.5px; color:var(--ink-dim);}
+  .db-ticks span{position:absolute; transform:translateX(-50%);}
+  .db-ticks span:first-child{transform:none;} .db-ticks span:last-child{transform:translateX(-100%);}
+  @media (max-width:560px){
+    .db-row{grid-template-columns:minmax(0,1fr) 46px; row-gap:4px;}
+    .db-label{grid-column:1 / -1;}
+    .db-scale{grid-template-columns:minmax(0,1fr) 46px;}
+    .db-scale > div:first-child{display:none;}
+  }
+
+  .feedback-flow{display:grid; grid-template-columns:1fr auto 1fr; gap:10px; margin-top:18px; align-items:stretch;}
+  @media (max-width:620px){ .feedback-flow{grid-template-columns:1fr;} .ff-arrow{transform:rotate(90deg);} }
+  .ff-col{background:var(--card-tint); border:1px solid var(--line); border-radius:10px; padding:14px 16px; min-width:0;}
+  .ff-col.after{background:var(--gold-tint); border-color:#E6D3B0;}
+  .ff-k{font-family:var(--mono); font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--accent-dark); margin:0 0 8px; font-weight:600;}
+  .ff-col.after .ff-k{color:var(--gold);}
+  .ff-col ul{margin:0; padding-left:17px; font-size:14px; line-height:1.5;}
+  .ff-arrow{display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:20px;}
+
+  .limits{margin-top:22px; padding:18px 22px; background:#fff; border:1px solid var(--line); border-top:4px solid var(--accent-dark); border-radius:12px;}
+  .limits .ac-eyebrow{font-weight:600;}
+  .limits ul{margin:6px 0 0; padding-left:18px; font-size:14.5px; line-height:1.6;}
+
+  /* motion (only when allowed; see script at end) */
+  .f-bar{transform-origin:0 50%; transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+  .f-row:nth-child(2) .f-bar{transition-delay:.1s;} .f-row:nth-child(3) .f-bar{transition-delay:.2s;}
+  .f-row:nth-child(4) .f-bar{transition-delay:.3s;} .f-row:nth-child(5) .f-bar{transition-delay:.4s;}
+  .motion .funnel:not(.in-view) .f-bar{transform:scaleX(0);}
+  .budget-bar{position:relative;}
+  .budget-bar::after{content:""; position:absolute; inset:0; background:var(--panel); transform-origin:100% 50%; transform:scaleX(0); transition:transform 1s cubic-bezier(.2,.7,.2,1);}
+  .motion .budget-bar:not(.in-view)::after{transform:scaleX(1);}
+  .db-dot.post{transition:left .9s cubic-bezier(.2,.7,.2,1);}
+  .db-span{transform-origin:0 50%; transition:transform .9s cubic-bezier(.2,.7,.2,1);}
+  .db-gain{transition:opacity .4s ease .7s;}
+  .motion #dumbbell:not(.in-view) .db-dot.post{left:var(--from) !important;}
+  .motion #dumbbell:not(.in-view) .db-span{transform:scaleX(0);}
+  .motion #dumbbell:not(.in-view) .db-gain{opacity:0;}
+
+  footer{padding-block:30px 44px; color:var(--ink-dim); font-size:12.5px; line-height:1.6; border-top:1px solid var(--line);}
+  .footer-block{margin-bottom:18px;}
+  .footer-block p{margin:0; max-width:80ch;}
+  .footer-label{font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase; font-weight:600; margin:0 0 4px !important;}
+
+  /* ---------- Headline finding: dark box under the header fields (same on all case studies) ---------- */
+  .headline-finding{margin:24px 0 0; padding:20px 24px; border:none; max-width:none; background:var(--accent-dark); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+  .headline-finding .hl-eyebrow, .headline-finding .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-soft); margin:0 0 8px;}
+  .headline-finding p.hl-text, .headline-finding p{font-family:'Source Serif 4', serif; font-size:clamp(17px,2vw,19.5px); font-weight:600; color:#fff; margin:0; line-height:1.5; text-wrap:pretty;}
+  .pathnav-item{font-size:13px;}
+  .insight h3{font-size:18px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="header-top">
+    <div class="container">
+      <a class="back-btn" href="index.html">&larr; Portfolio</a>
+      <div class="eyebrow">Program design &amp; evaluation</div>
+      <h1>Designing &amp; Evaluating a Graduate Preview Weekend</h1>
+      <p class="sub">A weekend program for prospective Ph.D. applicants to Duke Psychology &amp; Neuroscience, built from scratch, run on a $10K budget, and evaluated with a pre/post survey.</p>
+    </div>
+  </div>
+  <div class="header-bottom">
+    <div class="container">
+      <div class="header-grid">
+        <div class="header-field"><p class="hf-label">Program</p><p class="hf-value">Prospective graduate student program, 2023</p></div>
+        <div class="header-field"><p class="hf-label">Participants</p><p class="hf-value">89 applicants &rarr; 13 attendees</p></div>
+        <div class="header-field"><p class="hf-label">Evaluation</p><p class="hf-value">Pre/post survey, 12 of 13 responded (92%)</p></div>
+      </div>
+      <div class="headline-finding">
+        <p class="hl-eyebrow">Headline finding</p>
+        <p class="hl-text">Attendees&rsquo; ratings rose on all 12 survey items from before to after the program, with the largest gains in sense of belonging. Themes from the open-ended responses guided improvements for future years.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="pathnav" aria-label="Sections">
+  <div class="pathnav-inner">
+    <a class="pathnav-item active" href="#sec-challenge"><span class="pathnav-dot"></span>Challenge</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" href="#sec-method"><span class="pathnav-dot"></span>Methodology &amp; Scope</a>
+    <span class="pathnav-line"></span>
+    <a class="pathnav-item" href="#sec-insights"><span class="pathnav-dot"></span>Insights</a>
+  </div>
+</nav>
+
+<main>
+  <!-- 01 CHALLENGE -->
+  <section class="section" id="sec-challenge">
+    <div class="section-head"><div class="container">
+      <div class="section-eyebrow"><span class="num-badge">01</span>Challenge</div>
+      <h2>Applicants without insider access apply at a disadvantage</h2>
+    </div></div>
+    <div class="container">
+      <p class="desc">Ph.D. admissions reward unwritten knowledge, like which faculty are taking students and what a strong statement sounds like. Applicants without mentors in academia often learn it late or not at all. With no program in place, a graduate-student team built one: a selective weekend of faculty meetings, one-on-one application feedback and a writing workshop, held before applications were due.</p>
+      <div class="weekend-tag"><svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
+          <rect x="3" y="6" width="28" height="25" rx="4" fill="#fff" stroke="var(--accent-dark)" stroke-width="2"/>
+          <path d="M3 10 a4 4 0 0 1 4 -4 h20 a4 4 0 0 1 4 4 v4 H3 Z" fill="var(--accent-dark)"/>
+          <rect x="9" y="2" width="3" height="7" rx="1.5" fill="var(--accent-dark)"/><rect x="22" y="2" width="3" height="7" rx="1.5" fill="var(--accent-dark)"/>
+          <rect x="8" y="18" width="5" height="4" rx="1" fill="var(--accent-soft)"/><rect x="15" y="18" width="5" height="4" rx="1" fill="var(--accent-soft)"/>
+          <rect x="22" y="18" width="5" height="4" rx="1" fill="var(--gold)"/><rect x="8" y="24" width="5" height="4" rx="1" fill="var(--accent-soft)"/>
+          <rect x="15" y="24" width="5" height="4" rx="1" fill="var(--gold)"/>
+        </svg><span>One weekend, three components</span></div>
+      <div class="framework" style="margin-top:14px">
+        <div class="fw-box">
+          <div class="fw-icon-frame"><svg class="fw-icon" viewBox="0 0 150 100" aria-hidden="true">
+            <path d="M58 6 h34 a10 10 0 0 1 10 10 v4 a10 10 0 0 1 -10 10 h-12 l-8 9 l-1 -9 h-13 a10 10 0 0 1 -10 -10 v-4 a10 10 0 0 1 10 -10 Z" fill="var(--accent-tint)" stroke="var(--accent-soft)" stroke-width="1.5"/>
+            <circle cx="65" cy="18" r="2.6" fill="var(--accent-soft)"/><circle cx="75" cy="18" r="2.6" fill="var(--accent-soft)"/><circle cx="85" cy="18" r="2.6" fill="var(--accent-soft)"/>
+            <circle cx="38" cy="50" r="12" fill="var(--accent-soft)"/>
+            <path d="M18 92 Q18 66 38 66 Q58 66 58 92 Z" fill="var(--accent-soft)"/>
+            <circle cx="112" cy="48" r="13" fill="var(--accent-dark)" opacity=".9"/>
+            <path d="M90 92 Q90 64 112 64 Q134 64 134 92 Z" fill="var(--accent-dark)" opacity=".9"/>
+            <rect x="8" y="84" width="134" height="6" rx="3" fill="var(--line)"/>
+          </svg></div>
+          <div class="fw-title">Faculty meetings</div><div class="fw-sub">Time with the labs they&rsquo;re applying to</div>
+        </div>
+        <div class="fw-arrow" aria-hidden="true">+</div>
+        <div class="fw-box">
+          <div class="fw-icon-frame"><svg class="fw-icon" viewBox="0 0 150 100" aria-hidden="true">
+            <path d="M44 6 h46 l18 18 v68 a4 4 0 0 1 -4 4 h-60 a4 4 0 0 1 -4 -4 v-82 a4 4 0 0 1 4 -4 Z" fill="#fff" stroke="var(--accent)" stroke-width="2"/>
+            <path d="M90 6 v18 h18" fill="var(--accent-tint)" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/>
+            <rect x="52" y="34" width="44" height="4" rx="2" fill="var(--accent-soft)"/>
+            <rect x="52" y="44" width="38" height="4" rx="2" fill="var(--accent-soft)"/>
+            <rect x="52" y="54" width="44" height="4" rx="2" fill="var(--accent-soft)"/>
+            <rect x="52" y="64" width="26" height="4" rx="2" fill="var(--accent-soft)"/>
+            <circle cx="104" cy="76" r="17" fill="var(--gold)"/>
+            <path d="M95 76 l6 6 l12 -12" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg></div>
+          <div class="fw-title">Application feedback</div><div class="fw-sub">One-on-one review of their materials</div>
+        </div>
+        <div class="fw-arrow" aria-hidden="true">+</div>
+        <div class="fw-box">
+          <div class="fw-icon-frame"><svg class="fw-icon" viewBox="0 0 150 100" aria-hidden="true">
+            <rect x="20" y="14" width="96" height="76" rx="6" fill="var(--accent-tint)" stroke="var(--accent-dark)" stroke-width="2"/>
+            <path d="M32 36 q8 -8 16 0 t16 0 t16 0" fill="none" stroke="var(--accent-soft)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 52 q8 -8 16 0 t16 0 t16 0 t16 0" fill="none" stroke="var(--accent-soft)" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 68 q8 -8 16 0 t14 0" fill="none" stroke="var(--accent-dark)" stroke-width="3" stroke-linecap="round"/>
+            <g transform="rotate(40 100 54)">
+              <rect x="94" y="8" width="13" height="58" rx="3" fill="var(--accent-dark)"/>
+              <rect x="94" y="16" width="13" height="6" fill="var(--gold)"/>
+              <path d="M94 66 h13 l-6.5 14 Z" fill="var(--accent-soft)"/>
+            </g>
+          </svg></div>
+          <div class="fw-title">Writing workshop</div><div class="fw-sub">How to write a strong personal statement</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 METHODOLOGY -->
+  <section class="section" id="sec-method">
+    <div class="section-head"><div class="container">
+      <div class="section-eyebrow"><span class="num-badge">02</span>Methodology &amp; scope</div>
+      <h2>A selective program with a built-in evaluation</h2>
+    </div></div>
+    <div class="container">
+      <div class="stat-row">
+        <div class="stat-card"><div class="num" data-count="89">89</div><div class="lbl">applications</div></div>
+        <div class="stat-card"><div class="num" data-count="13">13</div><div class="lbl">attendees</div></div>
+        <div class="stat-card"><div class="num" data-count="92%">92%</div><div class="lbl">survey response (12 of 13)</div></div>
+      </div>
+      <h3 class="sub-h">Selection: four review stages</h3>
+            <div class="funnel" data-animate role="img" aria-label="Selection funnel: 89 applications, 55 passed screening, 35 passed fit review, 13 invited, 13 attended">
+        <div class="f-row"><div class="f-label">Applications<small>Submitted by Aug 25</small></div><div class="f-track"><div class="f-bar" style="width:100%">89</div></div></div>
+        <div class="f-row"><div class="f-label">Initial screen<small>Eligibility, completeness</small></div><div class="f-track"><div class="f-bar" style="width:61.8%">55</div></div></div>
+        <div class="f-row"><div class="f-label">Research-fit review<small>Match to chosen faculty</small></div><div class="f-track"><div class="f-bar" style="width:39.3%">35</div></div></div>
+        <div class="f-row"><div class="f-label">Faculty review<small>Invited to attend</small></div><div class="f-track"><div class="f-bar" style="width:14.6%">13</div></div></div>
+        <div class="f-row"><div class="f-label">Attended<small>100% acceptance</small></div><div class="f-track"><div class="f-bar" style="width:14.6%">13</div></div></div>
+      </div>
+
+      <h3 class="sub-h">Evaluation</h3>
+      <p class="desc">Attendees rated 12 statements on a 1&ndash;5 agreement scale before and after the weekend, then rated satisfaction and answered open-ended questions on strengths and weaknesses. 12 of 13 responded to both the pre and post surveys.</p>
+
+      <h3 class="sub-h">Budget: $9,755 of $10,000 spent</h3>
+      <p class="desc">Funded by a dean's award ($3K) and faculty donations ($7K). Direct costs came to about $750 per attendee.</p>
+      <div class="budget-bar" data-animate role="img" aria-label="Direct costs: travel $6,033, food $3,232, gifts $424, other $67">
+        <span class="b-travel" style="width:61.8%"></span><span class="b-food" style="width:33.1%"></span><span class="b-gifts" style="width:4.3%"></span><span class="b-other" style="width:0.8%"></span>
+      </div>
+      <div class="budget-legend">
+        <div class="bl-item"><b><span class="bl-sw b-travel"></span>$6,033 &middot; 62%</b>Travel</div>
+        <div class="bl-item"><b><span class="bl-sw b-food"></span>$3,232 &middot; 33%</b>Food</div>
+        <div class="bl-item"><b><span class="bl-sw b-gifts"></span>$424 &middot; 4%</b>Welcome kits</div>
+        <div class="bl-item"><b><span class="bl-sw b-other"></span>$67 &middot; 1%</b>Other</div>
+      </div>
+      <p class="caption-note">One dinner was donated by a faculty host and isn't included. $245 was left unspent.</p>
+    </div>
+  </section>
+
+  <!-- 03 INSIGHTS -->
+  <section class="section" id="sec-insights">
+    <div class="section-head"><div class="container">
+      <div class="section-eyebrow"><span class="num-badge">03</span>Insights &amp; recommendations</div>
+      <h2>What the evaluation showed, and what changed</h2>
+    </div></div>
+    <div class="container">
+
+      <article class="insight">
+        <div class="insight-banner"><span class="ib-num">1</span><span class="ib-tag">Insight</span></div>
+        <h3>Gains were largest where applicants had the least access before</h3>
+        <p class="desc">Every item rose, but not evenly. Belonging items gained about 1.2 points on average and application readiness about 1.0. Research fit and intent to apply gained least, because attendees already rated them high.</p>
+
+        <div class="stat-row">
+          <div class="stat-card"><div class="num" data-count="+1.24">+1.24</div><div class="lbl">average gain, belonging items</div></div>
+          <div class="stat-card"><div class="num" data-count="+0.98">+0.98</div><div class="lbl">average gain, application readiness</div></div>
+        </div>
+
+        <p class="chart-title">Mean agreement before and after the weekend (1&ndash;5)</p>
+        <div class="chart-key"><span><span class="key-dot pre"></span>Before</span><span><span class="key-dot post"></span>After</span><span>Right column: change</span></div>
+        <div id="dumbbell" data-animate></div>
+        <div class="db-scale" aria-hidden="true"><div></div><div class="db-ticks"><span style="left:0">1</span><span style="left:25%">2</span><span style="left:50%">3</span><span style="left:75%">4</span><span style="left:100%">5</span></div><div></div></div>
+        <p class="caption-note">Descriptive means from 12 respondents; self-report, no comparison group, no significance tests.</p>
+
+        <div class="applied-callout">
+          <p class="ac-eyebrow">Recommendation</p>
+          <p class="ac-text">Protect the time attendees spend directly with current students and faculty. Those sessions target the biggest gaps, and attendees' top request was for more of them.</p>
+        </div>
+      </article>
+
+
+      <article class="insight">
+        <div class="insight-banner"><span class="ib-num">2</span><span class="ib-tag">Insight</span></div>
+        <h3>Open-ended feedback guided improvements</h3>
+        <p class="desc">Satisfaction was high (4.83 of 5 overall), so the written feedback did more to guide changes than the scores.</p>
+        <div class="stat-row">
+          <div class="stat-card gold"><div class="num" data-count="4.83">4.83</div><div class="lbl">overall satisfaction, out of 5</div></div>
+          <div class="stat-card gold"><div class="num" data-count="3">3</div><div class="lbl">trends turned into changes</div></div>
+        </div>
+        <div class="feedback-flow">
+          <div class="ff-col"><p class="ff-k">What attendees said</p><ul><li>The first day was too packed, with no breaks</li><li>Faculty meetings felt too short</li><li>Schedule changes didn't always reach everyone</li></ul></div>
+          <div class="ff-arrow" aria-hidden="true">&rarr;</div>
+          <div class="ff-col after"><p class="ff-k">What we changed</p><ul><li>Breaks built into the schedule</li><li>Longer faculty meetings</li><li>Clearer communication with attendees</li></ul></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-block">
+      <p class="footer-label">My role</p>
+      <p>One of three organizing leads and co-head of the logistics team. I co-designed the program, ran logistics for each attendee's visit, and led budget planning and management. I helped write the survey and interpret the results; other team members ran the analyses.</p>
+    </div>
+    <div class="footer-block">
+      <p class="footer-label">Data use</p>
+      <p>All figures are aggregate means and totals from the program's internal 2023 summary report. No individual responses or demographic breakdowns are shown, because the cohort is small enough to identify people.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var groups = [
+      {name:"Belonging and life inside the program", items:[
+        ["I understand what it's like to be a graduate student here", 2.85, 4.83],
+        ["The department is welcoming to underrepresented students", 3.54, 4.92],
+        ["I would easily form lasting relationships with peers and faculty", 3.92, 4.92],
+        ["The department values diversity, equity and inclusivity", 3.77, 4.75],
+        ["I would be listened to and respected", 4.08, 4.92]
+      ]},
+      {name:"Application readiness", items:[
+        ["Confident writing a competitive application", 3.46, 4.58],
+        ["Confident discussing my research with faculty", 3.46, 4.42],
+        ["My application materials are competitive", 3.54, 4.50],
+        ["My CV presents my experience well", 3.69, 4.58]
+      ]},
+      {name:"Research fit", items:[
+        ["I know how my interests fit the labs I'm considering", 4.23, 4.66],
+        ["I understand the breadth of research in those labs", 3.85, 4.33]
+      ]},
+      {name:"Intent", items:[
+        ["Likelihood of applying", 4.69, 5.00]
+      ]}
+    ];
+    function pos(v){ return ((v - 1) / 4 * 100).toFixed(2) + "%"; }
+    function esc(s){ var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
+    var html = "";
+    groups.forEach(function(g){
+      var mean = g.items.reduce(function(a,it){ return a + (it[2]-it[1]); },0) / g.items.length;
+      html += '<div class="db-group"><div class="db-group-h"><span>' + esc(g.name) + '</span><span>avg +' + mean.toFixed(2) + '</span></div>';
+      g.items.forEach(function(it){
+        var pre = it[1], post = it[2];
+        html += '<div class="db-row">' +
+          '<div class="db-label">' + esc(it[0]) + '</div>' +
+          '<div class="db-track" role="img" aria-label="' + esc(it[0]) + ': ' + pre.toFixed(2) + ' before, ' + post.toFixed(2) + ' after">' +
+            '<div class="db-axis"></div>' +
+            '<div class="db-span" style="left:' + pos(pre) + ';width:calc(' + pos(post) + ' - ' + pos(pre) + ')"></div>' +
+            '<div class="db-dot pre" style="left:' + pos(pre) + '" title="Before: ' + pre.toFixed(2) + '"></div>' +
+            '<div class="db-dot post" style="left:' + pos(post) + ';--from:' + pos(pre) + '" title="After: ' + post.toFixed(2) + '"></div>' +
+          '</div>' +
+          '<div class="db-gain">+' + (post - pre).toFixed(2) + '</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    });
+    document.getElementById("dumbbell").innerHTML = html;
+
+    // highlight the section in view in the path nav
+    var links = Array.prototype.slice.call(document.querySelectorAll(".pathnav-item"));
+    var secs = links.map(function(a){ return document.querySelector(a.getAttribute("href")); });
+    function onScroll(){
+      var y = window.scrollY + 120, idx = 0;
+      secs.forEach(function(s,i){ if (s && s.offsetTop <= y) idx = i; });
+      links.forEach(function(a,i){ a.classList.toggle("active", i === idx); });
+    }
+    window.addEventListener("scroll", onScroll, {passive:true});
+    onScroll();
+  })();
+</script>
+<script>
+/* Scroll-in motion: charts draw in and big numbers count up when they enter view.
+   Skipped entirely when the visitor's system asks for reduced motion (or without IntersectionObserver),
+   so content always shows in its final state. */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('[data-animate]');
+  var counters = document.querySelectorAll('[data-count]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  document.documentElement.classList.add('motion');
+
+  function parse(el){
+    var text = el.getAttribute('data-count');
+    var m = text.match(/^([^0-9]*)([0-9][0-9,]*\.?[0-9]*)(.*)$/);
+    if (!m) return null;
+    var numStr = m[2];
+    return { text:text, prefix:m[1], suffix:m[3],
+             target:parseFloat(numStr.replace(/,/g,'')),
+             decimals:(numStr.split('.')[1] || '').length,
+             commas:numStr.indexOf(',') > -1 };
+  }
+  function fmt(c, v){
+    var s = c.commas
+      ? v.toLocaleString('en-US', {minimumFractionDigits:c.decimals, maximumFractionDigits:c.decimals})
+      : v.toFixed(c.decimals);
+    return c.prefix + s + c.suffix;
+  }
+  function countUp(el){
+    var c = parse(el); if (!c) return;
+    var start = null, dur = 1100;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = fmt(c, c.target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step); else el.textContent = c.text;
+    }
+    requestAnimationFrame(step);
+  }
+  counters.forEach(function(el){ var c = parse(el); if (c) el.textContent = fmt(c, 0); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      if (el.hasAttribute('data-count')) countUp(el);
+      else el.classList.add('in-view');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.35 });
+  targets.forEach(function(el){ io.observe(el); });
+  counters.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>

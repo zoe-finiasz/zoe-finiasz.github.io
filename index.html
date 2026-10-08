@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zoe Finiasz, Ph.D. — Research Portfolio</title>
-<meta name="description" content="Behavioral researcher (Ph.D.) studying how people decide what to trust and how they learn — survey, experimental, and observational research translated into recommendations for product, UX, consumer insights, and learning teams.">
+<meta name="description" content="Behavioral scientist (Ph.D.) studying how people learn and what they trust — experimental, observational, survey, and program-evaluation research translated into recommendations for learning, instructional design, and assessment teams.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://zoe-finiasz.github.io/">
 <meta property="og:title" content="Zoe Finiasz, Ph.D. — Research Portfolio">
-<meta property="og:description" content="Behavioral research case studies for UX, consumer insights, and learning science roles.">
+<meta property="og:description" content="Behavioral science, applied learning, and research &amp; evaluation case studies.">
 <meta property="og:image" content="https://zoe-finiasz.github.io/og-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,14 +19,14 @@
 <style>
   :root{
     --ink:#2B2620; --ink-soft:#40493C;
-    --paper-a:#EAF2E4; --paper-b:#DCEAD3; --panel:#FFFFFF;
+    --paper-a:#F8F6F1; --paper-b:#EFEBE3; --panel:#FFFFFF;
     --rust:#C1552E; --rust-dark:#9A4322;
     --ochre:#C98A2C; --ochre-dark:#9C6A1F;
     --teal:#3E6E78; --teal-dark:#2A4E56;
     --moss:#4B7A5E; --moss-dark:#365A44;
     --slate-blue:#4A6B93; --slate-blue-dark:#33496B;
     --plum:#6C5B92; --plum-dark:#4B3E68;
-    --line:#C7DCC0; --card-tint:#F2F8EE;
+    --line:#DCD6CB; --card-tint:#F6F4EF;
     --radius:8px; --maxw:960px;
   }
   *{box-sizing:border-box;}
@@ -42,10 +42,7 @@
 
   .hero{
     padding:96px 0 58px; border-bottom:1px solid var(--line);
-    background:
-      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(193,85,46,0.07), transparent 60%),
-      radial-gradient(ellipse 800px 500px at 100% 10%, rgba(62,110,120,0.08), transparent 60%),
-      linear-gradient(180deg, var(--paper-a) 0%, var(--paper-b) 100%);
+    background:linear-gradient(180deg, var(--paper-a) 0%, var(--paper-b) 100%);
   }
   section{background:var(--panel);}
   .hero .wrap{display:flex; align-items:center; justify-content:space-between; gap:48px;}
@@ -56,14 +53,22 @@
   .contact-row{margin-top:28px; display:flex; flex-wrap:wrap; gap:8px 22px; font-family:'IBM Plex Mono', monospace; font-size:13px;}
   .contact-row a{color:var(--teal-dark); font-weight:600; text-decoration:none; border-bottom:1px solid var(--teal);}
   .hero-photo{flex:none;}
+  .hero-photo{padding:7px; border-radius:50%;
+    background:conic-gradient(from -45deg, var(--teal) 0 25%, var(--slate-blue) 0 50%, var(--plum) 0 75%, var(--moss) 0 100%);
+    box-shadow:0 8px 24px rgba(43,38,32,0.16);}
   .hero-photo img{
     width:230px; height:230px; border-radius:50%; object-fit:cover; display:block;
-    border:4px solid var(--teal-dark); box-shadow:0 6px 20px rgba(43,38,32,0.15);
+    border:5px solid var(--paper-a);
   }
+  .cs-strip{display:flex; gap:6px; margin-top:22px; margin-bottom:6px; max-width:340px;}
+  .cs-strip a{flex:1; height:8px; border-radius:4px; transition:transform .15s ease, height .15s ease;}
+  .cs-strip a:hover, .cs-strip a:focus-visible{transform:scaleY(1.6);}
+  .cs-strip-label{margin-top:9px; font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:.06em; color:var(--ink-soft);}
   @media (max-width:780px){
     .hero .wrap{flex-direction:column-reverse; text-align:center; gap:28px;}
     .hero-sub{max-width:none;}
     .contact-row{justify-content:center;}
+    .cs-strip{margin-left:auto; margin-right:auto;}
     .hero-photo img{width:140px; height:140px;}
   }
 
@@ -75,6 +80,10 @@
 
   .cs-grid{margin-top:32px; display:flex; flex-direction:column; gap:16px;}
   .pub-link-wrap{margin-top:36px; text-align:center;}
+  .more-research{margin-top:20px; padding:14px 18px; border:1px solid var(--line); border-radius:10px; display:flex; flex-wrap:wrap; gap:6px 14px; align-items:baseline;}
+  .more-label{font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .more-research a{color:var(--ink); text-decoration:none; font-size:15px; min-width:0;}
+  .more-research a:hover b, .more-research a:focus-visible b{text-decoration:underline;}
   .pub-link{
     display:inline-flex; align-items:center; gap:6px;
     font-family:'IBM Plex Mono', monospace; font-size:13px; font-weight:600;
@@ -94,7 +103,28 @@
   .cs-card.live:hover{ transform:translateY(-2px); box-shadow:0 10px 24px rgba(43,38,32,0.10); }
   .cs-card.wip{ opacity:.82; }
 
+  .cs-card{display:grid; grid-template-columns:minmax(0,1fr) 210px; grid-template-areas:"top thumb" "blurb thumb" "bottom bottom"; column-gap:28px; scroll-margin-top:24px;}
+  .cs-row-top{grid-area:top;} .cs-blurb{grid-area:blurb;} .cs-role{grid-area:role;} .cs-row-bottom{grid-area:bottom;}
+  .cs-thumb{grid-area:thumb; align-self:start; margin-top:4px; margin-bottom:18px; background:#fff; border:1.5px solid color-mix(in srgb, var(--accent) 45%, white); border-radius:10px; padding:10px 12px 6px; box-shadow:0 1px 3px rgba(43,38,32,0.06);}
+  .cs-thumb svg{display:block; width:100%; height:auto; overflow:visible;}
+  .cs-thumb .t-cap{font-family:'IBM Plex Mono', monospace; font-size:9.5px; letter-spacing:.04em; color:var(--ink-soft); margin-top:2px; line-height:1.35;}
+  .cs-thumb text{font-family:'IBM Plex Mono', monospace;}
+  @media (max-width:700px){
+    .cs-card{grid-template-columns:minmax(0,1fr); grid-template-areas:"top" "thumb" "blurb" "bottom"; padding:20px 20px 22px;}
+    .cs-thumb{margin:4px 0 16px; max-width:300px;}
+  }
+  /* thumbnails draw in (only when motion is allowed) */
+  .cs-thumb .gb{transform-box:fill-box; transform-origin:50% 100%; transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+  .cs-thumb .gb:nth-of-type(2){transition-delay:.08s;} .cs-thumb .gb:nth-of-type(3){transition-delay:.16s;} .cs-thumb .gb:nth-of-type(4){transition-delay:.24s;}
+  .cs-thumb .dline{transform-box:fill-box; transform-origin:0 50%; transition:transform .8s cubic-bezier(.2,.7,.2,1);}
+  .cs-thumb .gv{transition:opacity .4s ease .6s;}
+  .motion .cs-thumb:not(.in-view) .gb{transform:scaleY(0);}
+  .motion .cs-thumb:not(.in-view) .gv{opacity:0;}
+  .motion .cs-thumb:not(.in-view) .dline{transform:scaleX(0);}
   .cs-row-top{display:flex; align-items:center; gap:14px; margin-bottom:10px;}
+  .cs-card .cs-row-bottom{flex-wrap:nowrap; align-items:flex-end; gap:24px;}
+  .cs-card .cs-tags{flex:1 1 auto; min-width:0;}
+  @media (max-width:640px){ .cs-card .cs-row-bottom{flex-wrap:wrap; align-items:flex-start; gap:16px;} }
   .stamp{
     font-family:'IBM Plex Mono', monospace; font-size:14px; font-weight:600;
     color:var(--accent, var(--ink-soft)); border:1.5px solid var(--accent, var(--line));
@@ -173,10 +203,15 @@
 <div class="hero">
   <div class="wrap">
     <div class="hero-text">
-      <div class="eyebrow">Behavioral Research &middot; UX &amp; Consumer Insights &middot; Learning Science</div>
+      <div class="eyebrow">Behavioral Science &middot; Applied Learning &middot; Research &amp; Evaluation</div>
       <h1>Zoe Finiasz, Ph.D.</h1>
-      <p class="hero-sub">I'm a behavioral researcher who studies how people decide what to trust, how they learn, and why they believe what they do &mdash; and I turn those findings into recommendations for the teams designing products, experiences, and messages.</p>
-      <p class="hero-sub">I design surveys, experiments, and observational studies, analyze the data in R, and share results through dashboards and plain-language takeaways.</p>
+      <div class="cs-strip" aria-label="Jump to a case study">
+        <a href="#cs-museum" style="background:var(--teal)" aria-label="Case study 1: Supporting Learning at Science Museums"></a>
+        <a href="#cs-swl" style="background:var(--slate-blue)" aria-label="Case study 2: Graduate Preview Weekend"></a>
+        <a href="#cs-generics" style="background:var(--plum)" aria-label="Case study 3: Instructional Language and Learning"></a>
+        <a href="#cs-vaccine" style="background:var(--moss)" aria-label="Case study 4: Vaccine Attitudes Survey"></a>
+      </div>
+      <p class="hero-sub">I&rsquo;m a behavioral scientist who studies how people learn what they believe. Small details, like how a sentence is phrased or who is saying it, can change what people understand. My work looks for the details that make the biggest difference for learners. I also test whether programs designed to support learners actually work.</p>
       <div class="contact-row">
         <a href="mailto:zfiniasz@gmail.com">zfiniasz@gmail.com</a>
         <a href="https://www.linkedin.com/in/zoe-finiasz/" target="_blank" rel="noopener">LinkedIn</a>
@@ -194,57 +229,69 @@
     <p class="section-sub">Each case study covers the question, how the research was done, what I did, and what the findings mean for the people designing products, programs, and experiences.</p>
 
     <div class="cs-grid">
-      <div class="cs-card live cs-museum">
+      <div id="cs-museum" class="cs-card live cs-museum">
+        <div class="cs-thumb" data-animate><svg viewBox="0 0 186 104" role="img" aria-label="Parent 1.23; Joint 1.55; Child 1.75"><line x1="0" x2="186" y1="86" y2="86" stroke="#D8D2C6" stroke-width="1"/><rect class="gb" x="13.6" y="57.3" width="34.7" height="28.7" rx="3" fill="var(--moss)"/><text x="31.0" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Parent</text><text class="gv" x="31.0" y="53.3" text-anchor="middle" font-size="9" font-weight="600" fill="var(--moss)">1.23</text><rect class="gb" x="75.6" y="49.8" width="34.7" height="36.2" rx="3" fill="var(--plum)"/><text x="93.0" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Joint</text><text class="gv" x="93.0" y="45.8" text-anchor="middle" font-size="9" font-weight="600" fill="var(--plum)">1.55</text><rect class="gb" x="137.6" y="45.2" width="34.7" height="40.8" rx="3" fill="var(--slate-blue)"/><text x="155.0" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Child</text><text class="gv" x="155.0" y="41.2" text-anchor="middle" font-size="9" font-weight="600" fill="var(--slate-blue)">1.75</text></svg><div class="t-cap">Reconstruction score by who led play (0&ndash;3)</div></div>
         <div class="cs-row-top">
           <div class="stamp">01</div>
           <div class="cs-title">Supporting Learning at Science Museums</div>
         </div>
         <div class="cs-blurb">Field study of 325 families at 3 children&#8217;s museums: when kids helped lead play, they explored more systematically &mdash; and that exploration predicted what they could rebuild on their own.</div>
-        <div class="cs-role"><b>My role</b>Coding-scheme development &amp; reliability, coder training, museum-partner coordination</div>
         <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">Observational Research</span><span class="cs-tag">Qualitative Coding</span><span class="cs-tag">Inter-rater Reliability</span><span class="cs-tag">Field Research</span></div>
+          <div class="cs-tags"><span class="cs-tag">Applied Learning</span><span class="cs-tag">Qualitative Coding</span><span class="cs-tag">Inter-rater Reliability</span></div>
           <a class="cs-link" href="museum-case-study.html">Read &#8594;</a>
         </div>
       </div>
 
-      <div class="cs-card live cs-swl">
+      <div id="cs-swl" class="cs-card live cs-swl">
+        <div class="cs-thumb" data-animate><svg viewBox="0 0 186 104" role="img" aria-label="Before and after ratings on four survey items"><text x="8" y="10" font-size="8.5" fill="#6B6458">Know what grad life is like here</text><line x1="8" x2="178" y1="18" y2="18" stroke="#E2DDD3"/><line class="dline" x1="86.6" x2="170.8" y1="18" y2="18" stroke="#9DB7D6" stroke-width="3"/><circle cx="86.6" cy="18" r="3.6" fill="#fff" stroke="#8C95A4" stroke-width="1.6"/><circle cx="170.8" cy="18" r="4" fill="var(--slate-blue)"/><text x="8" y="34" font-size="8.5" fill="#6B6458">Dept. welcomes underrep. students</text><line x1="8" x2="178" y1="42" y2="42" stroke="#E2DDD3"/><line class="dline" x1="116.0" x2="174.6" y1="42" y2="42" stroke="#9DB7D6" stroke-width="3"/><circle cx="116.0" cy="42" r="3.6" fill="#fff" stroke="#8C95A4" stroke-width="1.6"/><circle cx="174.6" cy="42" r="4" fill="var(--slate-blue)"/><text x="8" y="58" font-size="8.5" fill="#6B6458">Confident writing an application</text><line x1="8" x2="178" y1="66" y2="66" stroke="#E2DDD3"/><line class="dline" x1="112.5" x2="160.2" y1="66" y2="66" stroke="#9DB7D6" stroke-width="3"/><circle cx="112.5" cy="66" r="3.6" fill="#fff" stroke="#8C95A4" stroke-width="1.6"/><circle cx="160.2" cy="66" r="4" fill="var(--slate-blue)"/><text x="8" y="82" font-size="8.5" fill="#6B6458">Know how I fit the labs</text><line x1="8" x2="178" y1="90" y2="90" stroke="#E2DDD3"/><line class="dline" x1="145.3" x2="163.6" y1="90" y2="90" stroke="#9DB7D6" stroke-width="3"/><circle cx="145.3" cy="90" r="3.6" fill="#fff" stroke="#8C95A4" stroke-width="1.6"/><circle cx="163.6" cy="90" r="4" fill="var(--slate-blue)"/></svg><div class="t-cap">Before &rarr; after, 1&ndash;5 agreement</div></div>
         <div class="cs-row-top">
           <div class="stamp">02</div>
-          <div class="cs-title">How Children Learn From Others</div>
+          <div class="cs-title">Designing &amp; Evaluating a Graduate Preview Weekend</div>
         </div>
-        <div class="cs-blurb">63 published studies (6,525 children) coded into one dataset to show which assessment design choices change results &mdash; and which are safe to cut for cost.</div>
-        <div class="cs-role"><b>My role</b>Led systematic coding of the study corpus</div>
+        <div class="cs-blurb">Designed and evaluated a selective weekend program for prospective Ph.D. applicants (89 applied, 13 attended): ratings rose on all 12 pre/post survey items, with the largest gains in sense of belonging.</div>
         <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">Research Synthesis</span><span class="cs-tag">Data Structuring</span><span class="cs-tag">Measurement Design</span><span class="cs-tag">SPSS</span></div>
-          <a class="cs-link" href="selective-trust-review.html">Read &#8594;</a>
+          <div class="cs-tags"><span class="cs-tag">Program Design</span><span class="cs-tag">Pre/Post Evaluation</span><span class="cs-tag">Budget Management</span><span class="cs-tag">Event Logistics</span></div>
+          <a class="cs-link" href="graduate-preview-weekend.html">Read &#8594;</a>
         </div>
       </div>
 
-      <div class="cs-card wip cs-vaccine">
+      <div id="cs-generics" class="cs-card live cs-generics">
+        <div class="cs-thumb" data-animate><svg viewBox="0 0 186 104" role="img" aria-label="Label 6.3; Specific 4.43; Generic 5.84; All 7.28"><line x1="0" x2="186" y1="86" y2="86" stroke="#D8D2C6" stroke-width="1"/><rect class="gb" x="10.2" y="41.9" width="26.0" height="44.1" rx="3" fill="#5B86A6"/><text x="23.2" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Label</text><text class="gv" x="23.2" y="37.9" text-anchor="middle" font-size="9" font-weight="600" fill="#5B86A6">6.30</text><rect class="gb" x="56.7" y="55.0" width="26.0" height="31.0" rx="3" fill="#3E8E82"/><text x="69.8" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Specific</text><text class="gv" x="69.8" y="51.0" text-anchor="middle" font-size="9" font-weight="600" fill="#3E8E82">4.43</text><rect class="gb" x="103.2" y="45.1" width="26.0" height="40.9" rx="3" fill="#D4A017"/><text x="116.2" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">Generic</text><text class="gv" x="116.2" y="41.1" text-anchor="middle" font-size="9" font-weight="600" fill="#D4A017">5.84</text><rect class="gb" x="149.7" y="35.0" width="26.0" height="51.0" rx="3" fill="#2F6B4F"/><text x="162.8" y="99" text-anchor="middle" font-size="8.5" fill="#6B6458">All</text><text class="gv" x="162.8" y="31.0" text-anchor="middle" font-size="9" font-weight="600" fill="#2F6B4F">7.28</text><line x1="0" x2="186" y1="65.0" y2="65.0" stroke="#2B2620" stroke-width="1.2" stroke-dasharray="3 3"/></svg><div class="t-cap">Children&rsquo;s estimates; dashed = observed 3/10</div></div>
         <div class="cs-row-top">
           <div class="stamp">03</div>
-          <div class="cs-title">Vaccine Attitudes Survey</div>
-        </div>
-        <div class="cs-blurb">National survey of 801 adults, segmented by belief: conspiracy endorsers withheld trust from institutional sources specifically &mdash; not informal ones &mdash; with implications for who should carry a message.</div>
-        <div class="cs-role"><b>My role</b>Project lead &mdash; research question, survey design, fielding, analysis</div>
-        <div class="cs-row-bottom">
-          <div class="cs-tags"><span class="cs-tag">Survey Design</span><span class="cs-tag">Audience Segmentation</span><span class="cs-tag">Qualtrics</span><span class="cs-tag">R</span><span class="cs-tag">Tableau</span></div>
-          <span class="cs-link-disabled">Case study coming soon</span>
-        </div>
-      </div>
-
-      <div class="cs-card wip cs-generics">
-        <div class="cs-row-top">
-          <div class="stamp">04</div>
           <div class="cs-title">Instructional Language and Learning</div>
         </div>
         <div class="cs-blurb">Controlled experiments with children and adults: broad, generic phrasing led learners to over-generalize from limited evidence more than specific phrasing did.</div>
-        <div class="cs-role"><b>My role</b>Stimuli design, data collection, analysis &amp; writing (child studies)</div>
         <div class="cs-row-bottom">
           <div class="cs-tags"><span class="cs-tag">R</span><span class="cs-tag">Mixed-Effects Models</span><span class="cs-tag">A/B Testing</span><span class="cs-tag">Instructional Design</span></div>
+          <a class="cs-link" href="instructional-language.html">Read &#8594;</a>
+        </div>
+      </div>
+      <div id="cs-vaccine" class="cs-card wip cs-vaccine">
+        <div class="cs-thumb" data-animate><svg viewBox="0 0 186 104" role="img" aria-label="Survey icon">
+  <rect x="58" y="6" width="70" height="92" rx="6" fill="#F2F8EE" stroke="var(--moss)" stroke-width="1.8"/>
+  <rect x="78" y="1" width="30" height="11" rx="4" fill="var(--moss)"/>
+  <g fill="none" stroke="var(--moss)" stroke-width="1.6"><rect x="68" y="24" width="9" height="9" rx="2"/><rect x="68" y="44" width="9" height="9" rx="2"/><rect x="68" y="64" width="9" height="9" rx="2"/></g>
+  <path d="M69.5 28 l2.5 2.5 l5 -6" fill="none" stroke="var(--moss-dark)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M69.5 68 l2.5 2.5 l5 -6" fill="none" stroke="var(--moss-dark)" stroke-width="2" stroke-linecap="round"/>
+  <g fill="#C9DCC9"><rect x="84" y="26" width="34" height="4" rx="2"/><rect x="84" y="46" width="28" height="4" rx="2"/><rect x="84" y="66" width="32" height="4" rx="2"/></g>
+</svg><div class="t-cap">Dashboard preview coming soon</div></div>
+        <div class="cs-row-top">
+          <div class="stamp">04</div>
+          <div class="cs-title">Vaccine Attitudes Survey</div>
+        </div>
+        <div class="cs-blurb">National survey of 801 adults, segmented by belief: conspiracy endorsers withheld trust from institutional sources specifically &mdash; not informal ones &mdash; with implications for who should carry a message.</div>
+        <div class="cs-row-bottom">
+          <div class="cs-tags"><span class="cs-tag">Survey Design</span><span class="cs-tag">Audience Segmentation</span><span class="cs-tag">Qualtrics</span><span class="cs-tag">Prolific</span><span class="cs-tag">R</span><span class="cs-tag">Tableau</span></div>
           <span class="cs-link-disabled">Case study coming soon</span>
         </div>
       </div>
+
+    </div>
+
+    <div class="more-research">
+      <span class="more-label">More research</span>
+      <a href="selective-trust-review.html"><b>How Children Learn From Others</b> &middot; 63 published studies coded into one dataset to find which assessment design choices change results &#8594;</a>
     </div>
 
     <div class="pub-link-wrap">
@@ -291,7 +338,7 @@
 <div class="cta">
   <div class="wrap">
     <h2>Let&#8217;s talk</h2>
-    <p>I&#8217;m open to roles in UX research, consumer insights, market research, and learning science. If your team is trying to understand what people believe, trust, or learn, I&#8217;d love to hear from you.</p>
+    <p>I&#8217;m open to roles in learning science, instructional design, assessment, and applied behavioral research. If your team is trying to understand how people learn, what they trust, or whether a program is working, I&#8217;d love to hear from you.</p>
     <div class="contact-row">
       <a href="mailto:zfiniasz@gmail.com">zfiniasz@gmail.com</a>
       <a href="https://www.linkedin.com/in/zoe-finiasz/" target="_blank" rel="noopener">LinkedIn</a>
@@ -302,5 +349,61 @@
 
 <footer><div class="wrap">Zoe Finiasz, Ph.D. — Portfolio, 2026</div></footer>
 
+<script>
+/* Scroll-in motion: charts draw in and big numbers count up when they enter view.
+   Skipped entirely when the visitor's system asks for reduced motion (or without IntersectionObserver),
+   so content always shows in its final state. */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('[data-animate]');
+  var counters = document.querySelectorAll('[data-count]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  document.documentElement.classList.add('motion');
+
+  function parse(el){
+    var text = el.getAttribute('data-count');
+    var m = text.match(/^([^0-9]*)([0-9][0-9,]*\.?[0-9]*)(.*)$/);
+    if (!m) return null;
+    var numStr = m[2];
+    return { text:text, prefix:m[1], suffix:m[3],
+             target:parseFloat(numStr.replace(/,/g,'')),
+             decimals:(numStr.split('.')[1] || '').length,
+             commas:numStr.indexOf(',') > -1 };
+  }
+  function fmt(c, v){
+    var s = c.commas
+      ? v.toLocaleString('en-US', {minimumFractionDigits:c.decimals, maximumFractionDigits:c.decimals})
+      : v.toFixed(c.decimals);
+    return c.prefix + s + c.suffix;
+  }
+  function countUp(el){
+    var c = parse(el); if (!c) return;
+    var start = null, dur = 1100;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = fmt(c, c.target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step); else el.textContent = c.text;
+    }
+    requestAnimationFrame(step);
+  }
+  counters.forEach(function(el){ var c = parse(el); if (c) el.textContent = fmt(c, 0); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      if (el.hasAttribute('data-count')) countUp(el);
+      else el.classList.add('in-view');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.35 });
+  targets.forEach(function(el){ io.observe(el); });
+  counters.forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>
