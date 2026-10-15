@@ -3,396 +3,1144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vaccine Attitudes &amp; Institutional Trust — Zoe Finiasz</title>
+<title>Vaccine Attitudes Survey &mdash; Zoe Finiasz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  :root{
-    --bg: #F0F3EE;
+
+  :root {
+    --ink: #2B2620;
+    --ink-dim: #48505F;
+    --ink-soft: #48505F;
     --panel: #FFFFFF;
-    --ink: #1E2A2E;
-    --ink-soft: #4A5A5E;
-    --teal: #2C6B65;
-    --teal-deep: #1F4C48;
-    --gold: #B8873A;
-    --line: #D8DED6;
-    --mono: 'IBM Plex Mono', 'SF Mono', monospace;
-  }
+    --card-tint: #F2F8EE;
+    --line: #CFDCD3;
+    --accent: #4B7A5E;         /* moss */
+    --accent-dark: #365A44;    /* moss-dark: header, banners, headline box */
+    --accent-tint: #E8F1E9;    /* section-head bands */
+    --accent-tint-2: #F6FAF4;
+    --accent-soft: #A9CFB4;    /* pale moss for labels on the dark header */
+    --accent-soft-ink: #7FA48C;/* lighter step of the moss ramp (informal sources) */
 
-  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap');
-
-  *{ box-sizing: border-box; }
-
-  html{ scroll-behavior: smooth; }
-
-  body{
-    margin:0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Source Sans 3', sans-serif;
-    line-height: 1.6;
+    /* audience segments: separate categorical palette, kept clear of the moss accent */
+    --c-non: #5B6472;      /* slate: matches the Tableau dashboard */
+    --c-non-ink: #4A525E;
+    --c-end: #C25A1C;      /* burnt orange: matches the Tableau dashboard */
+    --c-end-ink: #A3470F;  /* darker orange for text contrast */
   }
-
-  a{ color: var(--teal); }
-
-  .wrap{
-    max-width: 1080px;
-    margin: 0 auto;
-    padding: 0 32px;
-  }
-
-  /* Nav */
-  .topnav{
-    border-bottom: 1px solid var(--line);
-    background: rgba(245,246,243,0.92);
-    backdrop-filter: blur(6px);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-  }
-  .topnav .wrap{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    padding-top: 18px;
-    padding-bottom: 18px;
-  }
-  .topnav .brand{
-    font-family:'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.05rem;
-    letter-spacing: 0.01em;
-  }
-  .topnav .back{
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    text-decoration:none;
-    color: var(--ink-soft);
-    border: 1px solid var(--line);
-    padding: 7px 14px;
-    border-radius: 100px;
-    transition: border-color .15s ease, color .15s ease;
-  }
-  .topnav .back:hover{ border-color: var(--teal); color: var(--teal); }
-
-  /* Hero */
-  header.hero{
-    padding: 72px 0 48px;
-    border-bottom: 1px solid var(--line);
-  }
-  .eyebrow{
-    font-family: var(--mono);
-    font-size: 0.78rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--teal);
-    margin-bottom: 18px;
-  }
-  h1{
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: clamp(2rem, 4vw, 2.9rem);
-    line-height: 1.12;
-    margin: 0 0 22px;
-    max-width: 15ch;
-    color: var(--teal-deep);
-  }
-  .dek{
-    font-size: 1.08rem;
-    color: var(--ink-soft);
-    max-width: 62ch;
-    margin: 0 0 32px;
-  }
-
-  .metarow{
-    display:flex;
-    flex-wrap: wrap;
-    gap: 28px;
-    margin-top: 32px;
-  }
-  .metaitem{
-    border-left: 2px solid var(--gold);
-    padding-left: 14px;
-  }
-  .metaitem .k{
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-soft);
-    margin-bottom: 4px;
-  }
-  .metaitem .v{
-    font-size: 0.92rem;
-    font-weight: 500;
-  }
-
-  .finding-callout{
-    background: var(--teal-deep);
-    color: #EAF2EF;
-    border-radius: 14px;
-    padding: 28px 32px;
-    margin-top: 40px;
-  }
-  .finding-callout .label{
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: #9FC9BF;
-    margin-bottom: 10px;
-  }
-  .finding-callout p{
+  * { box-sizing: border-box; }
+  body {
     margin: 0;
-    font-size: 1.05rem;
-    font-family: 'Fraunces', serif;
-    font-weight: 400;
-    line-height: 1.5;
-    max-width: 68ch;
+    background: var(--panel);
+    color: var(--ink);
+    font-family: "Source Sans 3", sans-serif;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 840px; margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 {
+    font-family: "Source Serif 4", serif;
+    color: var(--ink);
+    line-height: 1.18;
+    margin: 0;
+  }
+  p { margin: 0 0 1.05em 0; color: var(--ink-soft); font-size: 16.5px; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--accent); }
+
+  .mono {
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: 0.06em;
   }
 
-  /* Sections */
-  section.viz-section{
-    padding: 64px 0;
-    border-bottom: 1px solid var(--line);
+  /* ============ HEADER ============ */
+  .header-top {
+    background: var(--accent-dark);
+    color: #fff;
+    padding: 42px 0 34px 0;
   }
-  section.viz-section:last-of-type{ border-bottom: none; }
-
-  .section-head{
-    display:flex;
-    align-items: baseline;
-    gap: 16px;
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--accent-soft);
     margin-bottom: 8px;
   }
-  .section-num{
-    font-family: var(--mono);
-    font-size: 0.85rem;
-    color: var(--gold);
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    color: #fff;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.45);
+    border-radius: 999px;
+    padding: 6px 15px;
+    margin-bottom: 26px;
+    transition: background 0.15s ease;
   }
-  h2{
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 1.55rem;
+  .back-btn:hover { background: rgba(255,255,255,0.12); }
+  .header-top h1 {
+    font-size: clamp(28px, 4.2vw, 38px);
+    font-weight: 600;
+    color: #fff;
+    max-width: 700px;
+  }
+  .header-top .sub {
     margin: 0;
-    color: var(--teal-deep);
+    font-size: 16px;
+    color: rgba(255,255,255,0.72);
+    max-width: 620px;
   }
-  .section-desc{
-    color: var(--ink-soft);
-    max-width: 66ch;
-    margin: 14px 0 32px;
-    font-size: 0.98rem;
+  .header-bottom { background: var(--panel); padding: 28px 0 30px 0; }
+  .header-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px 24px;
+  }
+  .header-field {
+    border-left: 2px solid var(--accent);
+    padding: 0 0 4px 16px;
+  }
+  .header-field .field-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .header-field .field-value { font-size: 15px; color: var(--ink); line-height: 1.4; }
+  .header-field .field-value-lg {
+    font-family: "Source Serif 4", serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .header-field .field-subtext { font-size: 13px; color: var(--ink-dim); margin-top: 3px; line-height: 1.4; }
+  .headline-finding { margin: 22px 0 22px 0; padding: 2px 0 2px 22px; border-left: 3px solid var(--accent-soft); max-width: 44em; }
+  .headline-finding .hf-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .headline-finding p { margin: 0; color: #fff; font-family: "Source Serif 4", serif; font-size: clamp(20px, 2.6vw, 26px); font-weight: 600; line-height: 1.38; text-wrap: pretty; }
+
+  /* ============ STICKY PATH NAV ============ */
+  .path-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(246,250,244,0.94);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .path-nav-inner {
+    max-width: 840px;
+    margin: 0 auto;
+    padding: 13px 28px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .path-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    padding: 5px 2px;
+    white-space: nowrap;
+    transition: color 0.15s ease;
+  }
+  .path-item .dot {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--line);
+    flex-shrink: 0;
+    transition: background 0.15s ease, box-shadow 0.15s ease;
+  }
+  .path-item.active { color: var(--accent-dark); font-weight: 700; }
+  .path-item.active .dot { background: var(--accent); box-shadow: 0 0 0 4px rgba(75, 122, 94, 0.18); }
+  .path-connector {
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--line);
+    min-width: 14px;
+    margin: 0 2px;
   }
 
-  .viz-section .wrap{
-    max-width: 1360px;
+  /* ============ SECTIONS ============ */
+  section.numbered { padding: 46px 0 24px 0; border-top: 1px solid var(--line); scroll-margin-top: 60px; }
+  section.numbered:first-of-type { border-top: none; padding-top: 0; }
+  #sec-insights { background: var(--accent-tint); }
+  .section-head-band { padding: 34px 0 14px 0; background: var(--accent-tint); }
+  .section-eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent-dark);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+  }
+  .num-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    border: 1.5px solid var(--accent);
+    color: var(--accent-dark);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px;
+    transform: rotate(-6deg);
+    margin-right: 10px;
+    flex-shrink: 0;
+    background: #fff;
+  }
+  .section-head-band h2 { font-size: clamp(23px, 3vw, 28px); font-weight: 600; margin: 0 0 10px 0; }
+  .section-desc { margin-top: 14px; max-width: 680px; }
+
+  /* duo-example */
+  .duo-example {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin: 22px 0 6px 0;
+  }
+  .duo-card {
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 15px;
+    background: var(--accent-tint-2);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+  }
+  .duo-card.strong-claim { border-left-color: var(--example-strong); background: var(--accent-tint-2); }
+  .duo-card .tag {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em;
+    display: block; margin-bottom: 6px; color: var(--accent-dark); opacity: 0.85;
+  }
+  .duo-card em { font-style: italic; color: var(--ink); }
+
+  /* stat row */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin: 30px 0 22px 0;
+  }
+  .stat { border-top: 3px solid var(--accent); padding: 14px 0 0 0; min-width: 0; }
+  .stat .num { font-family: "Source Serif 4", serif; font-size: clamp(38px, 5.2vw, 52px); font-weight: 700; line-height: 1; letter-spacing: -0.02em; color: var(--accent-dark); font-variant-numeric: tabular-nums; }
+  .stat .label { font-size: 14px; color: var(--ink-dim); margin-top: 8px; line-height: 1.4; }
+
+  .note-callout {
+    background: var(--accent-tint);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 14.5px;
+    color: var(--ink-dim);
+    margin-top: 16px;
   }
 
-  .viz-note{
-    font-family: var(--mono);
-    font-size: 0.76rem;
-    color: var(--ink-soft);
-    letter-spacing: 0.02em;
-    margin: -16px 0 20px;
-  }
-
-  .viz-frame{
+  /* ============ INSIGHT CARDS ============ */
+  .insight-card {
     background: var(--panel);
     border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(18,59,54,0.04);
+    border-radius: 12px;
+    box-shadow: 0 3px 14px rgba(54, 90, 68, 0.07);
     overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .insight-banner {
+    background: var(--accent-dark);
+    color: #fff;
+    padding: 11px 26px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .insight-banner .tag-num {
+    flex: 0 0 auto;
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .insight-banner .tag-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .insight-body { padding: 26px 28px 28px 28px; }
+  .insight-body h3 { font-size: 18px; font-weight: 600; margin: 0 0 10px 0; color: var(--ink); }
+  .insight-body .desc { font-size: 15.5px; max-width: 680px; }
+
+  .stats-details { margin-top: 14px; font-size: 13px; color: var(--ink-dim); }
+  .stats-details summary {
+    cursor: pointer;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    font-weight: 600;
+  }
+  .stats-details ul { margin: 10px 0 0; padding-left: 18px; line-height: 1.6; }
+
+  .recommendation {
+    background: rgba(75, 122, 94, 0.08);
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    padding: 14px 18px;
+    margin-top: 18px;
+  }
+  .recommendation .rec-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    font-weight: 600;
+    margin: 0 0 6px 0;
+  }
+  .recommendation p { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.6; }
+
+  /* interactive chart, restyled as part of insight card */
+  .chart-module {
+    background: var(--card-tint);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 24px 22px 18px 22px;
+    margin-top: 20px;
+    box-shadow: 0 3px 14px rgba(54, 90, 68, 0.07);
+  }
+  .chart-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .chip {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 9px 15px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink-dim);
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .chip:hover { transform: translateY(-1px); }
+  .chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .chip.active { border-color: currentColor; color: #fff; }
+  .chip[data-cond="Label Only"].active { background: var(--c-label); }
+  .chip[data-cond="Specific"].active { background: var(--c-specific); }
+  .chip[data-cond="Generic"].active { background: var(--c-generic); }
+  .chip[data-cond="All"].active { background: var(--c-all); }
+  .toggle-row {
+    display: flex; align-items: center; gap: 10px;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; color: var(--ink-dim);
+    margin-bottom: 4px;
+  }
+  .toggle-row input { accent-color: var(--accent); }
+  #chartCanvas { max-height: 400px; }
+  .hover-readout {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12.5px;
+    color: var(--ink);
+    min-height: 20px;
+    margin-bottom: 10px;
+  }
+  .hover-readout .val { font-weight: 600; color: var(--accent-dark); }
+  .chart-note {
+    font-size: 12.5px; color: var(--ink-dim); margin-top: 12px; padding-top: 12px;
+    border-top: 1px dashed var(--line);
   }
 
-  .viz-frame .tableauPlaceholder{
-    width: 100% !important;
-    max-width: 100% !important;
+  figure { margin: 20px 0 4px 0; }
+  figure img { width: 100%; border-radius: 6px; border: 1px solid var(--line); display: block; }
+  figcaption { font-size: 12.5px; color: var(--ink-dim); margin-top: 8px; }
+
+  .translate-callout {
+    margin-top: 22px;
+    padding: 18px 22px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--accent-dark);
+    border-radius: 12px;
+  }
+  .translate-callout .tc-eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    margin: 0 0 8px 0;
+    font-weight: 600;
+  }
+  .translate-callout p { font-size: 15.5px; line-height: 1.6; margin: 0; color: var(--ink); }
+
+  /* ============ ICONS ============ */
+  .claim-icon { display: block; width: 100%; max-width: 150px; height: auto; margin: 0 0 12px 0; }
+  .icon-key { font-size: 13px; font-style: italic; color: var(--ink-dim); margin: 6px 0 16px 0; }
+  .framework { display: flex; align-items: stretch; gap: 10px; margin: 24px 0 8px 0; flex-wrap: wrap; }
+  .fw-box { background: var(--accent-tint-2); border: 1px solid var(--line); border-top: 4px solid var(--accent-soft); border-radius: 10px; padding: 16px 18px; flex: 1 1 200px; min-width: 0; }
+  .fw-box.s2 { border-top-color: var(--accent); }
+  .fw-box.s3 { border-top-color: var(--accent-dark); }
+  .fw-icon-frame { background: #fff; border: 1.5px solid var(--line); border-radius: 12px; height: 104px; margin: 2px 0 12px 0; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 3px rgba(54,90,68,0.08); }
+  .fw-icon { display: block; height: 82px; width: auto; max-width: 88%; }
+  .fw-title { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--accent-dark); }
+  .fw-sub { font-family: "Source Serif 4", serif; font-weight: 600; font-size: 15.5px; color: var(--ink); margin-top: 5px; line-height: 1.35; }
+  .fw-arrow { display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 20px; }
+  @media (max-width: 680px) { .framework { flex-direction: column; } .fw-arrow { transform: rotate(90deg); } }
+
+  /* ============ MOTION (only when allowed; see script at end) ============ */
+  figure[data-animate] { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .motion figure[data-animate]:not(.in-view) { opacity: 0; transform: translateY(18px); }
+
+  /* ============ FOOTER ============ */
+  footer { background: var(--panel); color: var(--ink-dim); font-size: 12px; line-height: 1.6; padding: 30px 0 44px 0; border-top: 1px solid var(--line); }
+  .footer-grid {
+    display: block;
+  }
+  .footer-block { margin-bottom: 18px; }
+  .footer-block:last-child { margin-bottom: 0; }
+  .footer-block .fb-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--ink-dim);
+    margin: 0 0 4px 0 !important;
+  }
+  .footer-block p { margin: 0; }
+  .footer-block em { color: var(--ink); font-style: italic; }
+  footer a { color: var(--accent-dark); }
+
+  @media (max-width: 680px) {
+    .duo-example { grid-template-columns: 1fr; }
+    .stat-row { grid-template-columns: 1fr 1fr; }
+    .header-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .path-item { font-size: 10px; gap: 5px; }
+    .path-connector { min-width: 8px; }
+  }
+  .stat .num.num-range{font-size:clamp(22px,2.9vw,28px); padding-top:14px; letter-spacing:-0.01em; white-space:nowrap;}
+
+  /* ============ NATIVE CHARTS (match the other case studies) ============ */
+  svg.insight-chart { width: 100%; display: block; overflow: visible; margin: 8px 0 4px 0; font-family: "Source Sans 3", sans-serif; }
+  .insight-chart .bar-value { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; text-anchor: middle; }
+  .insight-chart .bar-group-label { font-size: 13px; font-weight: 600; text-anchor: middle; fill: var(--ink); }
+  .insight-chart .bar-axis-tick { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--ink-dim); }
+  .insight-chart .panel-title { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; font-weight: 600; fill: var(--accent-dark); }
+  .insight-chart .chart-axis-line { stroke: var(--line); stroke-width: 1; }
+  .insight-chart .chart-gridline { stroke: var(--line); stroke-width: 1; opacity: .5; }
+  .insight-chart .panel-divider { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 4; }
+  .insight-chart .err line { stroke: var(--ink); stroke-width: 1.4; }
+  .insight-chart .observed { stroke: var(--ink); stroke-width: 1.3; stroke-dasharray: 5 4; }
+  .insight-chart .observed-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; fill: var(--ink); }
+  .insight-chart .bar { transform-box: fill-box; transform-origin: 50% 100%; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+  .insight-chart .err, .insight-chart .bar-value { transition: opacity .4s ease .75s; }
+  .motion .insight-chart:not(.in-view) .bar { transform: scaleY(0); }
+  .motion .insight-chart:not(.in-view) .err, .motion .insight-chart:not(.in-view) .bar-value { opacity: 0; }
+  figure .chart-figure-note { font-size: 12px; color: var(--ink-dim); margin: 2px 0 0 0; }
+
+  /* four phrasings, step 1 */
+  .phrases { display: flex; flex-direction: column; gap: 6px; width: 100%; padding: 0 10px; font-size: 11px; line-height: 1.25; color: var(--ink); }
+  .phrases div { display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .fw-box.s1 { flex: 1.35 1 0; }
+  .fw-box.s2, .fw-box.s3 { flex: 1 1 0; }
+  @media (max-width: 680px) { .fw-box.s1, .fw-box.s2, .fw-box.s3 { flex: 0 1 auto; } }
+  .phrases .pd { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .chart-module { background: #fff; }
+
+  /* ---------- Headline finding: dark box under the header fields (same on all case studies) ---------- */
+  .headline-finding{margin:24px 0 0; padding:20px 24px; border:none; max-width:none; background:var(--accent-dark); border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12);}
+  .headline-finding .hl-eyebrow, .headline-finding .hf-label{font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; color:var(--accent-soft); margin:0 0 8px;}
+  .headline-finding p.hl-text, .headline-finding p{font-family:'Source Serif 4', serif; font-size:clamp(17px,2vw,19.5px); font-weight:600; color:#fff; margin:0; line-height:1.5; text-wrap:pretty;}
+  /* ---------- Type matched to the other case study pages ---------- */
+  .back-btn{font-size:14px; font-weight:600; letter-spacing:normal; padding:8px 20px; margin-bottom:24px;}
+  .header-top{padding:34px 0 36px 0;}
+  .header-top h1{font-size:clamp(26px,3.6vw,40px); font-weight:700; letter-spacing:-0.01em; line-height:1.15; margin:0 0 14px 0;}
+  .header-top .sub{font-size:15.5px; line-height:1.6;}
+  .header-field .field-label{font-weight:400; letter-spacing:.1em;}
+  .header-field .field-value-lg{font-family:'Source Sans 3', sans-serif; font-size:15px; font-weight:400; line-height:1.4;}
+  .section-head-band h2{font-size:clamp(20px,2.4vw,26px);}
+  .recommendation .rec-label{font-weight:400;}
+  .footer-block p{font-size:12.5px;}
+
+  /* ============ PAGE-SPECIFIC ============ */
+  .note-callout p { font-size: 14.5px; color: var(--ink-dim); margin: 0 0 8px 0; }
+  .note-callout p:last-child { margin-bottom: 0; }
+
+  .source-spectrum { display: flex; gap: 14px; margin: 22px 0 22px 0; flex-wrap: wrap; }
+  .ss-group { flex: 2 1 220px; background: var(--accent-tint-2); border: 1px solid var(--line); border-top: 4px solid var(--accent-soft); border-radius: 10px; padding: 12px 14px 14px; min-width: 0; }
+  .ss-group.inst { flex: 3 1 300px; border-top-color: var(--accent); }
+  .ss-group-label { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: var(--accent-dark); margin-bottom: 10px; }
+  .ss-items { display: flex; gap: 10px; }
+  .ss-item { flex: 1 1 0; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 10px 6px 8px; text-align: center; min-width: 0; }
+  .ss-item svg { width: 44px; height: 38px; display: block; margin: 0 auto 6px; }
+  .ss-item span { display: block; font-size: 13px; line-height: 1.3; color: var(--ink); }
+
+  .claims { display: flex; flex-direction: column; gap: 9px; width: 100%; padding: 0 12px; font-size: 12px; line-height: 1.3; color: var(--ink); }
+  .claims div { display: flex; align-items: flex-start; gap: 7px; }
+  .claims .pd { width: 8px; height: 8px; border-radius: 50%; flex: none; background: var(--accent); margin-top: 4px; }
+  .fw-box.s1, .fw-box.s2, .fw-box.s3 { flex: 1 1 0; }
+  @media (max-width: 680px) { .fw-box.s1, .fw-box.s2, .fw-box.s3 { flex: 0 1 auto; } }
+
+  .chip[data-claim].active { background: var(--accent-dark); border-color: var(--accent-dark); color: #fff; }
+  .legend-row { display: flex; gap: 18px; font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-dim); margin-bottom: 6px; }
+  .legend-row i, .type-key i { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 7px; vertical-align: -1px; }
+  .canvas-box { position: relative; height: 360px; }
+  .type-key { display: flex; gap: 18px; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-dim); margin: 4px 0 0 0; }
+  .insight-chart .row-label text { font-size: 13px; fill: var(--ink); }
+  .insight-chart .hval text { text-anchor: start; font-size: 12px; }
+  .insight-chart .slope-label text[text-anchor="end"] { text-anchor: end; }
+  .insight-chart .slope-label text[text-anchor="start"] { text-anchor: start; }
+  .insight-chart .hbar { transform-box: fill-box; transform-origin: 0% 50%; transition: transform .9s cubic-bezier(.2,.7,.2,1); }
+  .motion .insight-chart:not(.in-view) .hbar { transform: scaleX(0); }
+  .insight-chart .slope, .insight-chart .slope-label, .insight-chart .hval { transition: opacity .8s ease .2s; }
+  .motion .insight-chart:not(.in-view) .slope, .motion .insight-chart:not(.in-view) .slope-label, .motion .insight-chart:not(.in-view) .hval { opacity: 0; }
+  .insight-body p.desc + p.desc { margin-top: -4px; }
+
+  .tableau-link { display: block; margin: 22px 0 46px; padding: 18px 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--accent-dark); color: #fff; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+  .tableau-link:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(54,90,68,.18); }
+  .tableau-link span { display: block; }
+  .tableau-link .tl-preview { margin: 16px -22px -18px; overflow: hidden; border-radius: 0 0 11px 11px; background: #fff; border-top: 1px solid rgba(255,255,255,.15); aspect-ratio: 1600 / 391; height: auto; }
+  .tableau-link .tl-preview img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .tl-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent-soft); margin-bottom: 4px; }
+  .tl-title { font-family: "Source Serif 4", serif; font-size: 19px; font-weight: 600; }
+  .tl-sub { font-size: 14px; color: rgba(255,255,255,.75); margin-top: 2px; }
+
+  @media (max-width: 560px) {
+    .ss-items { flex-wrap: wrap; }
+    .ss-item { flex: 1 1 40%; }
+    .canvas-box { height: 300px; }
+    .stat .num.num-range { white-space: normal; }
+    figure:has(svg.insight-chart) { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    svg.insight-chart { min-width: 540px; }
   }
 
-  .viz-frame .tableauPlaceholder object,
-  .viz-frame .tableauPlaceholder iframe{
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Footer */
-  footer{
-    padding: 48px 0 72px;
-    color: var(--ink-soft);
-    font-size: 0.88rem;
-  }
-  footer .note{
-    font-family: var(--mono);
-    font-size: 0.76rem;
-    color: #7C877F;
-    max-width: 68ch;
-    line-height: 1.7;
-  }
-
-  @media (max-width: 640px){
-    header.hero{ padding: 48px 0 36px; }
-    .wrap{ padding: 0 20px; }
-    .finding-callout{ padding: 22px; }
-    section.viz-section{ padding: 44px 0; }
-  }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ============ HEADER ============ -->
+<div class="header-top">
   <div class="wrap">
-    <div class="brand">Zoe Finiasz</div>
-    <a class="back" href="index.html">← Portfolio</a>
+    <a class="back-btn" href="index.html">&larr; Portfolio</a>
+    <div class="eyebrow">Public Health Attitudes &middot; Survey Research</div>
+    <h1>Vaccine Attitudes Survey</h1>
+    <p class="sub">An 800-person survey of vaccine conspiracy endorsement compared how two audience segments rated the same counter-evidence coming from five different kinds of sources.</p>
+  </div>
+</div>
+<div class="header-bottom">
+  <div class="wrap">
+    <div class="header-grid">
+      <div class="header-field">
+        <div class="field-label">Sample</div>
+        <div class="field-value-lg">800 U.S. adults</div>
+        <div class="field-subtext">Prolific; quota-balanced between vaccine-hesitant and vaccine-supportive adults</div>
+      </div>
+      <div class="header-field">
+        <div class="field-label">Design</div>
+        <div class="field-value">Within-subjects survey (2 claims &times; 5 evidence sources)</div>
+      </div>
+      <div class="header-field">
+        <div class="field-label">Analysis</div>
+        <div class="field-value">R (tidyverse, lme4); linear mixed models; Tableau Public</div>
+      </div>
+    </div>
+    <div class="headline-finding">
+      <div class="hf-label">Headline finding</div>
+      <p>Conspiracy endorsers and non-endorsers trusted informal sources about equally. Non-endorsers trusted institutional sources (like medical journals) about 2.4 times as much as endorsers did.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ STICKY PATH NAV ============ -->
+<nav class="path-nav">
+  <div class="path-nav-inner" id="pathNavInner">
+    <a href="#sec-challenge" class="path-item" data-target="sec-challenge"><span class="dot"></span>Challenge</a>
+    <span class="path-connector"></span>
+    <a href="#sec-method" class="path-item" data-target="sec-method"><span class="dot"></span>Methodology &amp; Scope</a>
+    <span class="path-connector"></span>
+    <a href="#sec-insights" class="path-item" data-target="sec-insights"><span class="dot"></span>Insights</a>
   </div>
 </nav>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="eyebrow">Case Study — Applied Behavioral Research</div>
-    <h1>Vaccine Attitudes &amp; Institutional Trust</h1>
-    <p class="dek">
-      A national survey study examining how conspiracy‑belief endorsement shapes trust in
-      evidence — and whether that distrust is general or targeted specifically at
-      institutional sources.
-    </p>
-
-    <div class="metarow">
-      <div class="metaitem">
-        <div class="k">Sample</div>
-        <div class="v">801 U.S. adults, Prolific</div>
-      </div>
-      <div class="metaitem">
-        <div class="k">Method</div>
-        <div class="v">Survey + attitude scaling</div>
-      </div>
-      <div class="metaitem">
-        <div class="k">Analysis</div>
-        <div class="v">R — cleaning, modeling, aggregation</div>
-      </div>
-      <div class="metaitem">
-        <div class="k">Role</div>
-        <div class="v">Design, analysis &amp; visualization</div>
-      </div>
-    </div>
-
-    <div class="finding-callout">
-      <div class="label">Headline finding</div>
-      <p>Conspiracy endorsers don't distrust evidence in general — they selectively
-      withhold trust from institutional sources of evidence specifically, while
-      remaining receptive to evidence from other channels.</p>
+<!-- ============ SECTION 01 — CHALLENGE ============ -->
+<section class="numbered" id="sec-challenge">
+  <div class="section-head-band">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="num-badge">01</span>Challenge</div>
+      <h2>The same evidence lands differently depending on who delivers it</h2>
     </div>
   </div>
-</header>
-
-<section class="viz-section" id="main-findings">
   <div class="wrap">
-    <div class="section-head">
-      <span class="section-num">01</span>
-      <h2>Main Findings</h2>
+    <div class="section-desc">
+      <p>Communicators often assume the most authoritative source is the most persuasive. That doesn't hold if part of the audience distrusts a whole type of source.</p>
+
+      <div class="source-spectrum" aria-label="Five evidence sources, from informal to institutional">
+        <div class="ss-group">
+          <div class="ss-group-label">Informal</div>
+          <div class="ss-items">
+            <div class="ss-item">
+              <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M8 4 h32 a5 5 0 0 1 5 5 v14 a5 5 0 0 1 -5 5 h-20 l-8 7 l1 -7 h-5 a5 5 0 0 1 -5 -5 v-14 a5 5 0 0 1 5 -5 Z" fill="#fff" stroke="var(--accent-soft-ink)" stroke-width="2"/><circle cx="17" cy="16" r="2" fill="var(--accent-soft-ink)"/><circle cx="24" cy="16" r="2" fill="var(--accent-soft-ink)"/><circle cx="31" cy="16" r="2" fill="var(--accent-soft-ink)"/></svg>
+              <span>Personal anecdote</span>
+            </div>
+            <div class="ss-item">
+              <svg viewBox="0 0 48 40" aria-hidden="true"><rect x="14" y="2" width="20" height="36" rx="4" fill="#fff" stroke="var(--accent-soft-ink)" stroke-width="2"/><rect x="18" y="9" width="12" height="3" rx="1.5" fill="var(--accent-soft-ink)"/><rect x="18" y="15" width="9" height="3" rx="1.5" fill="var(--accent-soft-ink)" opacity=".6"/><path d="M19 27 l3 3 l7 -7" fill="none" stroke="var(--accent-soft-ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Social media post</span>
+            </div>
+          </div>
+        </div>
+        <div class="ss-group inst">
+          <div class="ss-group-label">Institutional</div>
+          <div class="ss-items">
+            <div class="ss-item">
+              <svg viewBox="0 0 48 40" aria-hidden="true"><rect x="6" y="4" width="36" height="32" rx="3" fill="#fff" stroke="var(--accent)" stroke-width="2"/><rect x="11" y="9" width="26" height="5" rx="1" fill="var(--accent)"/><rect x="11" y="18" width="11" height="12" rx="1" fill="var(--accent)" opacity=".45"/><line x1="26" y1="19" x2="37" y2="19" stroke="var(--accent)" stroke-width="2"/><line x1="26" y1="24" x2="37" y2="24" stroke="var(--accent)" stroke-width="2"/><line x1="26" y1="29" x2="34" y2="29" stroke="var(--accent)" stroke-width="2"/></svg>
+              <span>News article</span>
+            </div>
+            <div class="ss-item">
+              <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M6 14 L24 4 L42 14 Z" fill="#fff" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/><g stroke="var(--accent)" stroke-width="3"><line x1="12" y1="18" x2="12" y2="31"/><line x1="20" y1="18" x2="20" y2="31"/><line x1="28" y1="18" x2="28" y2="31"/><line x1="36" y1="18" x2="36" y2="31"/></g><rect x="6" y="33" width="36" height="4" rx="1" fill="var(--accent)"/></svg>
+              <span>Government statement</span>
+            </div>
+            <div class="ss-item">
+              <svg viewBox="0 0 48 40" aria-hidden="true"><path d="M10 3 h24 l6 6 v28 h-30 Z" fill="#fff" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round"/><rect x="21" y="12" width="6" height="16" rx="1" fill="var(--accent)"/><rect x="16" y="17" width="16" height="6" rx="1" fill="var(--accent)"/></svg>
+              <span>Medical journal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p>This study asked whether people who reject a claim are rejecting the evidence itself or only certain sources of it.</p>
     </div>
-    <p class="section-desc">
-      Explore how trust in evidence sources varies by conspiracy‑belief endorsement,
-      and where institutional distrust concentrates relative to trust in evidence overall.
-    </p>
-    <p class="viz-note">Interactive dashboards below — best viewed on desktop.</p>
-    <div class="viz-frame">
-      <div class='tableauPlaceholder' id='viz1787975322329' style='position: relative'>
-        <noscript>
-          <a href='#'>
-            <img alt=' ' src='https://public.tableau.com/static/images/Va/VaxDataDraft/Dashboard1/1_rss.png' style='border: none' />
-          </a>
-        </noscript>
-        <object class='tableauViz' style='display:none;'>
-          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-          <param name='embed_code_version' value='3' />
-          <param name='site_root' value='' />
-          <param name='name' value='VaxDataDraft&#47;Dashboard1' />
-          <param name='tabs' value='no' />
-          <param name='toolbar' value='yes' />
-          <param name='static_image' value='https://public.tableau.com/static/images/Va/VaxDataDraft/Dashboard1/1.png' />
-          <param name='animate_transition' value='yes' />
-          <param name='display_static_image' value='yes' />
-          <param name='display_spinner' value='yes' />
-          <param name='display_overlay' value='yes' />
-          <param name='display_count' value='yes' />
-          <param name='language' value='en-US' />
-        </object>
+  </div>
+</section>
+
+<!-- ============ SECTION 02 — METHODOLOGY & SCOPE ============ -->
+<section class="numbered" id="sec-method">
+  <div class="section-head-band">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="num-badge">02</span>Methodology &amp; scope</div>
+      <h2>Rating counter-evidence from five sources</h2>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="section-desc">
+      <p>Each participant did this twice, once for a claim that the government is lying about the COVID-19 vaccine&rsquo;s safety and effectiveness and once for the same claim about pharmaceutical companies. They rated their belief in the claim, then saw evidence against it from five sources. After each source, they rated how much they trusted it and how much they now believed the claim.</p>
+
+      <div class="framework">
+        <div class="fw-box s1">
+          <div class="fw-icon-frame"><div class="claims">
+            <div><span class="pd"></span>The government is lying about the vaccine</div>
+            <div><span class="pd"></span>Big Pharma is lying about the vaccine</div>
+          </div></div>
+          <div class="fw-title">1 &middot; Rate a claim</div>
+        </div>
+        <div class="fw-arrow" aria-hidden="true">&rarr;</div>
+        <div class="fw-box s2">
+          <div class="fw-icon-frame"><svg class="fw-icon" viewBox="0 0 150 100" aria-hidden="true">
+            <g fill="#fff" stroke-width="2">
+              <rect x="10" y="30" width="22" height="30" rx="3" stroke="var(--accent-soft-ink)"/>
+              <rect x="37" y="30" width="22" height="30" rx="3" stroke="var(--accent-soft-ink)"/>
+              <rect x="64" y="30" width="22" height="30" rx="3" stroke="var(--accent)"/>
+              <rect x="91" y="30" width="22" height="30" rx="3" stroke="var(--accent)"/>
+              <rect x="118" y="30" width="22" height="30" rx="3" stroke="var(--accent)"/>
+            </g>
+            <g stroke-width="2">
+              <line x1="15" y1="40" x2="27" y2="40" stroke="var(--accent-soft-ink)"/><line x1="15" y1="47" x2="24" y2="47" stroke="var(--accent-soft-ink)"/>
+              <line x1="42" y1="40" x2="54" y2="40" stroke="var(--accent-soft-ink)"/><line x1="42" y1="47" x2="51" y2="47" stroke="var(--accent-soft-ink)"/>
+              <line x1="69" y1="40" x2="81" y2="40" stroke="var(--accent)"/><line x1="69" y1="47" x2="78" y2="47" stroke="var(--accent)"/>
+              <line x1="96" y1="40" x2="108" y2="40" stroke="var(--accent)"/><line x1="96" y1="47" x2="105" y2="47" stroke="var(--accent)"/>
+              <line x1="123" y1="40" x2="135" y2="40" stroke="var(--accent)"/><line x1="123" y1="47" x2="132" y2="47" stroke="var(--accent)"/>
+            </g>
+            <text x="34.5" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-dim)">informal</text>
+            <text x="102" y="78" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-dim)">institutional</text>
+          </svg></div>
+          <div class="fw-title">2 &middot; See counter-evidence</div>
+        </div>
+        <div class="fw-arrow" aria-hidden="true">&rarr;</div>
+        <div class="fw-box s3">
+          <div class="fw-icon-frame"><svg class="fw-icon" viewBox="0 0 150 100" aria-hidden="true">
+            <text x="10" y="26" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-dim)">trust</text>
+            <rect x="62" y="17" width="78" height="8" rx="4" fill="var(--accent-tint)" stroke="var(--line)"/>
+            <rect x="62" y="17" width="48" height="8" rx="4" fill="var(--accent)"/>
+            <circle cx="110" cy="21" r="7.5" fill="#fff" stroke="var(--accent-dark)" stroke-width="2.5"/>
+            <text x="10" y="66" font-family="IBM Plex Mono, monospace" font-size="10" fill="var(--ink-dim)">change</text>
+            <rect x="62" y="57" width="78" height="8" rx="4" fill="var(--accent-tint)" stroke="var(--line)"/>
+            <rect x="62" y="57" width="26" height="8" rx="4" fill="var(--accent)"/>
+            <circle cx="88" cy="61" r="7.5" fill="#fff" stroke="var(--accent-dark)" stroke-width="2.5"/>
+            <text x="62" y="90" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-dim)">0</text>
+            <text x="140" y="90" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--ink-dim)">3</text>
+          </svg></div>
+          <div class="fw-title">3 &middot; Rate each source</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="num" data-count="800">800</div><div class="label">Adults, Prolific</div></div>
+        <div class="stat"><div class="num" data-count="5">5</div><div class="label">Evidence sources rated per claim</div></div>
+        <div class="stat"><div class="num" data-count="2">2</div><div class="label">Conspiracy claims (government, pharma)</div></div>
+        <div class="stat"><div class="num" data-count="296">296</div><div class="label">Endorsed at least one claim</div></div>
+      </div>
+      <div class="note-callout">
+        <p><strong>Segments.</strong> Endorsers were those who rated a conspiracy as very likely to be true (4 of 4). The sample we recruited was an even split between self-identified vaccine-hesitant and vaccine-supportive adults.</p>
+        <p><strong>Belief change.</strong> We measured change as the difference between a participant&rsquo;s endorsement before and after seeing each piece of counter-evidence.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="viz-section" id="respondent-profile">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="section-num">02</span>
-      <h2>Respondent Profile</h2>
+<!-- ============ SECTION 03 — INSIGHTS & RECOMMENDATIONS ============ -->
+<section class="numbered" id="sec-insights">
+  <div class="section-head-band">
+    <div class="wrap">
+      <div class="section-eyebrow"><span class="num-badge">03</span>Insights &amp; recommendations</div>
+      <h2>What the data show, and what to do about it</h2>
     </div>
-    <p class="section-desc">
-      A demographic and attitudinal breakdown of the sample — useful for checking who
-      the findings above generalize to, and for spotting subgroup patterns underneath
-      the topline result.
-    </p>
-    <div class="viz-frame">
-      <div class='tableauPlaceholder' id='viz1787975298530' style='position: relative'>
-        <noscript>
-          <a href='#'>
-            <img alt=' ' src='https://public.tableau.com/static/images/Va/VaxDataDraft/Provs_AntiVaxxers/1_rss.png' style='border: none' />
-          </a>
-        </noscript>
-        <object class='tableauViz' style='display:none;'>
-          <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
-          <param name='embed_code_version' value='3' />
-          <param name='site_root' value='' />
-          <param name='name' value='VaxDataDraft&#47;Provs_AntiVaxxers' />
-          <param name='tabs' value='no' />
-          <param name='toolbar' value='yes' />
-          <param name='static_image' value='https://public.tableau.com/static/images/Va/VaxDataDraft/Provs_AntiVaxxers/1.png' />
-          <param name='animate_transition' value='yes' />
-          <param name='display_static_image' value='yes' />
-          <param name='display_spinner' value='yes' />
-          <param name='display_overlay' value='yes' />
-          <param name='display_count' value='yes' />
-          <param name='language' value='en-US' />
-        </object>
+  </div>
+
+  <div class="wrap">
+    <!-- Insight 1 -->
+    <div class="insight-card">
+      <div class="insight-banner">
+        <span class="tag-num">1</span>
+        <span class="tag-label">Source trust</span>
+      </div>
+      <div class="insight-body">
+        <h3>Endorsers distrusted institutional sources specifically</h3>
+        <p class="desc">Both groups gave informal sources little trust. The difference showed up for institutional sources. Medical journals were the most trusted source for non-endorsers and had the widest gap between groups.</p>
+
+        <div class="chart-module">
+          <div class="chart-controls" id="claimRow"></div>
+          <div class="legend-row">
+            <span><i style="background:var(--c-non)"></i>Non-endorser</span>
+            <span><i style="background:var(--c-end)"></i>Endorser</span>
+          </div>
+          <div class="hover-readout" id="hoverReadout">Hover a bar for the exact mean and group size.</div>
+          <div class="canvas-box"><canvas id="trustChart"></canvas></div>
+          <div class="chart-note">Mean trust on a 0&ndash;3 scale. Government claim: 196 endorsers, 605 non-endorsers. Pharma claim: 280 endorsers, 521 non-endorsers. Aggregated from the cleaned survey file; no individual responses are shown. Error bars show &plusmn;1 SE.</div>
+        </div>
+
+        <details class="stats-details">
+          <summary>Statistical details</summary>
+          <ul>
+            <li>Linear mixed model on trust (0&ndash;3), random intercepts for participant, claim as covariate.</li>
+            <li>Endorser &times; source type (informal vs. institutional) interaction: b = &minus;0.73, SE = 0.04, p &lt; .001</li>
+            <li>Endorser gap within informal sources: b = &minus;0.07, p = .051. Within institutional sources: b = &minus;0.50, p &lt; .001</li>
+            <li>Mean institutional trust, both claims pooled: 1.51 (non-endorsers) vs. 0.64 (endorsers)</li>
+          </ul>
+        </details>
+
+        <div class="recommendation">
+          <div class="rec-label">For communication &amp; content strategy</div>
+          <p>A segment that rejects a claim isn't necessarily rejecting evidence. Segment audiences by which sources they trust as well as by what they believe, and test messengers for each segment instead of assuming the most authoritative source will be the most persuasive.</p>
+        </div>
       </div>
     </div>
+
+    <!-- Insight 2 -->
+    <div class="insight-card">
+      <div class="insight-banner">
+        <span class="tag-num">2</span>
+        <span class="tag-label">Belief change</span>
+      </div>
+      <div class="insight-body">
+        <h3>For non-endorsers, belief change followed trust. For endorsers, it didn't.</h3>
+        <p class="desc">Non-endorsers showed about twice as much belief change after institutional sources (compared to informal ones), in line with how much they trusted each. Endorsers showed the same amount of change from every source.</p>
+
+        <figure><svg class="insight-chart" data-animate viewBox="0 0 720 300" role="img" aria-label="Two slope charts comparing informal and institutional sources. Trust: non-endorsers rise from 0.60 to 1.51, endorsers from 0.45 to 0.64. Belief change: non-endorsers rise from 0.59 to 1.16, endorsers stay flat at 1.25.">
+          <!-- panel A: trust -->
+          <text class="panel-title" x="190" y="22" text-anchor="middle">Trust</text>
+          <line class="chart-axis-line" x1="48" x2="48" y1="40" y2="240"/>
+          <line class="chart-axis-line" x1="48" x2="340" y1="240" y2="240"/>
+          <line class="chart-gridline" x1="48" x2="340" y1="190" y2="190"/><line class="chart-gridline" x1="48" x2="340" y1="140" y2="140"/><line class="chart-gridline" x1="48" x2="340" y1="90" y2="90"/><line class="chart-gridline" x1="48" x2="340" y1="40" y2="40"/>
+          <text class="bar-axis-tick" x="42" y="244" text-anchor="end">0</text><text class="bar-axis-tick" x="42" y="194" text-anchor="end">0.5</text><text class="bar-axis-tick" x="42" y="144" text-anchor="end">1.0</text><text class="bar-axis-tick" x="42" y="94" text-anchor="end">1.5</text><text class="bar-axis-tick" x="42" y="44" text-anchor="end">2.0</text>
+          <text class="bar-axis-tick" transform="translate(12,140) rotate(-90)" text-anchor="middle">Mean rating (0&ndash;3)</text>
+          <text class="bar-group-label" x="115" y="262">Informal</text><text class="bar-group-label" x="285" y="262">Institutional</text>
+          <g class="slope">
+            <line x1="115" y1="180.3" x2="285" y2="88.8" stroke="var(--c-non)" stroke-width="3"/>
+            <line x1="115" y1="194.5" x2="285" y2="176.3" stroke="var(--c-end)" stroke-width="3"/>
+            <circle cx="115" cy="180.3" r="5.5" fill="var(--c-non)"/><circle cx="285" cy="88.8" r="5.5" fill="var(--c-non)"/>
+            <circle cx="115" cy="194.5" r="5.5" fill="var(--c-end)"/><circle cx="285" cy="176.3" r="5.5" fill="var(--c-end)"/>
+          </g>
+          <g class="slope-label">
+            <text class="bar-value" x="103" y="176" text-anchor="end" fill="var(--c-non-ink)">0.60</text>
+            <text class="bar-value" x="103" y="204" text-anchor="end" fill="var(--c-end-ink)">0.45</text>
+            <text class="bar-value" x="297" y="93" text-anchor="start" fill="var(--c-non-ink)">1.51</text>
+            <text class="bar-value" x="297" y="181" text-anchor="start" fill="var(--c-end-ink)">0.64</text>
+          </g>
+          <!-- panel B: belief change -->
+          <text class="panel-title" x="552" y="22" text-anchor="middle">Belief change</text>
+          <line class="chart-axis-line" x1="410" x2="410" y1="40" y2="240"/>
+          <line class="chart-axis-line" x1="410" x2="702" y1="240" y2="240"/>
+          <line class="chart-gridline" x1="410" x2="702" y1="190" y2="190"/><line class="chart-gridline" x1="410" x2="702" y1="140" y2="140"/><line class="chart-gridline" x1="410" x2="702" y1="90" y2="90"/><line class="chart-gridline" x1="410" x2="702" y1="40" y2="40"/>
+          <text class="bar-axis-tick" x="404" y="244" text-anchor="end">0</text><text class="bar-axis-tick" x="404" y="194" text-anchor="end">0.5</text><text class="bar-axis-tick" x="404" y="144" text-anchor="end">1.0</text><text class="bar-axis-tick" x="404" y="94" text-anchor="end">1.5</text><text class="bar-axis-tick" x="404" y="44" text-anchor="end">2.0</text>
+          <text class="bar-group-label" x="477" y="262">Informal</text><text class="bar-group-label" x="647" y="262">Institutional</text>
+          <g class="slope">
+            <line x1="477" y1="180.8" x2="647" y2="123.6" stroke="var(--c-non)" stroke-width="3"/>
+            <line x1="477" y1="114.8" x2="647" y2="115.4" stroke="var(--c-end)" stroke-width="3"/>
+            <circle cx="477" cy="180.8" r="5.5" fill="var(--c-non)"/><circle cx="647" cy="123.6" r="5.5" fill="var(--c-non)"/>
+            <circle cx="477" cy="114.8" r="5.5" fill="var(--c-end)"/><circle cx="647" cy="115.4" r="5.5" fill="var(--c-end)"/>
+          </g>
+          <g class="slope-label">
+            <text class="bar-value" x="465" y="185" text-anchor="end" fill="var(--c-non-ink)">0.59</text>
+            <text class="bar-value" x="465" y="119" text-anchor="end" fill="var(--c-end-ink)">1.25</text>
+            <text class="bar-value" x="659" y="137" text-anchor="start" fill="var(--c-non-ink)">1.16</text>
+            <text class="bar-value" x="659" y="111" text-anchor="start" fill="var(--c-end-ink)">1.25</text>
+          </g>
+          <!-- legend -->
+          <circle cx="250" cy="288" r="5" fill="var(--c-non)"/><text class="observed-label" x="260" y="292">Non-endorser</text>
+          <circle cx="380" cy="288" r="5" fill="var(--c-end)"/><text class="observed-label" x="390" y="292">Endorser</text>
+        </svg>
+          <figcaption>Fig. 1 &mdash; Mean trust and reported belief change by source type, both claims pooled. Each person's informal (2 sources) and institutional (3 sources) ratings were averaged before averaging across people.</figcaption>
+        </figure>
+
+        <details class="stats-details">
+          <summary>Statistical details</summary>
+          <ul>
+            <li>Linear mixed model on belief change (0&ndash;3), random intercepts for participant, claim as covariate.</li>
+            <li>Endorser &times; source type interaction: b = &minus;0.58, SE = 0.03, p &lt; .001</li>
+            <li>Endorsers showed more change than non-endorsers from informal sources (b = 0.13, p &lt; .001) and about the same from institutional sources (b = 0.02, p = .52)</li>
+            <li>Trust&ndash;change correlation by source and claim: r = .09 to .43 for non-endorsers; r = &minus;.01 to &minus;.22 for endorsers</li>
+          </ul>
+        </details>
+
+        <div class="recommendation">
+          <div class="rec-label">For message testing</div>
+          <p>With skeptical audiences, test sources directly. How much people say they trust a source didn&rsquo;t tell us how much it would move them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Insight 3 -->
+    <div class="insight-card">
+      <div class="insight-banner">
+        <span class="tag-num">3</span>
+        <span class="tag-label">Generalized distrust</span>
+      </div>
+      <div class="insight-body">
+        <h3>Distrust carried across institutions</h3>
+        <p class="desc">The pharma claim accused drug companies, but its endorsers distrusted government statements too. They trusted a government statement about as little as a social media post (0.24 vs. 0.22). For this group, distrust seemed to extend to institutions in general.</p>
+
+        <figure><svg class="insight-chart" data-animate viewBox="0 0 600 270" role="img" aria-label="Trust gap between non-endorsers and endorsers for each source. Government claim: anecdote 0.34, social media 0.12, news article 0.74, government statement 0.89, medical journal 1.20. Pharma claim: anecdote 0.06, social media 0.05, news article 0.49, government statement 1.03, medical journal 1.04.">
+          <text class="panel-title" x="235" y="22" text-anchor="middle">Government claim</text>
+          <text class="panel-title" x="485" y="22" text-anchor="middle">Pharma claim</text>
+          <!-- gridlines + ticks -->
+          <g>
+            <line class="chart-axis-line" x1="150" x2="150" y1="34" y2="218"/>
+            <line class="chart-gridline" x1="210.7" x2="210.7" y1="34" y2="218"/><line class="chart-gridline" x1="271.4" x2="271.4" y1="34" y2="218"/>
+            <text class="bar-axis-tick" x="150" y="234" text-anchor="middle">0</text><text class="bar-axis-tick" x="210.7" y="234" text-anchor="middle">0.5</text><text class="bar-axis-tick" x="271.4" y="234" text-anchor="middle">1.0</text>
+            <line class="chart-axis-line" x1="400" x2="400" y1="34" y2="218"/>
+            <line class="chart-gridline" x1="460.7" x2="460.7" y1="34" y2="218"/><line class="chart-gridline" x1="521.4" x2="521.4" y1="34" y2="218"/>
+            <text class="bar-axis-tick" x="400" y="234" text-anchor="middle">0</text><text class="bar-axis-tick" x="460.7" y="234" text-anchor="middle">0.5</text><text class="bar-axis-tick" x="521.4" y="234" text-anchor="middle">1.0</text>
+            <text class="bar-axis-tick" x="375" y="256" text-anchor="middle">Trust gap (non-endorser minus endorser, 0&ndash;3 scale)</text>
+          </g>
+          <!-- row labels -->
+          <g class="row-label">
+            <text x="140" y="56" text-anchor="end">Personal anecdote</text>
+            <text x="140" y="92" text-anchor="end">Social media post</text>
+            <text x="140" y="128" text-anchor="end">News article</text>
+            <text x="140" y="164" text-anchor="end">Government statement</text>
+            <text x="140" y="200" text-anchor="end">Medical journal</text>
+          </g>
+          <!-- government claim bars -->
+          <rect class="hbar" x="150" y="40" width="41.2" height="22" rx="3" fill="var(--accent-soft)"/>
+          <rect class="hbar" x="150" y="76" width="14.4" height="22" rx="3" fill="var(--accent-soft)"/>
+          <rect class="hbar" x="150" y="112" width="90.1" height="22" rx="3" fill="var(--accent)"/>
+          <rect class="hbar" x="150" y="148" width="107.6" height="22" rx="3" fill="var(--accent)"/>
+          <rect class="hbar" x="150" y="184" width="145.8" height="22" rx="3" fill="var(--accent)"/>
+          <g class="bar-value hval" fill="var(--accent-dark)">
+            <text x="197.2" y="56">0.34</text><text x="170.4" y="92">0.12</text><text x="246.1" y="128">0.74</text><text x="263.6" y="164">0.89</text><text x="301.8" y="200">1.20</text>
+          </g>
+          <!-- pharma claim bars -->
+          <rect class="hbar" x="400" y="40" width="7.9" height="22" rx="2" fill="var(--accent-soft)"/>
+          <rect class="hbar" x="400" y="76" width="6.2" height="22" rx="2" fill="var(--accent-soft)"/>
+          <rect class="hbar" x="400" y="112" width="59.5" height="22" rx="3" fill="var(--accent)"/>
+          <rect class="hbar" x="400" y="148" width="124.8" height="22" rx="3" fill="var(--accent)"/>
+          <rect class="hbar" x="400" y="184" width="126.0" height="22" rx="3" fill="var(--accent)"/>
+          <g class="bar-value hval" fill="var(--accent-dark)">
+            <text x="413.9" y="56">0.06</text><text x="412.2" y="92">0.05</text><text x="465.5" y="128">0.49</text><text x="530.8" y="164">1.03</text><text x="532" y="200">1.04</text>
+          </g>
+        </svg>
+          <div class="type-key"><span><i style="background:var(--accent-soft)"></i>Informal source</span><span><i style="background:var(--accent)"></i>Institutional source</span></div>
+          <figcaption>Fig. 2 &mdash; Difference in mean trust between non-endorsers and endorsers for each source. Longer bars mean endorsers trusted that source less.</figcaption>
+        </figure>
+
+        <details class="stats-details">
+          <summary>Statistical details</summary>
+          <ul>
+            <li>Endorsers' mean trust in government statements: 0.18 (government claim), 0.24 (pharma claim), the lowest of the five sources under both claims, alongside social media (0.25, 0.22)</li>
+            <li>180 participants endorsed both claims; 296 endorsed at least one</li>
+          </ul>
+        </details>
+
+        <div class="recommendation">
+          <div class="rec-label">For choosing a messenger</div>
+          <p>Swapping one institution for another may not help with a skeptical audience. Messengers from outside institutions, or institutional evidence shared through channels the audience already uses, are worth testing.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="translate-callout">
+      <p class="tc-eyebrow">Why this matters beyond this study</p>
+      <p>People decide whom to learn from before they decide what to believe. Every curriculum, test item, or health campaign presents its claims through some source, but audiences don&rsquo;t agree on which sources are trustworthy. Knowing which sources a segment trusts or discounts is a first step toward helping people update their beliefs.</p>
+    </div>
+
+    <a class="tableau-link tableau-link-single" href="https://public.tableau.com/views/Vax_Data_Trust_Belief/TrustBeliefRevision?:language=en-US&amp;:display_count=n&amp;:origin=viz_share_link" target="_blank" rel="noopener">
+      <span class="tl-eyebrow">Interactive dashboard</span>
+      <span class="tl-title">Explore the findings in Tableau Public &rarr;</span>
+      <span class="tl-sub">How much endorsers and non-endorsers trust each source, how much each source moves their beliefs, and where to start with skeptical audiences</span>
+      <span class="tl-preview"><img src="data:image/webp;base64,UklGRsZ7AABXRUJQVlA4ILp7AABQ7wGdASpABocBPmEwlUekIyIhInNZoIAMCWdu/ELZxBRGt9D/ud2k7H/l/4n8Yfez5T7pvdH2v9/+0Xw+99/6nlU9A/or2Z/5z9dvdX+hP1p+AH+o/3f1K/8f9uven/c/+L+QHwD/mn+r/dT3af89+y3uP/t/+x/Z3/KfIR/Qf8p///bJ/5PsLf5D/hf/f3A/5//ZP/t7P//a/cr/1/Kd/aP+j+7HwL/tZ///+L7gH/x9QD/3dbP03/sf9t/YL+jfG3vL+0f3L9rf7b6V/jnzL9x/t/+H/2n9y/aH4/ci/ov89/sf8/6k/x/7B/ff7T/l/+f/efm3+u/5b+7/ux/pvRP4b/0X5wf335BfyT+V/4j+0f5D/pf3f95fcN/wP8B3Numf5//d/5z2BfW76D/tv7v/nP/r/oPRz/rf7x+OHwP+jf3v/Y/4H8q/sA/k39P/1H95/KP5m/4/g+/iv+J+yPwBfzb+z/9j/Cf6/4W/57/xf6H/VfuX7Vv0D/Lf+f/P/7D5Cf5l/Zv+t/jP8579///90n73f//3af3W////kGYchJaFsqrAPt3ybCyqsA+3fJsLKqwD7d8mwsqrAPt3ybCyqsA+3fJsLKqwD7d8m2Pk2FlVYB9u+TYWVVgH275NhZVWAfbvk2FlVYB9u+TYWVVgH27RDkVyAJR/AI8Py08tUKdkLOaxCz+BTnlSDyWhbKqwD7d8mwsqrAPt3ybCyqsA+3fJsLKqwD7d8mwsqrQ6QktC2VVgH3NVl5NZnFTtNzAziZi+nfacsR5Lj0Zi14bvE5ocROJD+9Bjs3dWJr585guGCWgoWchcLVO9A8Ri0HkVhoJE/vDVc+LjXaAQhcFg7FFkLb+JvlQlabPS1UEeHqy5Qm9HW+5URCr9UF0zDBH1hcXZUfI2d4pXpG9oc/LB78Ye6TVsMEUdp8lUE13jw2zoUl9OGrAcmqbutGkwzwD7d8mwsqrAPt3ybCyqsA+3e3r57fbvk2FlVYCBDNaxyEkxi3PVz4b8R/YltQB6p90/rYCpWoP2N4BFndvhEldksu2Q26Wg1ZeioOkKizMjibn84JZ68UGSSEj4wpru9RRzeF92Jz7H702JCUtDXkEFexmVdHYL0lplrAPt3ybCyqsA+3fJsLKqwD7d8mxbkJCTzLkxu5uSZcM1GuzrR7JvUhJaFwJpDflVXLVHT207Nzak4j3pXxzgNZXRKYj9j7knYxeqBv5XIQXcSGIDo0cTTeJjXO8I4u9O+gnzqeLEnIcAEqrnkbYhYk5DgAlVc8jdAa64k9iCxLvJ/SH7KqueUKEF/6nme5lU1sqUMkUa5rxfB20NnDRwbBwH275NhZVWAffKma683u9DNWCvLQ4PfDV43okpVRTu1tERqN78aGoDz1n3/c8lkDICAy2da2VVgIEM1rHISWTlRTGxRRGhoOCyRTAgb4LtX1VQLi3uLrl+XakFM/H8mH1/hGgoKnVSvV89hNE0jflJ2a8Tqud96Go6VyPqbSVgl3PUkqJvkxKDfKNlvcGL367Htsj6UVXWIk3WI54NEUB5asx3Z+jd2pmyFazEVDlEtlHPn6lgU6zdOCfQmWgELmMkf/2MiNFuHBAwzySPX/Caz90Y0a9VFx5TviYClANFMC7SSVLcAT+zmi5F7dbqYKY4eD440RSlV3JoOtpLxMnP9Ph7TK8tS+RNXr6S/YjlTmTWgNzPbIm6IgVIotuI0jGiFNF13JQsOdUmyfWC52g55+97kDCXJbanYebOx5aH/szA9NEu4KLQVVIM0MI4KpfcN6pzyRERywYd5lSZXzi+5p7+g6UQvNR8gwedjJyp844vTxze4kxjoQsqrAPt3ybtsOl3kPPhHBaK8adXT4KULkRB6aNjrCS6jQNMoBRT8EYlXVjYWc10DXgYz4yRTx5ZSwjEp0u9sSRbNA71+KxNrYdMABm5asXM7xpgiQ6YJ71eknj0g8p2fjPpxhhkCAxOIgrPiFkVqHRhK/6wLniehK1hMmuBJZFuhmYpJmKTg9ksUx2vMye+qsL+1ZKtLOoyiVfnirN0X/JQwpOTOP9u+FKKiLo2o4w6vzaktI6KAG7hFSGmqXD5fegpIUeKP4CIrP+7JreJYexE5wcYgCTbRfOith72Gc9rwI/wHaZGiF2d/CajgohRN7PrCypmSgZbHwOga/mxzpcIzlMNZRGO9bnj4XxddPc5HNLMKy9wQBWgBfIItMJlVkXOx0EhqqcHJLimoFbDrh4RREHExBDUgy7E8vK8gtPXeDl31FeDnvUPuP1fGjkf4po8BRyRffz1kXgntjcI7I1RrolGhLQ4/+bjt0vAPt3ybCyq9DMe3cm7zVCXuNfd/sHpmi1a/2EzD8JR/t4MiBnvwPMynbsRPqGVS/0cZCaEbpwJs+gBIWCqJHXFgOcE5N7pzCqjSQRgLE+zHUdMew7qLZLpuzqF391pyb2ysrKc/0C3ZLNoSgTcwzZIkwvXvEsdpLI+lU1R0Z18s0Wi49astT/aH4LOUOUmENHv2VjXe8Vl8kHNdGdGRSeIq7X3WDzHG0jns4MWFRi8XoX9WBHSTs91ZCmE6tExyZiM4bp/9XMTK9RdVBCvnX/2s0/ias/VaNIeZBV7c8G0feUuhDBbjDMsBo4LYLq8z6qFJtLvdVs6dUpPazGrSQQ3z+WSUoUpdPiAp7cV5U5LDbQcBbKqwD7d8mxbpBIAhsQFHK1fquGHBa1so7jjIvUQ8GppN/94NgjMxj1yTOTX/mNLUSJBExtg1c0Gxb6ag2vTwjOC2V2yRlqsA2r9mrfTFCY0/iygaBqNWzhZlRwuno1iexPAeX8yqpGeX+0qhzd/GaCFpYsUWKEBj6+oY7Nqm9fwyG9j2Q1hfPGSEVL9kho1218L8GdOMy2Kyp+tx6B8A7Vewh46t2CrXWeFr9eLTliYCveWDwPZY/PgnODN5WLZk/e+PL0lDXWibiR3trwd5MmvPlAtIPKA39nrG6puUCN8q5LNkiCMVqrdNuGgA62V4b+mK7wQwRiD7UheuPwm57z3Ai+1zWf6NHt3hZjet7hG7ZsfzdcARmpeRxPahs7ypnEOniHbGBXTkN2+H4D4PQ3NRB5LQtlVaXI4HQL4ztYAaU1GFf5lUAXOo56EVo8o9C9wQyiYLRdQQU5d1JbUZIy1WAbVgPoftJNsIOoNMbLMxw8vcH7tXoRmDZ5PO4cHohaEeY5+nVMH0A/ex0D5R4RHf2gCtv4R6Az5m5zyFMEUqwISY4DyxfJDsbvROBmqZ6FgwU0IUDKadUAXVpM8I0KYU7nTumYMwA+fblUawDwTbwmi4GFAjfPqo++p/+PsSVLxtai94vFnSc+tBC8TfVhlsrlFAsd2Nm/uZqZ7i88zXYEteSnE3m/8AaS4y97RZWVW3tLwT8bdk/U6WkfFPhTFFrIy/8piAf//MlKnPzxL3eGHnqrj60K4P5Vl820qNAN2/Lmr4wp0Tys8rnaLGFcPEFWKXs7dmPHOQpxpIStmItSZEGTDPAPt30sZ7MAz+65ckTws3xK9vEeF39ujaSqmC1SdCXpDQYMso8TBkb97fddTlzVgU/1NMR5iOOCY2MOdsWdH5CSRP7THXW9ylH9fxP00bFJRNit9KDC67HNUnSuy77h7w8wMzv8nutAUKHyTF/iVAEV4xXxYe4ooe0neLkD2EyYwvfMErwbPv6kgjyNQCXhczyND2+incXEGKe57RD2lSLrc2i2QjAgkmA/nqG0wx8kY054XOw9NeFV+p/XAdEZ0HbdQLOoa6/u19Y03yqCoZPBKhMBQdaPX9ZAUymDKNVFixpIbyaQkSXrTIbu4RgdKvdQMmuvUAGkGBU2oI4KnIyBAlxjUReRJCk5MrnvXhzsUOFhBMnGCQyBOUKAHkJDKVcXxh4sByQEhb3ZKnH8mzUgKQ2NHLZbxjLttsJFkpujgb0j33q5jvN/hPZwRHhoo9Q1tKibMJBQwKJmhrmt8AAB+9FwdmnFGEmaDzR2NTxLEhXAZmfsAUW4TwBjwjQM4Ns2WePG4MEWPpPWVfbTyQLFbt3udPhFiIRTVFTxBRafA1cov9SzkS5WWUgN1C1w5D5yvl+R0Zw1LKVdEKlD/yOXJa7uugH6JfgCMhJwrv+F0zTXkXvAA+3fJsLOeIEdMTV8iwNQ7esx7DuotlhR+AAwHJjhNqHJGOg0PnYuN9/LAXrP1k0gx1r6T3V54opDxvMW1vaTkeH8/Kzp5JDDNLa7BnT9iyObY6CZnehV+oFbKqwD7d8pZFcpCS0LZVWDPUXuotlVYB9u+TYWVVgH275NhZVXOriaeO6Xk8loWyqsA+3fJsLKqwCt8eNJRkd1cTTx3VxNPA5rMlWxUfVjFd5Ug8loWyqsA+3fJsLKqwD7d8mwsqrAPt3ybCyqsA+3fJsLKsVCU5NSsCA9EQOlVhbZWyqsA+3fJsLKqwD7d8mwsqrAPt3ybCyqsA+3fJsLKqwD7d8mwsqrAPt3ybCyqsBGBXKNp5GZlLqYoPTaeRFYGX25rQHacJMJ0tuU3WCm+y+3NaA7Tgs5gXnkJNeq/ec5LfrBTfZfbmuDnJzk5yc5OcnOTnJzk5yc5OcnOTnJzk2p6btt8JVKQkf4fcHktC2VVgH275NhZVWAfbvk2FlVX8nFkKq9ZMM8A+3fJsLKqwD7d8mwsqrAPt3yVoX49YtC3whksqD6/ElaGJb7Q3kduIuZw+vxJWhiW+0N5HbiLmcPr8SVoYlvtDeR24i5QOMiZAQ2m7jV9vI7cRczh9fiStDEt9obyO3EXM4fX4krQxLfaG8jtxFzOH1+JK0MS32T3nB0Q4pBJsMCJAOO/X4krQxLfaG8jtxFzOH1+JK0MS32hvI7cRczh9fiStDEt9obyO3EXKwpBBaKvz9EYUtQ3kduIuZw+vxJWhiW+0N5HbiLmcPr8SVoYlvtDeR24i5nD6/ElaGJbgOel0OKQSbDAmkJLQtlVYB9u+TYWVVgH275NhZVWDPfHsLKqwD7d8mwsqrAPt3ybCyqsA+3hX9pCS4pCS0LZVWAfbvk2FlVYB9u+TYWVVgK4hRcpCS0LZVWAfbvk2FlVYB9u+TYWVXzXyqsGeotlVYB9u+TYWVVgH275NhZVWAfbwrwYDwD7d8mwsqrAPt3ybCyqsA+3fJsMCo9hZXEuUhJaFsqrAPt3ybCyqsA+3fJsLKr5dKwJIUhJaFsqrAPt3ybCyqsA+3fJsMCo9hZXbJFoWyqsA+3fJsLKqwD7d8mwsqrAQIbT9lVYB9u+TYWVVgH275NhZVWAfbvlLOOUAAD+/8jw/KXsmgAAAAAAAddnWt8RwAAAAAI2OZFzhqlEB4kqHRtnGK5wHAHIERzgOAOQIjnAcAcgRHL2rYn9gAAAAADFfTTif770XSSgNAAAACA+38hARXEjcJpHr1/bZI0qXu1+nK523URn5aMH704LShHvGKQk7COsZhzMVtA3tC43AH2EeRt7oiGw4QJ3Fc8UzQATOiaZHPGR8VAJfO11PuIcBZ6iMGlh0E9Kv36Fqq3pZT5rJgoFs0PU+43ZkP5MxcSS2BFLT5EeVyE3alfFMhtbqtn1bTvfWWeWyl5WqzaOx3ovjJsLp7gyeiujT3wHvJfGTPiM7K4XYsTy+x9qVKUSNKvwObXBDXTzUGz6OJzU2TNT50VwHL9At/yIddix35hvuxDOM8hNAssfBNPXuMOOQejQQRkUc8Zl9fzrcedKFO7UGYp87ofX3a1ccMyW40QbcdDgUm9WSFgecLKpEHziassbfuHji1DoPgxBYn68gKqABdmO+AGbHuLso16rUeQnJp2X52ThSdvIOuqJm2R5XpslMVzJa5/+OmFicBKzRhTCxL9D5s2MPnC+C0x5xkH2N5P7ltZ0h/GEvZbCDfWH6aQ5Rr/nA3psWjI9SpcUgUHd6TVDk1t0Y6vpVIxB2da52sw0c2w7U07znEp/nsmzgoFWFwI6W1QzgaYZ0XidT4bxjAi1V/23H2+ouwIPn7htUtcH3wHPIduh+LNmDlv2VK2W8DJUJQMJBLTortL+ie+mAkx9zKIMjUhKbZVCabWKgAX/8g4hlAfqxQCOJzJW5q+sfAZOLCctmckeBgqn7cYRykx/Ca7sVeLUKLmlbxrSzqFRfoo2c0dkiH+1Be4qsy4Kc3mgF8vIhNO/2tNhRpiGWkvHyIA3zDbWRhBjv+lBko6Z55GODqi+pdMs3AtJxaTbi1C9pQXdwBkrc8fFDyiuV8OOgBCu9UvdhrgILJ6Fkla+WpznNLPJcSrNjKG+NJ1K8GcIhBGUWDkPmTjegcP2w2gqus6FATmXkPgBxSZXsdX5sV09RUs1LYKmXSrGbodVX6+I0ea7QIPs6KtNX3wPdlk2RX4JXGuXKOXrpxs+dqN3LagPCUZyrmRhmDwo7Cs1PFJLpuoTvc+ObDrwk0MoPvUDi4rjmjXL/h66sURUI2mJHei7xZwHf1gc2Sx43FjJjYze3qR/1Ug3d3yLq8wtvYar7h4E4r7lxjun4rMUWs68Nh6QTtOGlUJwJ3K4EeXyLn4k6kOrVzNnxx+f1UNyBtmdABO3t50df4UV5NT2yQTVg8WG+Adf4J1JBuNJwoMr2TMMMpXXGfOLrBVCf0/7/L/yAHBkzvZHcrOKAQyAWOw/6M8uZgwzW3UX2l5NhzjPt4jmmKY6rac7TIRpFDmS09z+Koy7Q257Kx5bm0ki5ryJ1C705uurxGjiVQkLGso3lM0pE1GXbHKr4u76YUApNUsNPUHm2CdbHatuXUp9ELP3VsSv9sEgRNPW5XjeF6+gKckFnlJDfwjyJaA0hSYj+UXl5ndiIdkoEV6MsawHuufs7INs9DuTcoU77x5De7QULEvDZYakLlGyCztjnIaBmU8tUoomtb//I0KILJeBSjS1yjrPwQ0+8Axm+GCbgSR3YvVOQ6TdbBpl+rvc/G38JMct24+LGyf+eJ+eHWzCeJ/SH2rigb4ccDiJbuU1P+S7hpg5hpquyM39PyrDy2EILncgcuI+fK/FZDO7AVFYi3nppq4l16HNzlH4EKZBfU0P+y0/ljqsX5lTGyKvPKO3tAGAujLZSXinIsBbGGwvKoaf60DSya1Quh2/i8ZDtGudwSDE6AgHLDtFoA+maVfyHDCKvN4D3j59XsicWH7q3Wfe+vjZgvRYwupH5NiiDnyv8hPC+L4GdGch4+rROigbHYWanPtJQGNnzPa/aOCrmqLqMVuoxSmEdVNWKmTL+BsEpSljC7PjIOJfG72/wIgW2urv6ri/Jgx7DJrPu26/znn/0e5nRahMGSfzi3MEH0UgVXd5BFISMJjQ/es82IYxyd8S8F3YoDt08RAH8haTtAyhfPZzN44qCw6bPhazIqChR2u9i85zOxuqRWYxwPZ81u4chIxjLQN5gaiQzFx5jMuHPtdpVdypZh4OekhEnPMxfCjcEMixANV/eHy5T5+/j9Y7px/37skp02lz3+Cp3LfdaXfg+cUwvMTM5uplvGtc+hlVRNP4apQBlYis9bKmiCzbNpULWIsDCrbLHU07EwqgusN9st2K1S4D0/oHfvvZjqtpSQhbLcg7H8b7iKyQeAPlKvRv2NfTxLl4eQBhV/IyzAWhSQ+n5hkpclNIJcWsrOouIi7JM1dmPGz/8LRgxUm0tnZgh6ErZqXIlIl2iYDKsqkMjDNs/lFFFtBzpYLsIEW28S2m4/RM919wDhKW2oKlAdrhjKCxmJY1PDAoHhNJyiY5nKSS6VZStkY4bXG5LkKxdRaZKqBXzFcAXdoXu9HRCc+HnUrwzWutSTIqtOvcw/bHbuky9rEKcpUjnTCC5Rum+hUhB5dZKY1HMNKqydP4M7Grq1vWvisRLfDlsE+uJDgbBMMrRLNQ4/BS6JySU+HxNCSQT0zL8dHT3S3AMAvKwkhsUAUqYyEEE61a4KU03CIAiTGC5h+rqD4lRgLhXqaWRarGSJReIBLtupiB4QFcxobZP3LskrqJe4+2mFme4+pVaLP2k86rLGjb2JyIIJfjAiVLarXSP4y5V4mGCDtPxn+n6IOytC+6h8BaHoQQaHmMYS4JPGG9sTPTeh6szxaHGOAHWooLaMYsWa7XDOhPCvSNZhsQJuO/t1hcFEhYkzIdH0wQ4slo+PolEBsj9toxg27VxOEzzeODBoZJfcFKWbIbDiarieZVO+PSLyJXN5vNo4QxHs6uZK6s9dl9TaRkTtc4jADyaEE+qARc6zWjJCmKRdJPVCJFtmWdivTC8WU3ZX21n96ZIdnJBMpHc/u7Ococ07zcIwIerso5wZxbbf01/GrJl87dxAdnoG17QYZu61LmlHscUF7XWJWKY294THLfDfgD7oPbES02CxNklX9G/Fo0btS0hkqwHS1fE5Akl2zn3/GoJsmGaYOE7mI2P6bbPniMsxQ6bU3olEGbopM8JRhKzbXQ2oOVPpJhJqkppxXBtYEfUOt0HPEXNagVYr402NU4mPr2uj0A/Bdl3ykq0XNnjnroQzeZtDdI4TgdjcAg0TYaXyAVXmIvWrDbXjUyCTzKJWH7/u1Iy2Nwr7H3wFVaw0vbK4wHWVOWAm2x5jgJf8qoQGbMR+JulOS7o5muQm7bBOtjtZCGWhoe+5VsCrGRG5pQ/yZmNNFzYtZxHKXGyWco5w6KfOrOrwSH4gn1laSpWz1OAPXd+r2TkCh3W0JjZ6Irw9GnGL1bKKbevszyrxytpqsaj/MiV37IoD7Y7AxcJfB0VeQjKu8+p7wkGKA2XtLg1RPohYU+zgoOOh+LXhQvsCcj8Pq0TlJ6E0wwK/BIdw1zt52Z78oZhNe8dfOOXVeYGg2WTzSvhr9MOO6Py/z6VNctmlYwV9IZ33zjd1dQkX/YC9SWIxRg0uAlaZsrxTM1B/f8fZLC+OnqL1IqgsymYluPczuIhT0S+SYNunGLH50Z6kOXWoACUXw4hokjQAAAACSvvReTz6iq4K17HE7kMSZS0m2NEF9+iz7IAiyx4QM+reMvGkYUMD2ZnmTs/tIIEj2U0usE1z8G4HFzt9cZKzBB8JagD5yFK7XiGJZESBnQAO1U4ygYrMnuquJqRaDrdkRByBNnWwPaEnM4pXNcSWQq0Iqwe09mWtp8n0qEIem5cKemLgZKbPsB/N3l/7WO6Cr9mvyHhfmMx6lt09TVGdARHZRjISKTXIHIPACAOd15P9hR4hC5VOzQocGOpZUdrMpwgIaOjLQ34SdfyM/QRjxPeEneQ/poUqzEL6zgGB6t7CKkG2yDM/ShLxSUhxif2wrMn1WxNaVK4XQFTdXzGXsir6O0JvzxdTZ8Vl5NUOrtPA3BD3ltacyjHhno5k8/ql7l7TbAEr3uabdg5afY9yhdByxJVSvKJrACKYvvabAMPl8w4PiIyKnYGq4gd929+9A/5Nyg2cOIEFIY5yKTvLNMGJP30rlCiRClWf9gZbLxuVjYs9ZMwOB/iWrZmQuTwMWjMEf6wp2Sd4Ppl5iOzbU6nNubuaiNu3M9qHAEPFCATouX+SSrY0hiZdTJJDkwMP22cS8l6g5WNZyTBXyBylxBHS+P5guYJA6OFJlC3vFrgWOlPI+EE0daYW/IiSNzz5UC84125eY6K/eUmoeiICF0psM34MSF6hfvY5hl051RSiS2ZAZ/4kPAM3FIzSNv7BzNpD8qNn5DAPKW6vRmoVLqarUC4rPY4qY2mpSsxzX7MEQ/Cu7mYyfR+CHqOiQK7Ndb3NewqTJMKQhVosfd2V6hIEeK8Sz14dANWvYGsen0XAEAsHVs8W/mkqiyLAjukKtIIEbsdcA9L3IXhtgve2Vh5vxsUoqcLuGiO3Pje6utaBVjJJ3ttzr4l9Ax/fdDLN20Xn2P+20Iwv1yIcwqiW+6l2tjj6hRpAqnZ2ssmEaAGSb66OJXM+G67knr4KVU1CiwuEFqw2vkrtllEbRsoxrwZgAAAkk7g2j/HvUipgFA6g0FbArFDBkSOKw3AIGxT8lioIeJgwQkXKHBVFXs0xOfBJsRpT1Fwv9JyYCyjaenCENlu4W7JtZl/x1x9GDQbCG/p2e4gAWtvXGv2O4kFCUy1WJ1bllZ4idviLFsWLy+v8JjtBkZPn61sQpIv1yPMqN5JRj/VH4Wmnehrk3qXfKyNzuCnzaco9+OVg1Fj3zoZwKC8mTeSBBzL1637sr3e/Rd3dZatM58o3fjb4wSbrUAuADv+v+/0KmIcJr+R6/PegD9Ia+piSErA+uhnf72d1zApgHs9rq2XOeJtt7RiQIp2+obJZYyHF1E7gCSEimTtLYYr7OAWeAcMDScuUH/W/j5TOZYysM1KDsBUEw+dXew1t/9I/6nExh5JLIGhwMSSVO8yPJHqOTY4esOagYqaML1g1UiXuouIwQOrSv/7lEdPqNI3O69/7rHVLywPtSGURE/BejD4A9mjI9f+JZdrMcT096FAPwZGS/9ROYBNxh4vK9Fm38HshgP3vybouxmgkOVwVi5QH6y7fg60NrZVjDEXvWF4+6LC2t72eP9pqnIsTHLjkQTgNEGP1b/qWatfUv15pypfCKXXNEmDHhsaQA+p8uGaVIPgnnx+dvY60HseQYDAZ7mCSa+O8oZ11OYFYza1MHuKHL4drBA4Wrecwi0AhV89xgW+D4mvYVG94D7DD7AAAAijYrVNydLLUBPHluAtOYs0ww7P4tmyeBOJu5POI+3aNTYORvuYSMpviF5IRs+M3Kij+L+ZzeFpSHXguJtmRLtSLi+HLiW8tiE27/mGsmvoX/vscXrNIzA36I4XAvveydNadHrVllQDocLwKfkR9PizIr71HKZv49QeyCDj/QGCr7aWtIb4Ib5/ES82dqwtHgLM3xBG9hpeulNsNeuOhGv0P84JpQobK+AXC2PmxB75eo4eVixpg1R0oMYtP/GFEuq70uMHEphtpJn9QjmqESAkfjqtlztE/lrAr37jjMtjN0nGkbjqP8fYjimX8Ao/BQRLhCXYcxTyT60R5Ct0rqvPj8ifzXvnxvOuiOFxzrBk5gS6qH0CyjtrKRcsYDl8cC+CHB8WOC+xAAFFzgM7euMuWd1oGugPd1AM0oQ5OUvZEW4N1rOzLDEHgsk8oL/rwoeLDecI2QDBar6SZzheuMTR1alnSCZ7LUh7WIX8OF4bARwMFQQJt14+2hLoejxp/1ndwwBNsC6yozdj3dPUHgTXJcHiaWzUecSoSG83sFLVH3ykPBmpqE80G1Ww2BVXvJmshVjdUZkIxezSgfczUnqY2gimnqY9yrrVZu0cIeuLwe9BqIpCFam15P7ZSIdbGe87rK/5jJuplZBheGcTQNF9IFn9ld3zaK9V+vR0SJ2jfT4n8bj9s4vpDX49D0hHHTS5HhkIQSXvvSe/mbanKC1ruK//kpntsejRJiWV0OjygBC50PARmzw3r772ccbajV0NluMi0kFvUJGLHbQUcSko0cw6LSpsb3NVtsoTgTGIDE8MOeWKKG9Cfu13FIQjSDh1kObU4OOeNzOFNNS1cWPiMrfiWp0mUzaKQHWW/d07nnhfoj/0+PRwkadPrGHrqYqkmN/ST4W6551+P7BdpC5k8Bzlv7CRzjdWoG/51p1ikAAifBjnW3AAttiG4z121kM2yAb+qg5SPIDBWnNz0lG2w+0YUIazjj2dVlufx5vNj2BT+QM61gI+fnzH1HtBBDx3qDlMK9wbpjZP3QyaQkdjDgr24NCtifYpzblLgotwcPNcmn34nt3+4kJsGkMhruFkJ+BYMRpDB+pfpiBU+SpQDtmpPUZU4hNeEJGB6vpPIdI/Vz03vS1gkMc8r9nPBwz95yNkyXCrib35skMnL1dwx+lq+nOSotSixoDiYNiHuAeiQ0ZpGoIV9374kcJNyr96MzOVoEkpdAoNvxgGO8+VBtBdhpgQactm2qd7X9qnD+ZplTb1kmmQAmoJOlE2jsQbfEqDNrPVcBNYc4/X5A3gpbUkVX4v0RngU9gtlNJ7yMf4ukFRptSWoHE37UAJ1r4OyY4rXntqH41+Zfh+Z3+MKpTzVT3ZyFw3q2m2iUpFcb4IhszxsnL3V6L2jQlIzAMKTL7vUeCgehnvOALMk6XntH1nhqMIpnrMEV3hfWzhDxQadHKfBPSGHV7NjrAgmokkFwONYoeelOqfsBWBauni6GePOJhvjPDlMsSPIyp8trHzfgDOhC0XZBx3PICEMOPPLmbErLKVI7zOz5rxLqQPwq89IPN0ycb4Jqax5a3gf4SOxs9XlDjwyhFLu9E7G865S5Ffmt/7+V8Vy+s4KLi+tiAa7VktH8mhd2ic5ofRQ6IPEFijdsmEE05BuXKQrpIB+FIRkHRdNmVD+ThpKNitDLUKJr4YM1Q9PPyitghcrNoaHWY1s4CqHO+bmLpFeZvQ0t9KKPkwWYMqhwutDlJ+NIBZoqW/mUUaS5oT9rXfnwGLGvbtfvci4IT5Tp9pHIg8tKAEwG+Tb23p/zdOUt3mBwRcdLCMIATN/pfkVbvTqbQwvDOFOQp8s7r5BaQNdWq+RpQ1nw1+qtOaeMDdh7p0jaQMupjwvwNcNeRtUcYIOJseDlP96NJpjNjofQ0EJ8WwOe32pZc0A0/jG9TF2htShsS0kPyhaKoxTemJTt2R5CuzWIAo3h4JQw2d8FWMwhSSXeGPw6nFIhBZ01QBUfVt3jauLazrdiluQlXND21IwV41jRQJ/37Gtq0+dMrwws91ZNkPCF7OT42VCsI2FOi31N9GtVY3wLWs/EEYWYWwFWzDZinn4TPSpE3NcDyd9ujT4t26asAWXBAPqltbfgV29LLh55oUR1W7QZu2PB02vxVe4jLPPVEVbJNNybZonZdEMgaVcherDXsFiUxLaZm3TTDdipSFyPOJn7+R43d208kOS6Z8pPIuGo4PEWlz8gVU0P7ks3b65VNyZeFjWOy7EB38hcNWivwdQ+ZFCfr9vBWmPVx5U3/iCuJjmr1r5R7+UJaTtjImab8Mp/Nzy0vn8KVIEAUom/toCApdzXon44x1H+AqgyRm2XenTnocmLTpSB3X34PEbm1BNWC6YLqfUsS1Iu+tKB4MRJEGVGEhVuw8wxvhirsEvn/nzJI9SP1H+FJ6tRGwUhZVjmSxcAyQL2lhezEsAVrQXEqzXYGrz/BAUxB9BUCo/YTq9n36zOAi+B4ZzyRNlamkEnYYGqdR/aZmui5ZqDF9kp5bh4QCYKPsJhJuRSescbDhyAObwtbo06tztbvXaJLINBjnbbt1zedCzkSWAO71rlSE0HJrJCQTiY4WZYaQ44VN/jSm2HA4gz8JAOB0hPeH9AKv7nQd9h0gPKSsiiEStiAWJKsVr53T0jBkULftWJkqtOu6CCHiYT8qT41vGar4rFhR9yvXPJ5EFtTtS5xqzDzQd8QEthJcIFHd/YosdwCobCBZMSleXpFGCQY/2Pp1kQQCQ9kuhQq8Xyxb4O9oTnKIhxUeD4HKWOb/CDE1ZhcJsI6IP+hZqZDwe3iNQN3rlgwyt57k5tw01cbJzgpkZeY7/NAVNEmVoJs6J+v5le0uQIUiqpQEuJAC2ymT5z8Noo/UkZLJZ+BoSzNdI6xqM+F/iIBhSZfd6a6bJTsqKO8y3x/2rcJj/mJlCeeW52WwshpJY0C+K46DvSXf8naBe9CtvWQg2dgytXGpKoPqwV0t568tQPmlEf4LtKa6NidymSQvB8SnqEGKULQneNgfJjFcsDX5/BYNNZZhUTAtYKtFKTMcbD6ghv/mN4AmFPuluFn4SOxtAUcYFgehSo8G6XQEfxPRTaoDxesKZ8+hWt9md7k0MiTfpiLCWlZg224hUvBFog8QWKTJz0vd2so92VHtPisCcfbRorAufqiEz2W13ZcXhsJkoW8lx0g3MShc3GYuiT7eJY8nzJ759mBppE3LqnIVe1obhU48+etVNvdUj0gf7pYLBAyMzGPwRNpYl6AxYNNgvZtEXRuoGzU3LLjwN0V/IhReqAu0YUZEJVktMLzz1sTwZ7P8HAyaLu9upEN9aOe7dhkytzUob7w80Imuxo/e+ZTNbuXROWfHM5p6y0ipIP9nguYzTSzYw3IuH1+wuDf/51Qoojlj9+9tY+FCREge6d0L4Y3TdFa5q+ajk7VTYNiuNSPYHSSEqsPcLX1LuTy+gQauOdKh2zFvPJ+VyUlQmFmjWSVw8MobXdTHuerG5ECBtNlAgjTg4X3aGwHotH6LKU9KozxgXbch60Bba7aIjI/Io8PfkSFoshbwPof0lqPI2hEC4dIA8Znby8i4Panqk7QnppejBUItn+3gT/mvotP71OABx12g9Uwh/47/Q1ZmrgFDB37BktDglAI9Mm99P0KXRZJVHxO5XfbsBJUcABwaMZsdHeIbndV7+/BwtD1PXzl2MgGaflm+n5rAmEXXRazw/Vlavlcr8XqLPrfDAed6pntyXZ0OM6YJPTeK1mvOHBnfoTnk4pnfDdeDu8AbOvwtW7bkL6qhLqfRaFia6i4lL2S7Btac7Pzt+74VcqvI5mRp1YyxOUOrN5nUnbnFcg8o6hlNbewXdUmLAJP2+qrvHefny89zEUii79yv/BHK2NVlgffOY++BuVaTFOaWpySPikMWUG4z9PHzXGF9SB8JSFemqFPi+lrY6j3cx8EA4GV9Z4VcNXfeL+2htQFcI/YP/Cht+ybPviAlnvDjBUObprfV2EwB7+BCLZgXWok5oI7i+DlQwvdDGWDpWunsEGIoAsz1nYbgHG7R3ZqSTfpVJ/7UQ9QsAtAaGR5yMPbALGuKWkPnEsw3zPqdJ2mrIOBlWqdgn+1HNyJ/Gg5xMOTpFq6xGqSJhA4fTdU2SFzJnpr357soekYAiXL25AOsrVS8p0yQVtSXQyFqG2HXMoy4AuoUgDZmTZvhVwaVgwPv557xHRGb5ZVn5jyoM4cStXs7JZx/ja445+5owEvUVgYwOg3YdQbMntw+E8aY6v9P7/vJ35NVSDJcEGXnxDRI69WuIUU64MytBdQmOEDSqYEGww9EfTmMkh6+nS9/BP5rZYEIb+xNYD/QceZUb0QHDkuL8qDa1L07cAROBV7r2KCL0AmFdj3ewZKWQk7YILQMHdPQzkFkSQDmjueb8ViRQJTmuDiMJqZlzZ3ULC+7S58UkSxn8H7uc8brEc3vJ5fxsuHBYtla3fRIAblli2BzQUoNUzeockmNOlhVHUnb2UtQ44LZpnjX9qIecLUbnZnWv7cLZpobqmxTKQPHwHhWcZ+E7ceAwDB/RY2moheO4UkbfjG0r9VrzCNYvOF7llgr7kL/Gm4ZS2b5F3pMY4EViy+TEyd5x6y9hQ60rW4BrqAT9ZB8tTGky6HdO2OAkS0TGLrJ1I6WUHyDWPbbaivbrDtUJHVuNS9J/U6LOBTyO2W4GstagP87cIA1+zf1PRxbgkOx9ZE29Ic7dXkWHW2nlHdVY0ZBp4OwhK8SiEh094PBg7+QagVpNAkPEzzBQHm237st9m8iRBvu/ftcqd1Ejt49Eqgx6vGmZpWtbRbnLsLUloxaO98Cz/cWcHHf+ckY80xkseFreeBSGcnFSY9lkvLAxSURDwPV0zRvbAKHMTjZ0UWdw2cGzO0USRfXE376g4VU2dfwstykW3l8SRIwiywE8hPfm1shJzYGCgMfUZ8ixhef2vB6VGcswt8sl7pKzd8yE+PnQExpdowt3o/7Mi1zCavELmP+XoPJ6z2UbbETteaDBEd3Y1m8YgT0LofYZ02KiPyYHMycq4v22UpgjaqLwxVtNoIKV1ow8ax55PsOoYLS5MKszjz/pwmhv0GmWPcXKQwCN67JJG/wW+3+ZogwzCzIIB7wuHwxsg7SDWP9r5qDzcN3vX3rXMfkexMdMutYvF2QnPcQkr2BPiwpBJLXLpTjEJNgnjbEiXsK1aEtv5fxwlmFGRytGLRJivoK/qrf7arDdJFxN9EBSrCTSwrRpEsz3dEtyOSzxo7c0Wp8+5cduOU/Sg0JBTj/uSzJL5xNnxHV6njT6SGR0p1HwJbzBJAUNGpDzg1oY5qVaspD1CuGpRYireoBtg2isB4up1L0K2RWbesLhUU3XMooKRk9VBonWu7140y5S7q/tcMyp8Qg5N2PfpLY9i+Csd3ZOMx0X0pONLwfPBf5XnpC+WYkebBB66GGUDyp4iT4F6sjTbfF4yBVGKouo+JEf95eU4G8cjz0jkavNJsQcKS0PYa5az6ldSQz1OXHt9tgzb8j1Oo+0SRk9xH3WGDpC8pU8V2/Hmil0PY9Umd8hAoqnqpbc7rWd5IuouJKoqN8H/RMDI508Zi7SHZIFHc4kbP0doQD3c8I+0ZOJqOVGio+RKy4rPdRlaL5WCAoupsMe1Q2PBtLkjZ+gCkEGK+o+0sZIqnNwP1CZwf504lL2BdXrYriAv+yMyR9XWeMeN6LFtOBm0gR6QpAXbduVp/s2VlgBjlR2lC+cWud/eak167eRcWCfEBwlg+xLsZtqi0MWF23/jLdUnLBf0Ec8RM4U4eqp4tJTpTEf69Nj7SAoI/7iu2/MSlpo752azTBOms+v2HVx4tesZcUIcRJc/Z406xYY0XfB9Ly1tvMy6nEbhElprGFMy+ePj+QuTgtWs3uR/MvPItjV95TN8kGxsPxqe9sOCAMto3e6eCqR3xPJ1TqTQeDBzSnMXQSXcA8xCw2dhf3JYpxKV80H/spKM+UIBLBHTNFF6Kbxezbsfw7i7rA+Z6lKPzwJo07jH5KFsi7bDzTHqG6wXfQwlfsuKHoaRz6GXEGbY+YqiFC5k0ZpCTKLNJzl14HXFWfVXlnEXWdbQ9LLHg8DVWpZtgHrglhq9W9iYb2aZJ+vArHdnIoV3yrJx9vcgGxBHQlHm/V/xaN/G9SNe2JLTfMr7aeGVoq+4wWsbxRaKc0PGRiiLtdvQHY0tWyLfXaBjEufci+/DG2vjEuS2f52oa4uk7nbdZpvULdnKvUWpoq9ZIYYNAsBFJA3wX0TSOF9X8ZjtJK46GU3qbfIybcn9wOvyvWnx2HL5jUNw7wPy0fPn8EgDG5ouuZ99zaXVqUtm3p4v3i1PDJeA4sC1H+QDsbOEU3GSHDKffG/uoz4jXhXMLWs0ZvkIzn5OHkgYZTBv5HrrLVFiZG1+MOtj2sTs4rvVvt6Bqg7eX3L8zoipR4TyULAj0aYyosaVUuqrhQXcVskIT1rlADHj8elsexSfP5gK95w3Tbw9cdMWBQDI9k7CSUYsf/bt4WEe22Wze2ACX1nTIKrPCzqJWdm4KbTjn5/PmdaY0qVkVIyGRzzyziz029VL85iqjFDc7cKxNXu1PrxXr7/FX/DXwC/DE419g4+TWDLV1JX0MzKwzRfQwYOr41x5H8A8/ajWKrUD1WpHiBu1wFkMIeF5hbG8ND4s9H8mZqHNAOie+OVuuiujVSLqlxN3j8o6+JaKfiOmSduBxYqLbgvaIosHLbySr3S0BrsnnUSeXxUTyf+wBRkGeO4pAazfueM6lRBO130ze/zUdwhRSzeZMl+9+gTC7fangC/vrFahWT2lZ6p03s8/3EYiL/vOfKbFOmX2r2wllIXWASaHEFwbtg8PQBSArjnZoPFyzjLcKbOGxd32iDw13cKno1Id1GHTwqJ5Zqz5KsbHmhT6gEBbvwuTpGrrXurA2xNXRGAn8vZGBTBselmEW8B6911LQGvLif5bLhf8CJtZzS53Pi2bjE/eNiaZA9boBKKMDPRCNh9anU3OQcN/4mTvyb69bucSnj6VkdrBy2ivaNCYfc9xLqykigFdgaZ41aPU3sgOXz2MxuG5XqdrAFmTGeITHRjLeYQuvSpA23mUlOHYiMl0S8Rf4NJN0ckASsE18moqHWW6OdfjFa9XVVSCn2ZVye2YJttR5ZFeL56Mr3fwB1wh0cSJWSLl3vxrrC0yCqTt44mtLyAp59PsW6a/6lvIl9EpNdaeyAu/8NO/M39vUCH0GBJyWwWAAuzf+096+GV7VHnPoAL2btkSNknIZsfVD0UJX+oNnZkBmnxETGJiB+Kbb021AU/vDCigNiAotMgxw+IBgYQdqoikLjT0JZNOLFGKDwPmSVqvrPBcwkqXwS77X3o6dBu4SIowPwxhP5fqAwyN5TmUDgnuzDtDeKYqG8ICM4rD/B3B7f8Zr0Ti1tuiam7jozB2n09IIbuYO25nDffgdhErK6gNLtUFC4zETJQQyvbjZTdT4eqoqVBZ1JUQ4Xr3eOkwhkf/6UPkxeUUMdddlsb3uVcyaG9yPaAr7mz9ml4A0weRNhB7e9HxHfISPuqNJob7cNqYxEA/IcMoX2OvQz4A4XEQb7gWA1AAlcSjYRR8M3P0l+btGTijimn9Ldyr43Ip4fdm+HxgcB22nxlQ3NKJsqxu0+O2nsfv3nYXvSVFgbWzpeH9i+sTauccn0CfiudkaaIyppY96ZdOWFXR6/3knfDWBGoS8OUdFgyK5TZXTDHRa8g9sRNyBYXimIyLPx06zyDe7v8UCkRe03aU8NLHu5pdKqdmWkJO6YJlnSJe+KKaTaI7nBBmB+zdkI7WRxwfJ9Wo+Zdh0m9mpgAGoZtem+RRJfgyrQZGlzYsnJoi46ASS29P7kk/teL/IfCJOETWApNMNAG0aT3HKWnGSfR3ISuQplJeiCIGHH7I7+VkE/xHw5n5HUfpHx59HbnI8pMOG3KLq4qDcMdNnqPhU27LS27uo0AbDReOsziynBp/amUXW+TT3WVbUUzGn4SkBdQA2m1du9pLdYfnJHnLeFmEAUkE+vBvrruZlfTasgCZB3t/vO5Mows4hc7Z24VlTa3Bo9MsB0ozearb9mX6hB/Ox0nIZjTr386y+dZG82nC/4H2zarlLfxLun3OutKJoJPzxE3wCG8O3ThcQuLnRfcqESweGp5RhHDLGQX/9u+9jY4RAw5LNTxXREwx9a7SHC/8iV1QorYoYTznxoiqRmUlb455M545tjOs+PfRoBBZa5LmFVYKJRc018D4L4nEOPJsv2FI60F9CVfVJyGoEkVe+4IeQVZm9hK5NqOSju0QcYMZnmohFY0pOSm3XSTYAN5KWI4PGnbQcZhXbrvEMdZx22Dui4MoOCGLEZTjOwgbVPuCtq+VYacVA7YBCOFngPPTeys9l2osmLI1OAUMon9yjbfRSVJDZiHb6cdek4BwkSRytl42e4SvseHw8XhpV+KJpdut4AtxQtZJUZVYfUGSF+LmT9fHSTQs8E+v0rM6rXby6AFjsbH3HqCeuEAqiN/vfEj2GG3pZjKzKJTuiTbodx3y//JyumvyU+ahT3guGJHZqGK3U85TpfLw/AYn5aaMnsppWQbPJtPm9DHce7h7nHHDFKMnTvvFfqq/7jseNUUXeWJDDRxBrDYqZy549hEIAy8ruvsLcnUCgALwE5TXet9su2JoWXJb764foB5LI1npwj+fueDKIBNOWL+YrDjo/fCMSGwxmGH01YcrnZY5dcH8NYEahLvv9o9ho52GVk8yCNBgMWvvngyhvrdzZ/itTqI+g3CEnSAmy3fQ+3K/VT2WtucKDsPFRdMDvTqZ4tqt0FCkPZzL4AdEQCwKbu/YnhMg2+06nqyMo/5oEukS3pYv9ZNg9L6fhCmTsoxbQ88xQggKgQv9omXJvw17HtfT0Gb/9fb2gXm4p8BmQ7iCHwHQFRXRbujZ4h9LuxLQDZHwoh3vIlOyQ9pVus+FpdgeEUPlKXiHHc0ArGu3Yd7PRjETDHTZPUU0auQq59bpCdklaQFw7nufGe8Isl1IszU55if3WDJItd9+RrBvWCDrdU+2Ia+3o6LZxS2XAmng1PBbTS5szghRvl1Um4MbCWPnMLXeaKIzKGxcX1oF4UuGpdPfVaHmZfzZTIGu/kQKeQ/n6rJfNO7REdeiFWK6joH1we5Cp1zn8CefO8QaaHUGw9NrbrfnIKCzM+KF/5jfN12Z6EbJF+HIDfST/bHjBXjtlUqOesXw+7v+Jl/7j60bmYjEhB+PH3wUmd8Tdp5VZYY66JF9rF6MJn07c3BnbVAvpDSqjCTTNelERV2or9JDqSuYql4Lx83IHneIcFtf6zSbZllUAFC0w3ESGxctJRfepLnQi1Z4PDXFG4XPXxozKnUqX/SytSbBZ/x6Yt2A7i8PSAKPXdvCPjGnfMr9KbfWPUvqBRAKwHIOyHvPMQ2/EPcqFIXYDf8RoFncYhI4z38/sicISm9PBLO+jq3S2YmmefCdJ8xGfDjz7DZ6UWi/YdvT7u7WPG2vIMODgBpsWt5ESKKj1vWvVmqMT3SeOWdAygVqDR/WTKM4wjoZJ+xj90Xy7gUMbpQEc465t7ME5r1RaNtpCF8hSMCm/No8q8SFuTsce6bKomPN5zReAFX/3ftL2vkLwMSWyNcV0U5hOXimn02dPpaELTqn8Y4uJpNA544JQboOgUH3tWqM29yzn+NjVqbI5Wq6jRRbgmnoKCT9IJm60grRoqNSy2abyx/au2Shs3lP6UBHnMYIijMfOhJoXLXh/ipJvIz7J2ZrhchxZyZIaGeFRk2g5I/45javPJQ52syEwIIY2tyt0XYnPYbyB/3X7D9ul336BcS8ogfY8U79jmSbb+x5cirVBszUzMETFnWVkK+s4r/j1V1gYqPrui7YZgDjb7KLxr5YL70Hswf2+qiT1jDfbvOqQueMnirrxOlpBejOidw1dsZLqmGHZ9L72ph9NuoO60vfex3Hk5qqbXEJcoc5FYUjtPp6QQvX08XEJZyqLYSbwUW+J/63Khb2gaGSsJwax4eFRNhlgH7Fpz6SvfY3fEJbYDVoYuS6oxflIn4+l+TBE4+a+2wTgQKGj1rg9GnWH9Y+e8OicW20gXd2vOfr0Qfp5G7JDmqsYCDsm8sDJy107PLK7wLA0j3w37uBAMHEya6eP9VWIEQp5sPXljBQdfc9/W6mkHbRiB7ytaD79x3olrf1v5f0YIhLDsCnCl6WxDDoyzVsf0jEnLg+4qOs8HC4PteRe9ov2FRHNOW0d+c+VNMYi/1wG2pPaG42BlGui37Tt7JI8jxbWlDDHs/PSYr3e9hQCjoFRT6Z6ckR6rT4P/hHO+7gI1RPivgr8klxlc+UHSboVZ1LIhvaWi2BQstcQiF4TY0PDWEGpyluk5l86WnYAI478dj9KnbgkEHnRtRQrR3Fld8OGyQUNZoGzTID4UPRf6xjb6Vkyqb03dkSAUXFTd2VkCkS57Uv/RRNaEIF78VPaLaWD6Ld9Nc2Fu6tTx30KdmOsn+MFJ6rQzS+fvvOiOg5xXdgacq7iaSbhY4hck2+AMwe4ycrn6YDW2awF+RyAHmFQfyvNuu9X2+YBWr8EqBDiK3NGWRXgD8/FRZcCnLYZEwYoiHuEozRAMP4t5azJ9Tj5h5vnC0/GwAwJRH+38hLed+9ABtF8B2Dcqk1RSJ4lpMYKev6TqkEn4r/nk9GWYWLQ4SpSMthrWPKbzgAUrFsEDacriIXKsqQ7uNcIUgArCnW/gjagV98Kyjl54VEnLATu4rPvqreQ6WS80LciRZ6V/waEpFfHGY2UzJI8W7gKIMhhb/iAWkmKxUEfuCf8vrkkv6wI4K81wuxcD8KSEpGienGPOB+aOV/wAAMyiddFaKL1BoMAr0zGo5dWDYDr/LwxV+dCLYJvtXWoyVxct2pJqlAzUsEkQvDbGNNjaNql9XfSKRthtAI3MRjzH1Qr0M39mDjFxsWoy3B+zUkRjETqHdHck9XE04z5t6WDHr8QmN7s99wpUyEjEdHh8XXiT6XgKPJgqn8nhXz1NFBDuxeXXGyT03Fh5fpLfkxBQhGRWF76XyfyS5OLjZhzvMM+V43UFL+tFOvRa4errM8TKd7ls2q0uSf/VicPQrkItp7z+Lzx+7+nVsXx7TEAlaJ6QKQCykoOb+0vIc70cGveN01uKEvw+No5vMvBy6NyB0codNK7Id/uwRy/UV10nO0ik56lZTXOG1KHZzL+wdT65ZuGAS59Zbw/ann8s0A8aIwioNMXxgP9RPURtHhUKokV6pArpCALSXPDP3rTWqdRsqxmLth6fYmcI87X5hGtxtIImyKzOeDBut/9Lq85eBqKv+LKHpYxK/UC0vnP/y90tH13/DOcfb7GvklvgY3QALjBN1rx2cOB8wYV6yz6U+DRf2PgYfHCdtlc763vBRluqieYNVvJAPTp53ZtVQnPLmmNDUgL9xiSse5zF+XwO0vw0f+iVNQln7CE+0JlIVPXQoT0tuTBHmd/oJMkbsf7WV2dIe5camSQMLC+F41JEOpG5OTQX16B9VdcdbMTSTYqmylazKF0bc2nIzJBuIJCZtYsnTaOXd+vO3mdfKwJsFXbBmHpdvDlL4+o603ufSEOTmybVGySUfh2oAjfXy5txpCmf6t+8GmG6R35BJaWUo6hcFetG21SY4FcjCLZSgXqZ6o0Ap2KH1Msl477ftnP1pYa8BMMOP04rcsNYcMLa/blqYAcQQ9gcCw+hX+ddDaq69XaF6k+1GKJCOKwcaNo21bR6iz4idDb47N0EuvEbVCZhEJgHi2F7nDRCiCc4UbTp0Wq+Pc16PUeUN5vG/tMfNGtGgXjglsJrhiCBB/wqja8BkSsMtahdNDTno2hHLKUbwTZF3bwwBBw43Y5WDKmwgl/Gz87WKLtN2EmHqYDRDAb4bQ/A6HM7jLDCQqY7QuyxIKG5auJ5hVVScO0zp1khcyV2M4cV1u0KkRxEoAJQsCPnWat/nUw9wWjfOFsm2UXLdXkysuOPXJpO6WCo/3sVKr3QPCqIgc6qx3+LoEgfjLQq1vGbj5E7U5yMh++5hOoBD5LGw3a7p9RPUvJ/1/Ia8AV+49MrgL5cML5MOfnQfOGPx8nCBxBBFjFqCvJOFZcxKApKtbuAdEc9Qnuqyns0IugNdFE87SVivJ/6PbTL1osCo7XZVBmHdw9Lr4kzjS+DCKpWQR+gWyesLQBhPf8bIzO09G7Tv+VcBh3c8JCMzU5L7iDoCsUKr6Cp4f0LUr+unCcjMnOMISg/K48T6d2XnQxwT6QOUFFKJ28hLOhvBeX1avb8YUUT+Mw384iNh+chDkm2hClDvWU4MY+v5/YLW+UTbPFXCrciPXof+v/umD1jT+E2I7lP8vhQ9oT0q7sMpnytufjeJ4zagfVHVG/7GfdEy3aV7+69MX/lXJVmwYma4yCZjgpPNJDFC84sAPz9rq4sTQIMWhxLImfcUHuv4clsdrBRPrO2yVM4Ux5sdaTu0yJYNUcRO+Gq6u9E/wmaFWj7xYGgVS5a9JwGW34F78p/38amE14eXCudeXN9fgZNfnZcOA45Q262XqzRtbo1GQKh8Z4ooJ7FaJaLnTLNUV7Wl+YwzM2Kv2jkZlpkvJo5M+42tgXv7av7R8ouI8Wrav/dMKD0lp3GSjFt3SYgLrYJZpdw4SZWdQ7E1oxht8I4oKQ6c4/dIBy3aAQO6NmSpjcCeh0T1tbefPg9HoN7exwwUg/Rgv42SRT0jofS/dsAKzbvKAESAMHz2tkKe+23InanORd5bB2lwWVTzeFyvSOdHNMJBAdRBrEa5sjPDWV6pJpc9Rhe5QbYQu/tLtRqP77eomK6PSBadbILg9tIRiuhWK+WadthJZPPrLxv95C71O1l3X5/3Fs4nRGK6MqYd3D1qxxIsagt0HP4rJ/1Y00EBSzGHsuiunxZAC2qA3lt3DsLra+k9/k8KLFSHM9OQk6fGaL78lTmfIbYgH9RNj2BWRzGb3IqzfNAwMdofB3NfZpB/YYlhoT3m6+vPtQxyywiK0zQkQnSxgx2li31E98bMA4Ek+d2xoRyu6LSnDTqZCJMqajQP42gjJnFz4byvSTwCB9x7KTnUkmbouPj8iX9yssFSKui4EDz4h7BPCzQJq48mKQNwHb93rvfMdhtPoenF5UHk4MOcHn/gFu2bJV6rzsqgmhSRVG19uEONxYJHJufsdYXHv/AD5vRAjP7543f+1xkbcYgnMyHQW2FPydV3YHhYXAKjAnL06b7a86LU2QXiHKNA1AlU2FK5dgxF8Z2WQN5R7RZurbdeMjvUHqGY6tXevQzQrGeSuYv6UeE9WMazVgBvQQ7TcnowzSKJ0BXMwCMuGS5JqSW+otHNsOy/2HbgRrs6rRTHEFnUw+EawCtBM6SIH0ZdKVsBxMRWbptDIGT31WKOXe9KfU+e/6KyeOAnckTxxCATijxOZ19vNSrdZHBa0lDPs2pgJPZhi9sTmK8isZyrF3YWpRn6R448xMRUcyTihi+i/2zA8VPQ+O3rdTGYMbHYbGZV3e616yRgM9ErmW8PEhxvQZvsHNqauw4TtMtqbEus2RmhLaEObIaLeJgF5818xPI3uZF4bp+ttp9oitWef3K71DL8s8t8WDobTG9tBfehlA+eX83jih44Lyh/jnSb/KHhhXpl1oEKi226EdMu/UWQbEWmGRPnnduqCICBi7ckVkyQR/KDAl/m0hnQeKX8EwUgv7vHGdFBeLGUxdWdXCzzPefCOdBe+aqc8MNyM9e6MDBeiYkuRH3XFK51MgjOat4t8JFLSrwfbfyyXPGoAdvrYDf+T9eggI1PKSfB4ndcIJvwVbtukCtv3rIoBVhuu9ksKuAUl6jF4QkTnVA4N2wqpGq+AbpQmcmhRT+rPuTl8ZWaDCD+bVWmHA6Y25oKozDaT/NaM0yKarO3vC6obHdRCZIxcvzXyIBogEF12zjjOPTm0nCSZjuNdzWwtuX4BVlRf7tdTKkObB6mgKZulvdAh1VYqDahJFKd8w/tWiCrjd05Zw52aaTix4IPac37DeTAdtYINICHNdIMeOY8A1MGhdPGTSLD83eBzbLksbq9NrxqB0hvQmnvtv/a5aoviQ5aXHt8BY21EKfdW5P1jX3Zh+3HUcaO8JMXLt7RGOGRB6JZrixmAhKfFZOwjs5V9VlEcVTbVy2RUyUABEJwQGLByX9T3hJm1+Ho9k+tLuxfTUfb6LZbiS9RQE/FSROIlXc/POPRCMeB1U4XgNiFKDkz4p/RRP5/i0csZmJlP217ENLBrGbne67roUKgRRPcQjAlfcKp7QAsH39yYfo/WcsLbKxAITjFBaVS+rZHW+oS/4HVEVrpE3QoEBAmpUAW9p77Mvo3/MMwNGuZkV5uR5Vh5WnGOO23BpbFmJ9GiQWZhmeesa79ULqm4NUxcbwWeYIpyElUlR/4ksYW4mfr9CjO+lqcg33pQcaSS4VgpTjBAQAFf6VDLWIdC36sa93D/0Ggrnvc1gKaD7w7YhdHPG//mBajMRVy8zCPLN1orT5PIBvChr5bXNfH3xut6b+jbAz6ZzZo5Wpsn58HsJ/pG0LlivOIkFmVJcF3/yYVWOttWJLWX4fXNjKwQ/6AgeWmbDVtZ/3+KmV46w4JlnoZ9QfUTETym3rDkHLNtqbMsuet5S41qGd3Gex0EISXlIcSL4IPdq2aaowfHAzdABlIXltLzqkYCGlMGTHRInHVH/lQiLuId+Rcz7q1P2dyEF3yXCOr1vgI4iPOvCmy/Gw6XATmZouQARpmQzo3D2Q5M2sgcilEKi2n6leLk7Wd5LCBV8yewtIrLXqqE0ljEGhM1JyWFQ73kklQfwGMUEr27tVyRCLcL/D3Er7P/Gvem4KDEVZcPRrswkOjIwVVCS/CWTFqwgx5sraz4XLt4agAgzXAswSepRpzT3yER8K5hTp2XtDH8beLQt4S/omCwA1RtTKn/+SrYOnY4liDQVRd0b3anmKH7QcHcBOtm4iJ0HFPOOPya0o6B+60Nr+PRLelp73yyXJa6Es26w4+XMRhYrKWxvr9w8yTSuTcIPlAIKOnsBKN1Bj0NbXTNLTeT2cxZsN3+nFldLF9nbwUade8qUVMfm5ncbGbTShus7C/vFWWo5PT84A4xepu+JucItFrbeRHyn5aZCSc9XyujcR6lpRqk4Pe9p0bdQ8eRZIwGnfEzOsDvTDth6aQKKnq1yzMBpJtMeHIN0udc9UG2//ExHZszCDkFf+4DxUCQARi62nJROsDHRjJIpmbZi6S2s+OE1sRCPd+FO9tH+eS3PPHApYsZHU3C0yp9Z+PUUDoo4bPDe1kEyv9FnjMyY5uD/a8lTuBTAtVLH9X++TjQLha6+JACCELw3HXt1tISjYsEDl7zo6SMElSJPDHPBw266d+pcE0DcsxW8c/Ii7M5evldSrNbBCaj79sgjpkvnt/qPfAnVA6zn3nMwmNcEHEnxH1BC1JmQhI/RLah3WqKsOqiroJtXguYdl1/YDAAZCGgjDStko0+D8KHb8bsFeiiypaOX3NsoDLqzIE982IHg5eJfLAGHJU+x7hi92BxKWk9ScUICFDYLqTucdv6e/vLJ1iWHjRaayFx7lL003FrUchDeIuGlJ01iRALhi3bGuTR60bWRnJgtLQ5YotuGcvDxfOoo39RkgKBPmc612SWyVztOKb9xhJa6NbQ3CXzCD8Zvo0Zb6kNfrHPaYfrZAfDBzW4MQv/sS4CM0YcmEnwDjXrn/4hoELZ7c1xA2s6h+FRPhjB5x+pHptaKPQfP6ybdOyDKHHkJZQoea8W/KJ4MT8wWiN39eXFDdtix8HLQn2hmKySxcxzVCK7/Ew9iOa0wcQiaF5FF3ZKJYY8OT7OUsPA42F65IzzwfoZxxjH7I0k+AJQ+PN38yCpIbBtTA2X1Bt7+BnCrANYnwD4PR15s5vJNDFAn/ckRaBVlGcyoN8hoEadBYTOU5WEFP+1A0x63FFCW+fMsTxoJJdcOgHh70BSNAkjFAC7nI+kYkqoKUopWvr/SCr1fSPUWp1lAoRH6UWf+hcxlyXK5bQ+OBQjAZ+Cj8DJsNnLwLKQ2CcXYLHemNWTbp0xH9t38PnjNUeRzKca78Eu+K4oSfdpYEFUKivfLDoCzBZA4vmZHZwvgXl8SerPGL+1cf7l9sThw9aNvxZGelVmJMnXUimUSKMbWvpjEVX0NYYDELDDDhWYuG04XV+Vvu5kJcrqJjf8K23rRrHRuuB9FnpzWoBGWE0mHvve8dEd4GKknT8j0pkjFnD9aGPmVW02skXLvcJTK5meGFv6ouVdtCUwi5SC6Q9Ws+FXjP0Oo+gYzfx/S4jY3ojQLGLL4AuoGqWBSPWbbpYRI9JwVBE5ygepgHzs35DwPocncF/sOSVavFl8fuKFeZj84VWeUpLGSHBqy6xh6E38nubi680t4fQtTH/+CePgxShDcga7ZHJ3HoV7OeQQCr363PNwnLnNm4hSagwUeBUB/GulTMwBecMG3vlZKMhVOTLF6F/bZaAQBegUR/walCVf7onEwgnV3THks+Zn5aenzx5kMSKp2S6diRym/unfIT2uxLGpARC77m86sDfQNcIu1sablZ71ockypCQkf7T7vTIRqkiltgUYdB9hnXGb73VlrlF/j2xNo/S5ruOa++zibzg31OwQj9a6DukKqAeHxRHLxvdR3YJwHD2Z1DvGmsTcKANvkR69WScOUmDdud/2JlV1nq41cIvI0KdIEN72TwE+Fj49PKdtiuRFY6CDrHQXTggykefefUG/Nu4aqy2+X1lsKu107lH4ivNMuW/m82vQfCJ9HpxeAF1a6SVGJTtMW0PeczUTmfTGh16pDdzrEXbPctXRT1gnXVdnKfDCllOyKfHnw+59SrqSNKPoj2r5cmDbnRy6MPFxiyfnsSF0s/y5xkD0O+s9BAdjgHMqb0SX97A+7hoqXjhlMHG/WnVZUgwaFV7Q4i5pBaeAPy/lma8Q727dDPcwF3alEVkxk7dMJ3o9YZHE4xChMMjCC25S7P2IK8ACM/BZKnpS1MzhfwPWUjHM/aDyksiAwKD2Wzi+G1/iHQ/Fa4zsLM9i/BhbOUutU8PXN/QP+zzKQcSBgFLMsIyQLbhfcII1vX4gdqrczPlBvfqM1cWGKm9OzhtXzn8ipVg5nkJwzu1ueIl+m8QCWZkEP7knGISQuu8TMoZ2Hq7qbKkTCGMpxUqOPrL9xyvs2i2TLIntcjWLTltX3Y/MtzXNtyyEO1yx9P6SjzCtTnY0mDP/Vwb8RymPDQGmWAeLqAgz5dmx/Sek2G8+bA2JmrMut8avM/AW7XcdTI0pod6+KkN7ur2KirJy2fFCBBfNiI/80xqUCi+Q1nR44PJTfVULXQePUKJEYw73VIapgruRw+3O3S4B63tZfGPqJT1Ne1PsDcXTCkG/S3S94ihJyiElljxW7RF6a3cWmRvIyGxWx5b0jXiStjUpAaRhbEWjEfjWZmwCJj1ZbdeV3QrNqH5A6g2SvR7ovaJZwRbz5LO/zJmaZhZ4VGb+pDPQ/6QY2xZ50jNuBBhCfmVm9+ozray/6jVmbm4LRU3mA8rnPTcY2KSThMsyWI7zxbvS6yj51MOkXg7qiCxrTTNmt7pyRUqC0jjuRmhs43w0uQHn60ThPNHRUdCL0VSIPvAynHvniMXFwfZXKXNnhn7bsRfxwtPrSQdDalNL2xOHsm37DEWympj+GZuN5m38R8gUke2H1gwnM8HDDl6gBW4YvsalGkrZRFEgtgRPhULB2527kchi3X+a0CnY8BJi3t94P8suEUsPg9g8UtSwkS53sjaI05wjnGY2cHE5qeuLTWgQ3CqT6L4sXmFZz7FDkBcXzc2UiDvBI+PFEQ2NdzbLiw9noXgZEAUoLvRvQ64nIQKUgNSO432Regn22IPtXqu38waiPpp7Mi3WPCs7xG2psZ5T8FTutvCVLxiWOq2qtRXFqHLOsfT0amwp4VL5T7kKcm1JRH2IKbe/bkGQqZHh3wpR+WWMcwcHG5aj3p+oOZEWJMWfFxzu5cchBuepQMt6Z2/Aro/J0kNfuu9fDM7ZLtqviuvmKDEZ+s++AQPwSDc8YPHls5/x3wGfpxOoTQNv+N3cNZPl4Dpzjk8TqBhIXpVZh1mgUf+KzpHvmQMNWsRmXm4rRhWy2g/VT8cJ6HAZu5/l7VZBSBNGz51AXFEuOVWG9cmbHd/+BauuYQZjj1IprshAdFs/yiTU+322iu05EHBwkXHkN1odMMqY1ES4ZG9D1YDSfQAHx+F3+zL223T/cAcHZelngoK/Emk3AJiuOKPUNtYAIsf4D7T0BGSabmni7d5LGqyb4CqJ6caAbcbXN/0BpfDEHicEExSELE4+pDPQ4egIN3W5uzDNX60k+Slh5gcsVZoJB+UJdDkAL+DDVujKufTBnaBkbMYYyD5mLA5KYWz7/8Vo/6JR7xlRzKIJFC2dGGfzBd1AZ7sKMnsFDGDxz9cXBp3WM3KMpef/hVvU+UC8HAj4iVDHOnn7UTlL/d127ZYhXBtpbJlilVWtMXxFowgDoe1DToxIANV4UhDPMeYPDEuuttMBVdJ+WtnngVK5UYIJZ2LtbEejV5lbaW1BJ5iR0Ca0Ulbs12HXu6+6KE0PxjjJVTW7wWBCacdmG9/V0IxgZmuXTmm51W1GPhHScvIMVrehxMw+iC+z1a5bjOMTbVpYH9ufykGqjRFq07GCMRm/EDCYGRFpo3yBDm6Q5A53bmkr+OTTPwxp1GFPXTBEunGx+s889vfVrFzFUvL0wrOXOQW3vlpgeh11IN5F/B3Gau8Sua1OaqFHHDuDKPg6IqtC1kaSC2HtPIOFsoy2LxJeWsCvQrDAdU3aIfCTEjF5DpVLaePq+PSbw0TQ4P8pWvU9iYKU6PwFwePC/xi6z69gKhyfQD6gR6qjFaMkHB3UlX/ieaIu3a99nRuKhEFLaIU6L/ZAAkpgiq4rlEDcyYPJDKfyw2VymUUquNK1Oi0fw34kkGAU23EBh7xMbYDPA5t2vw0KBVYIUz3O4BJUDkjihF+wI5MCHseBT7QuF29HcW1Zk/eMOI51Qcg6QvtWsvxi9F0mCeuLkHpVXBwyxV7XimPdqATSQ8ey8wLwt+3sFqAxRftEw7Y2sBp1jKzArnwzrgjXEYIqdXgICl6OQlI07xss8SrCvSbMNsiBy4N42Gr+c0YyfJPkoDk54qD44V1Y7yglpY+GJ2nD9gIdEuafXf8UdMnTEpk69LxtSvpxqpiKGFABvjtCDIG2U/+JVAebk+ppjDlJhBT3fYu2i7DlAw0rTgUKGLsdSxQHenjlrpFe/55eqJWSu1qeWR/q3vgFi0xYd7XI6By+n74v8an56OdpQabtBliwUzCQEaR5FvKXZJ8PzZEqQ1dKCvHrlMpBjhkEt6ss/eJg4jjI2VrkoUA2ij8gMAJBGiTaKuwIxa93UG7OASOvvv+YM+aoOpROF48DgP0ohqEpOunh118BbY1N7l8hOde7mMfwiAwEPrZv6Bk5A/YlbH//eLUe4SzQCJbUGMdQ7eQObYHKwQuOvTGY+IJZMFidOjeCGNuHkvnKguiUM2BXTLmYz/TceOdZ72JHxvsRI3i+eUjjjJlsqIcCKATdzrH1IilRQYSMJS3XWJYeKgp3ktIW5nBmZFSMTO9FY/RwUFs+FFI5RFxKZYiN4wtVPScVf2GUBhfwc/t4t6R75O82KVxsxFEWcI/uO3oL/+uLYHafDQ7V16qz4yJnMAVuvtePYpMaMvdCWgf+Z28dZIEveraXX7w4fuSF81q7cFxII92i9IW9us9fjJBeVHTdbiZs2KqAAFI60lqup65ldUqehpW5XfugEHpyB0s+vWqygqxrnF7PjR3TsE0vjgSoY45kV8+qn+fKOysNR/2NtUh00kvzJoi7gi4v6+NuopbYKh/5eGZhRF3sIHiQiGN0gMJNqC8rB7xZcJ2nJn8VSBwvzspVg1igGW7pDTczI5htEzavwlAEPl8xnKkdjPXD61c3lCGJ9EKLf69LbRpRSvXyWbPfDay8WBi6IyoaEvcxNCWZ7KUC/z/aK8M17UKVqsEuYJfS8Xj5I8aS0k7c4smsH3FAH1aAD+r8W048aeXsY45qwfoowWxugSxTkIkM7Wh2tCtGMuckkV1FdxmHUGS69V1q0WYaGG2f/iGXduC9UMr+Md97AVaTIyQpVw4IsXbeSjyqGFgTH16ccmYiX6Uoyt6XzRZnDYCTWNv0HNq1zoeEA1njZPrShVmEwFQO7RLz+Xruy1WyEReIo7kDgeXdH/BMUUyoMf367OwEDbSLE7NP/hRY9r7Jsy1l3qGtSLkeFOAGnd0aPvFmAnAJocC6bLS/03yE7OY10f2UbzlNJyiWAwVCqbnkzv9yFlVKqRGVY7m1unXiJJJJ79K9nDPh/2PIfCKYhIJxywvzhNgt9gMfv4ZLZR/CgmyH/zWV7i+S3l7d/4gTCKj81fpsUnkF8xXfmF9D22vnkhbQ2stRkM9jPGKnogzaTAV+KU7vrvbwjpi+C9AFFwXD9S8rw3VERoxRuZ3c+AQ8PJGh0FsGon84fJ10iQca+qMbuu3aOGK6OrI0NhczLxdl1Rk8cQ5FwCr3/d9QC/FF34/ZBmAvX0F1WahxLKX8C3dGweDWD1W/DPVqa6eYRg8zKzyAxxnGHo0Qf1e1AqNDRbazxD4titBo1PAg+xte9YqMBBHmhy9eVW9DH6Hgk4GAiRLVSH8dMUnd6GFuKrxlMzHY5RMJn7F29Tg+SkfW4fLYXit2YuK7z/cZTtoyGP+cnUxORNcUnpMK1SSnSYw+QP4tSfzuZ/VzD0g9nBAT8DhoZ29+6xnHICp7ANgby54LjvE10uJGN9z4woo9ZOeY5RAyeBwgo1mAORMzHIkHTifLse7O1n6LPxMIs5LinF3CUW31X8uWuIbps/zkF4BUy90piCSYniKtdLa/AiWSTV9bRa5qJznXqKd/3IYPiDkeBFRochaihHl64Q+HEFovu9CqNkbG74zL8l+zfm3k3rX179cUwOSH/+2YFARdOGEQLHuOIVlP/Ns/1bXndu7WnilDvnWpQj/izvUYlSSW85gUQvTt2NiS/+4XO/XsvHqUmNA5nUxaQqaHwcJDkM2SPvCcIREhidm511KmaTKNkUERRFnCP7jw3a3RnUDsPWv46gKkAQP2tHI08hGSo9bsKOWOze6f6vynZwU2yciWuhyJu0UDD1+kZgJm4s7OsRtPpX3pcKNd9+sZ5wk5Uh5yTXxxL5ibPVgHYpDuPpLHbQrfmCNHs9BspDuI4qCHaJBhqqR+s7mHbTxqF5z4xszD1E0ELVgrfnIFa6pTSZY4+NKJNOdeL0P08aQBLLjYFbrX4l6ojnA3WNChfieppoqu0soebl/9HA2Q2+mJMMz+3qLSFr8u3YYWqyBQR0R/MLY2xtSBqZvxh9C0N0GSZdFxjvH2j4EwGrSz+wRGOaf3pRZpA24ZlFY/hhb9XZoMuOLNZ8zR7Bh+7vV37dFzsXWoLtOTjg4Hocy53R1qILSiUw54gPyB5Xte5UWXMTflWMMq6M1o7zLbYfywYji9X9ueutz0aC1luqyO15iCqx8zw3Ny/pRLizc0UUduEbwYtN9kWF7P2inPpJH+L3/XOt4RRnRg0LBFtBOoYSjL9uZKrmavWJfbRf92Shh1HX4xa5bvIgpOIdIuzYn6/ccvChbVxxkicEU7lT7q+N3BNCRzClB+0akuqnz9sKbJ6V6H0ncUEIBlO1VLAJDVm4471C687lSjR+V989m2L9WTmPeQz5JFPEhneWMWAAoluSGTt/v8sAjaQ+vCTsXJWzzZZIVqwycmDTCGFOlwIWI2QywqtcaJ2H8DxR/ULZlu4zYBUTUxcGBxkI+v1SMQ+tchcEdERNsi/89d2MYw4Cg9i3flr0LBY5OpxDJwKYhJv1BsuIS0Hw/L5QZrFDjGT/TVX8aLuJ8fnC+0KbroxCOr7O1wCL1W2EqFUnzD+1A6eyjOXv6Xsp0qeIAf3qIgFdiQYiCMkYK2D+vG4PBwIUfe2RZxm80FP+UlWMtOw6FSpTxIZ3lbIYFsR8eczDGf3nzoVA2/pmtyIIRO/lS1elzIC0FWFMPixX/g3ELJXUL4zgZvHHisJ/53gtJxOOooTg8Tec4ujCG7XVBsHMedBo3Xj/ehPRXWBx7GMqd1AItckIm/0+ChhrDLDGiSoF4onK7grnoBrWMJ3gahMs/AeT5qF+wTkloLQna7X0Imt0ekIasGFIvDAn8bI1CB1Mf0TDLCgqKfuKtLgKVc1Rl277BvkTCSU02/lyS42AI4724nARwId8cIbb7QM/1kin8MJMxGVuU4q1CCaxokTtoy8kfwULh06goXb2fUSWTZ3v2J93UNQS/TWzaBCF8Z2kA5BnyjMXM8dhjZDXJ9BEKIYROgp1hPSQ1TjbUzDz/Kq5Z+f7qFljn1D6CzlMfcl+EKXzf0S3LxDzoo5pU0DwuyQgzkwODqhJyN0/GnuRzSQqG3Z9/NU2qPbuK/aZGc2Ee2+I6pBeQQ8PQR7jINtosUj3LJw1a5EaoYe/gWDqiEIk8J38aZhO8bCR9G5g67E6geuXGPR3nj8s/xiatlGVjRgrsq72aCzmUB+Vl937/MXW29EbFvW/jecYDVYcWI0Kqb92Tzbm4+41QBCQnD9PA+j2ur+VbYAMZ5gypftaM1ICP0YrTIOcGB1guGlkDJQCdaB9DhG52kXjIJseiaAkVg1SuCYX1k9HjbL5h0lvKWSFSiFEVA7HbUR6/pXgcRhHDJveypbUNx62/NbWmP1OtdizePcLpb+FEZdF1izA9wHt+ZKDe5ZhAUVGKMSar6/Djpl0+iPmkdnSiEPuiW4JVmBNBQ7EiWPo45gmgC7m6wNMXPuELMB19yFCb/eJfWrbWIyNfMwWXOYQ9Dq5E85q3frlGfPRpGKBwJpvsgPvJ9O3ifSP8YV4nHMWbGKnvFl6TICePQJYd0jbtEsCpNO0NrTSD8VwkCv+3qs3MOOk6TEG+p38a9AAiO7vmtxPS/3XXUx8Ot2N11LWUK29q26D0b6P+dbuckP6QaPfdEfiC9c2bRNZVhEMBsKDkNVV/lOhhLPUAFJOvTT598F7fXDfX1KaLY8tV5XJb+VZ8bSXgJpzwl9bAmkVgOgRR+j5xlDc2kUptT39S/OngBli7j+Gn7MecBY3qDe84Td6uzb9K1VHCggbbBlGc1K4+sRhu1KVytJFV6s8uaEiby+r61TnshJb8TLqALuAenfOuxYP7tg0Va+cUajqnriKCchK6amjbdFC78o4s8MbbZvK7twIGcKiXUsVFumh609p2FoQnWoAD4UVBokvohPNOV9h7ZuAcvvFXjfYXWq+L/NkWJBe6bgaZoedWzGOEUUewZQIEFU17ybWnykC5x+peu1cLWojMPoFsiiykFWmkazxrGZZ2kLSnKe/IzBObVAaWdVNIy4XHz5VAOJ1y+OD68ovYN5ebMLp6QrH2Hq0M1wbAiCi4WzqZ2rl+EUB2tAtXlUvnbLn8L3SCnXubEv8Km0mrOJS8BD5kcmTgLvUPRbxi9iBXmatEeSs6aKaMy8SaNqQ3H6pQVVmBoiopRKgpoWH2aAz75uZrcu1HlNWrLtBDzuT4G5rZ3ar9QUTtaDPtL+SMqn/rNpWpvBtQm+HztM8CqtHFa+/5edYUqDqRNeh74b0hUixWyfNCLyY0Ql5+Lue3hjrI5F6NnjGsq39DB7AtNQljyWXeb+2aVRVKC0oYwO2NoNAcXGwzURTS1fThj4BXkPQOC9aTM4fBt+UbuMHlk3wwNEP7rLn0wll094iEWEtzrF2FPt/kovXTu0dMLO+mDsHgLBP+pnMgd530UlMK58jeqq8muq3EUij1x7Wdc1P01uVewanrZoLvoQWMFj/si7ZAMMvcGyvNqElbY5vL4M06EH89Hs7u2eTP+V2go37F2Kl1XXIgligMh4Osdpu8DfeaETnq4xjzsAcu0vCHeHCG9EM7oOLJOGszS67mLs+G0MfQOlZQ4igffLtYkRPqqnjooFndrCG3ecryCSm6T/JWkFjklvixV0WZ5+LJjL5b0lHao8JMBgjMY/9z6uU+jx4qTMsKk3W8YfqQ4pRhFuFHNHpGiqfscIHkBZZJ/4SJPqPCbAlyLY1Nf4FFSxX06+wOD+1bSUP8sA0fE/pYjdVv31oEsercxlvdXyJt8Kd+lqeosRl/cIr2GAO4qvln3WvXZ2h33Zzgr0McrDTFHwtcC4a7M8aMyu/ZVEL3YmB+1bhUstTxwfaXulQmd+N2IQp9Qy1eUDtwThJXKgo/R3JFRqRWeTVSfc48i4acfrlg2K0oIJIlwY9swqkQAY/55DcuQJGtdo3GVJcEGSMdVKCXA3uJxw3XLD4MztXAIFAiy8/6P2k9jFSyfOOzM4/B0NfyBe8S9WHBobXQe9Jksx+Nj/BMLVQkLZ4k0Uy58JXbI5WsI8iWnL9OQtkU4Y3GTKFAnBvSRV2VwuDcuDYxERdckFBFZ0Mt9PD88IMEOiWOkDLitwDTtTPFqmMYwzlaGtxDVCE0uaO4upTXMhgEbj/sT4bXEYcxK2/qHaVrjcyTXfcFvtz9MkRZywr4d0jT796GeKHmrrxZ703KovMrAqRIXcyJvJgw1DZCveJ0B8ii1c7LPBqSbDlXyw15NrMKdPYmgjF9Pq23nQkMvQ1X6Spd/0lcYYCPnJ/6MPsfBXDujVXzjDB39DlMIZzFCzW+Io568bniGbZ7PN1mPVGOW+AwIcIslIveBN0LuiEymbsHaKIquhK+frkyqB+XTzh9IcOMVyE7Toy+IobSYIu2K1Z4hrnlWw1FoJ0G0CtcuPwRMSsPg/+xu+XCefHXBuyaVNbH43aVlPHwRIWjjAB7xsM/YZyL1G1nUt59yiZ8kz2qmRcbskrqCIWS4j+m9HOxCjvQh5CWAtlJ4+/3CgvTCbTEw6jhkNHDh5rP9itNG5pGKsB20LKcaqZVAjUmTKYG7ambaEtUjhgZt8Lb2y4XO+xB3QDb0gqG2TSaBkOmh0FTT031LI1ty7kSFmx8m5LMJKliKjBDVF6ae6RkLy8pXJtvOhG5STclJYtIfsvi574zJWdU+AR02DXf4Vgyw+/D/p5UKMYeAS0kGciqAbU1mS4Frs+Jmsw26qMzKBtchtM4VjYUbE8QRcLqIAzjvScQLV+Ef4hVllRvwGBUIYoX7FXv6Cm27yrBHLkk2SotrcQhqlA+zyLza5kGjfKsoYbCJbiZh5j5jGNhAsnTJWrEHF2DadtBSjyOZ9jZbpXm8jm5Do7Bv0Hqgja8NuNVYa1+i/B6Zvp5rTRWIaVbjXT0tFWqtW3SrTAiD9U+GLJt3YhneYQaRRDgcyhoYSnX2j842/jBCBSWZ1XYuqmIBcBuS/GRMRqC83Xcbrh37TwWiWb4uhiDghJq549FIWi4wdNnN5F9+omeP/3no9TuKv+Z9qjsnEuiiNGxTkWR4fOkG0PG+brGeF+ofPw5sRkHwj0BcqrMFAt+OzSDcvNy//B/3TvzBhRo1CtKSLOzknmhSJe0x19gX2KG6rsg7P5zl74ucZyfDyAxGOFIWNpqIM5ozgkreHFCKiYyL3JXkPsIlM6Hi6DCQPQsgpjXixYSgnnj6NtZEEbR7Ie3EDmh42QzAPYFuPBFect+DRZ6CAtJGRl+C+ho7LiG5954eq0kVCpsvVAq8cLPWHAbsh/UEW61VpQh2lVkmWridRXl6NhfLdegF3+LvCrDW2y7AyO9fnHimRowI3jtTqIE8VIAp+DhNW2qbola3U8COuBvkiNpDVf6GHMe/FXDGQaIli2vIaJ1mDjeJNB1Pjo6PBO3xkdB5ynRZ+rA5zHMA4aQ1ucmHEdrRL9GXOuwJAuqVzbtzTtH4DNoShofPPsnH4bv4oIiMGavfp/cqyMWmBDBoo3RMlCsEsqR26zdP6mgRlc1MuHyAG7quAw/GcB8gsAgpRoAniX6q0kwqrPOCPwkNFgJKZQs9YjkFjaLJHDhpdhSZ06BSLV+bHtjSUotR8iBoaH372PjdZhCqEhhzgCCsjLhp1lrRygwut6nLm9f08ka85ZvypVd9UD5UnNbmdTCBQDzTpyQsXvEchImg7nIWllm1uECwinjYwTZbDfpZ6/VxFzcOwUh5vGZE4OuYuAdJrvU/wbaSDchtRrXZiMqnqrgBjA/StOcmE4zc0BjpSSaNpZzlqBlgSktsxE919c2BRjAZs4GeOrq2xQW/m2A+qthlRMYLQsnBDjSqZWQHh/M5uMng3AMsOKLPNqPIjSLDrgfQUFoMe2rhePTjoeNjXr56eHOeVW3DqJyt22ornAv5SxiRw+zEHCgQ2wxaYaL3BMH6dXlzeHAM9A69dRt9M7+h2Gb6v2vHaOwFhF2BqbmEkLNCwUw93wN05cYGLGV/xyWkYZOIpdDea17bJVe3mU3IY/1U1AV0DnuVivYLIc4c8jR4lOTPRemOSORnulpahu+xIyM6aaI7hK9ljRKjjs8JToToH9BPhKq2itkPMQQlp8NyLWcz2NwWhNJHUXeJv3SJgOlP5CVwrtt2qguQtbAT88nWI5nQa7bNgPHbaTtIuWhGILat5cNpP3kb+HmmFGLP1BIcSxCENu1aJvNGfF0ifKB7u4F4FeXvtbwKGzB212XjE3RwUwaPr9QcvWJ+EKwyPTdOqDYVP4/GjwfJZfEHV67cGg/apUck3wtAfaneOCCSQu0UEQ8dDiskSAdhFhnZjTnFm0lwq2LchGChVbXuMv6/k8JdUTRBIF2AEqk5VHXSmGsZhAaKjdXlLlxQV3gw16Ek+HrvAh3ldB0RoTlMAwQyA13PRMhwhkmYTTORnTanizKriy9+tzd88da55TwnFNeGDDW/7eH/1k+EK1sTTvaxZlEv0sWOn+Ho+OlGIiRkLo2bRrCuaEjI1HzZCZ15emRBk4DJqYA8fQfLeMtiibLgXGl9FsLGqrFwAHraVUdImNqYBnYgnZZFzD27sk5bUJtA0sRVWjsXvgLFZ7RpKrHgF6Sl5mUyrGAVgmccmScyZYNx5HULPQfIKZB/E1/npK8A/kJ37phygU6er8Td2r5STIBuXEqxHhMohCQIDjD2T9fwqADYVP4/LIO/kM1FhrXSO13mD4eXc8N5WAmvEVaoixGwvi3gUeStOaSaYcXHSQ7QCluVZrr54ubotvwgcNCwYw5y02RqREWXs15fY9tqKL2HEAFW4NAC37XANgjW4QgxkWp1KQvhhRbbl8OJItGuZXpkiVzpDQB3ACHxebmEbFFuHkYOEAa9SRrMt749Pf92t01Iy4EKh2VYPZvd4d8XZZ9PbSbtqBdXxFr/QOs9k/a4/ThYtWFxFGZ4xwNXf5kvD1fp8dIBk3kUHJfG4BPVd6Y3ouuGgBqaPaYoGqi0Xk8lFQYfOtLv00Fnp8kIUmmTmqgJQrGNPrDhLej6cQE9o3I4Ld09QIk7es24S45N5u5Ec7Ef+j8eoSoV+8RqN7fS3OMULczi2fw1/dBwV5f0gsiNTdZWs3p14yvH6OUruPjuS7KclIZv57kODPxVzSMQOzk/7kdzpWKyU9PP9r0ekNNTsLOyRY55Xp/a7ykd50yF1UHOtVPb/b5nXON151UtbO+oBZmaxgDa4Oyx+M7aNhkWZrUjPi475OJj1yvktdkcn+UgHJMVxUUsKN7NtsbJluehIrT2bDmTA4jEn94p3KrTMMaPPEeBLHZ0Kn3YnjZNNUeSSWngwg/fNxQQu3Pz4qi7FhdKhRWx04r4zmoGo+77WI1gBZ2tkgl3xZm/9aQWzOi/TCO7MmHOCNABPa5MHj1+tdai6c2eH8ihIm1K7P3kKsoSqnvvTOw8n5mQgU9NK3cYGtn+vKZX2bkonnWYNd/du4QRooBzCLLH1uJwyU11t+N1btIXPExSn6uLyO2hts6tU2EZsl7BH54tWMb9uR2K96SR8+maQrtJEHWViDGHEHLAL/lzqwOGgFXR9vRtUoEGKffe0nvCSd2NuIRhUUXQvnTbXanST19nt+hNwKtHdnaJ9LcG3Vu8eaWn8qA0ESae0Y73z90rJkqLHujdTSYNXa9wHMHRKC5VW9aBdSR4z2UDa64TO8QdkG6VlwlA7ghCqc0FbX96npPBYaTsr8r4NzPyjtPJIT5pgpGPaH4WQaUNoPyoaEoEiDhr3kZ53F/pxRjk3XGBC77Pw4hOsRrDOcsa6MzvLhY8XMS2CKE+gXkWMZdolI8OjWcaFdr/S/crTtulGTpPSuqUmrP/vfqRnhjwqzR1b4Suhz7FXH3CS/8vpFgS2bUj0M/fom8ZKEyC0uISDo7Cxcbf97zRNeI275GeuNRtZQgJmgvYCrGOgJLN4dnEk8KRf17lFIKd/7U0HhQcV78ziJ1CFO+2B96LQAWfsPIft9zL5P0FEI1pwnTmTYU+7rQqOxlpncN4TpfBjzLPjNmrsTzwACHNhEED+KyrZpUiHoFClZPPjbDBZ8mBNL9NZdEJHTA3BKCG523HF0Lpv4ejSE+RgKj9KEhR6AHnAMJd64kOG9bU4EoK3io0KAmz3lN8RqvoUqP6ZaxWQ/JGQaMbRKfYfp+XPOtD2gxCKm8lhB70q6TKPM90jS3lqXp4VuOXVtVdXNDmUAfQn3XgpBWmRKlyikB3i9/2uye9e3YOzGp3blvtCKKvEy3CEH52tvMzb7Jk2qZRz098jS9oqqEQDfoblAMmrGcYb3ZoP+RtgGRFgYX6ybS/cYVOEoMxaifxlASQlxM87f/OlRBjyMRco8yB9ywFVHz59uJpYszAKfNs29jamn951I/yThkYkLz2LHwZ0F3l+Vd7+N8IKChxm7psgOQlDdRTb0LZdseoMzMCZgqMV/Oou/8YsH5kiVEoQRfLnOa913XT8chTBfJdjlDdt2WnPUv99yeOEYQRRtFCmunZK4jW39q1Zvvs8SDISuv6RTBUm2m6LOcyM950va6UXIR2Xci3ImqsG4yeGvZS4e7cSb47ZNUMAiKnWIDIHp4qTW57mRX587hZ9GmSC4d6JmcwK364JYHlEshvtdv6oIg7X5qMrnp8DLRU7RvLQfcLAM4q5ZxO4K7xvcZEDQu5y3ebeMkYOlf4QctgbkMRDjHIdpvfByxr7KwxfhOOzacVHeuivugeeqZn7XtyTatEKpg0J2WOJ8uXkicwAx8WTk43YJ6s0uQXbu6hh1+ZsCK3/uCd6eT250wxtx7z+VpGy/qAd2ZqZDrzBW4YE7AUgyJJRX+u+0jnrL3iopLD5isv1G14YZdjo03XzpvNZUiYXAOlFGQsRTNPuqfW3deYraoRDm7cMc4o7MTqqgHe5efBZuTAMZQMSyG9jjn2l0naDCEnf3LNWMnUrKo94etq0s920w2kso9hynTsKHKGAU8N4AFMRX6tuf/JmD6JwgVnRlbTvXbmbrB7JQlswdgDH/OcNsOo9MXIBVDjEWnU3l7eKyqdXAGEfEMyeo3zLKwNkNAsUFBH5t5wXZIIPjrgTxJYjQh393h18uba/khQWruzoL/ZFL+XrHTaG1qF5zKZ8Lx9zUC7/tsui/BMyhVdgqA875Y34UxgfejwyB4ujevNmaUkRRcL+v1ErVyrLaUk3/ksRm1hh/iCG1BaQIRYusXsxGe2T8gmbnxoKjM3S9BtbgqV0RIWe6oi5khQf0tAQ7ruvVHZp6AwPntlYd7fq9E7Oa8foCSt5CRsVvMCZZYwg29Sg+n4c+r5YEv9rXk2KAzD1+WkGFDWD9uNHun1r5uol2uNQyDZSdIGXfOpx7LoY4bqSxAdQKJMW/DGu08GlN30OT4cglveghlsd+FJhuCqPNTztEpno2+FWlL/lnj+e8snHJ2zNH4qM73qP+k8aiNk7J0xLnQkaY0S9EgR7FKsgbKsHXLtoa9zM/9j0PtWaAeJ+A8SUzx70P5DRBdYiLU8sDRjm9qQFUi+IXCRrY+Pul7VoiaLmRXknYuaxa5ge9JeZFkHg5Q0KIUBZtLv45x4rXOFQ5DuBuWkRMUmBeyosWrmiaWajC0+BHv+xYY0MWAh/XE35Xb8GRz9eutIj9YPeNmPUZTxPdKIWyQH0q2Cb7rqPXwbB+oe65VmG7gftSFUZKghIpAY3iKaL5+CHQkz3gSFRSRw8Wd7gxbKa5/h84zf8uULJfqkTjZOrzacVIhSuaGbvpCuJLKxx/M77JqjKNNos6REuZBpzFZwekKteirC92ZudJUltEJgokMwQmS8gliwD/2A9NnMqmDQOIk8cvhDEwTN7MVcFPszWS0rfQGgrt94gyNc8x9RDo31E1sKYalOVgFRDdQ61IJ/cIOThaiuJPlTQfIlR1s4EVRRm58ftXaFjhrKa34Rdr89XMJrdJMPQzYX6iyySKgMjID6PLW34XKj8sNO1MploGMg5fkS2viFiM8JDKi+p/ZWInG4/y3h4K3q2fqShn105D0Dtp26Kb5Fn410S2tmfpMYi/zSy20NHNlgZDwhlc4MMVQKB4vncgfVqZmJvok+od9YMhxWDAAOgNDNbA7/b0saUCgAAAEsHc2UiWMeYo47xnJLi718IQkcAB6walzfpO7TcSd6IX/mcA5tJkE4g0izUj7sjRmzPnaQAJ8mB94i1MtTz3UJ2/dFk25UtbxQ3lJSZY0hJTVN/L4NUYT4p5g+rF507hGjy2eMeINwXi+/4VkCwNG+4u87Fp6cZ8bg6UgkG1Vs8wZvJlLxL/aQ5s4oAYsP1hmes4ss7mUekmZgJB+aZdO+rab6hAAAAAAAAAAAO9JI2vPms3+XLh8uXD5cuHy5cPly4fLlw+XK00YOYwIpgAAAAAAAAAAAAAAAAAADdjt/l4CAsrC4YfTAboA3VYDdAG6rAboA3VYDdAG6rAboA3VYDdAG6rAboA3VYDdAG6qx2ylEjKk1B4bC4YfTAboA3VYDdAG6rDWMFKmBUwKmBUwKmBUwKmBUwKmBUwKmBUwKmBTS2q8BTceWAAAAAAAAAE0YKA0AAAAAAAAHEHPd8lK2OBXmgGfLsWfrX0yHLUmj3eu/SBH8wFNZ364Vp9qv57sintwWWBUwKmBUwKmBUwKmBUwKmBUwKmBUwKmBUwKmBUwKmBUwKl96AAGry0dvZBOpBveWNG4vh2SPQv01revZ7Wn7cZaOZOCWnkfIjATbi/lRTr9cPr+FYtpTljO4P/H593OYuV4wUqYFTAqYFTAqYFTAqYFTAqYFTAqYFTAqYFTAqYFTAqYFOjvREhWtY0HaULcX6wjl+5Wv5RnrrWwIV9nk2uboUbGP0KQwZCEcBgLF/GVUAYAMAGADABgAwAYAMAGADABgAwAYAMAGADABgAwAYAMAGADABgAwAYAMAGADABgAwAYAMAGADABgAwAXRXpDShMPe1RGjXgvsIlv1PTiDgv4YrmsdQSFWSgsiqnVuCAO2KBMktIZBZ+aaTDJ5WoNRIPA6H6NlwaiQeB0P0bLg1Ew1iIoaJ4cORtHL8qdRvO7ZQzhAAAClOAAABgKOwAAFQcAAADkiAAAB6KAAABJjHAAAEIYAAADB8AAABtIAAAAAAAA=" width="1600" height="391" alt="Preview of the Tableau dashboard on source trust and belief revision" loading="lazy"></span>
+    </a>
   </div>
 </section>
 
+<!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
-    <p class="note">
-      All figures reflect aggregate, respondent‑level data only. Small‑cell breakdowns
-      (n &lt; 5) are suppressed or collapsed prior to publication. Dashboards are hosted
-      on Tableau Public and update independently of this page.
-    </p>
+    <div class="footer-grid">
+      <div class="footer-block">
+        <div class="fb-label">Study</div>
+        <p>COVID-19 vaccine attitudes and source trust survey. 800 U.S. adults recruited on Prolific with a balanced quota of vaccine-hesitant and vaccine-supportive participants.</p>
+      </div>
+      <div class="footer-block">
+        <div class="fb-label">My role</div>
+        <p>I led this study end to end. I wrote the grant that funded it (Cornell University Social Sciences Seed Grant), designed and built the survey, ran data collection on Prolific, analyzed the data in R, and built the Tableau Public dashboards.</p>
+      </div>
+      <div class="footer-block">
+        <div class="fb-label">Where this fits</div>
+        <p>The recommendations on this page are implications drawn from survey data. They were not tested as interventions in this study, and the belief-change measure does not show direction of change.</p>
+      </div>
+      <div class="footer-block">
+        <div class="fb-label">Data use</div>
+        <p>Everything on this page is aggregated; the smallest group shown has 196 people. Geographic and demographic breakdowns are left out because crossing them with belief status would create small cells. Analysis rebuilt for this portfolio in R (tidyverse, lme4), with charts in Chart.js and inline SVG.</p>
+      </div>
+    </div>
   </div>
 </footer>
 
-<script type='text/javascript'>
-  (function(){
-    var divElement = document.getElementById('viz1787975322329');
-    var vizElement = divElement.getElementsByTagName('object')[0];
-    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-    else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-    else { vizElement.style.width='100%';vizElement.style.minHeight='2000px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}
-    var scriptElement = document.createElement('script');
-    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);
-  })();
+
+<script>
+/* Aggregate means only (exported by vaccine_analysis.R). Trust is 0-3, higher = more trust. */
+const trustData = [{"claim": "Government", "endorser": "Non-endorser", "source": "anecdote", "n": 605, "trust_mean": 0.931, "trust_se": 0.035}, {"claim": "Government", "endorser": "Non-endorser", "source": "article", "n": 605, "trust_mean": 1.517, "trust_se": 0.036}, {"claim": "Government", "endorser": "Non-endorser", "source": "gov", "n": 605, "trust_mean": 1.064, "trust_se": 0.042}, {"claim": "Government", "endorser": "Non-endorser", "source": "medjour", "n": 605, "trust_mean": 1.798, "trust_se": 0.043}, {"claim": "Government", "endorser": "Non-endorser", "source": "socialmed", "n": 605, "trust_mean": 0.369, "trust_se": 0.028}, {"claim": "Government", "endorser": "Endorser", "source": "anecdote", "n": 196, "trust_mean": 0.592, "trust_se": 0.058}, {"claim": "Government", "endorser": "Endorser", "source": "article", "n": 196, "trust_mean": 0.776, "trust_se": 0.067}, {"claim": "Government", "endorser": "Endorser", "source": "gov", "n": 196, "trust_mean": 0.179, "trust_se": 0.042}, {"claim": "Government", "endorser": "Endorser", "source": "medjour", "n": 196, "trust_mean": 0.597, "trust_se": 0.064}, {"claim": "Government", "endorser": "Endorser", "source": "socialmed", "n": 196, "trust_mean": 0.25, "trust_se": 0.046}, {"claim": "Pharma", "endorser": "Non-endorser", "source": "anecdote", "n": 521, "trust_mean": 0.8, "trust_se": 0.035}, {"claim": "Pharma", "endorser": "Non-endorser", "source": "article", "n": 521, "trust_mean": 1.501, "trust_se": 0.038}, {"claim": "Pharma", "endorser": "Non-endorser", "source": "gov", "n": 521, "trust_mean": 1.267, "trust_se": 0.042}, {"claim": "Pharma", "endorser": "Non-endorser", "source": "medjour", "n": 521, "trust_mean": 1.948, "trust_se": 0.043}, {"claim": "Pharma", "endorser": "Non-endorser", "source": "socialmed", "n": 521, "trust_mean": 0.273, "trust_se": 0.026}, {"claim": "Pharma", "endorser": "Endorser", "source": "anecdote", "n": 280, "trust_mean": 0.736, "trust_se": 0.049}, {"claim": "Pharma", "endorser": "Endorser", "source": "article", "n": 280, "trust_mean": 1.011, "trust_se": 0.058}, {"claim": "Pharma", "endorser": "Endorser", "source": "gov", "n": 280, "trust_mean": 0.239, "trust_se": 0.036}, {"claim": "Pharma", "endorser": "Endorser", "source": "medjour", "n": 280, "trust_mean": 0.911, "trust_se": 0.054}, {"claim": "Pharma", "endorser": "Endorser", "source": "socialmed", "n": 280, "trust_mean": 0.221, "trust_se": 0.038}];
+const sourceOrder = ['anecdote','socialmed','article','gov','medjour'];
+const sourceLabels = ['Personal anecdote','Social media post','News article','Government statement','Medical journal'];
+const claims = ['Government','Pharma'];
+const segColors = { 'Non-endorser': '#5B6472', 'Endorser': '#C25A1C' };
+let activeClaim = 'Government';
+
+function rowFor(claim, seg, src) { return trustData.find(d => d.claim === claim && d.endorser === seg && d.source === src); }
+function seriesFor(claim, seg) { return sourceOrder.map(s => rowFor(claim, seg, s).trust_mean); }
+
+const claimRow = document.getElementById('claimRow');
+claims.forEach(c => {
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'chip' + (c === activeClaim ? ' active' : '');
+  chip.dataset.claim = c;
+  chip.textContent = c === 'Government' ? 'Government claim' : 'Pharma claim';
+  chip.addEventListener('click', () => {
+    activeClaim = c;
+    claimRow.querySelectorAll('.chip').forEach(el => el.classList.toggle('active', el.dataset.claim === c));
+    if (trustChart) {
+      trustChart.data.datasets.forEach(ds => { ds.data = seriesFor(activeClaim, ds.label); });
+      trustChart.update();
+    }
+  });
+  claimRow.appendChild(chip);
+});
+
+/* Brackets under the x-axis grouping informal vs institutional sources */
+const typeBrackets = {
+  id: 'typeBrackets',
+  afterDraw(chart) {
+    const x = chart.scales.x, c = chart.ctx, y0 = chart.chartArea.bottom;
+    const step = x.getPixelForValue(1) - x.getPixelForValue(0);
+    const groups = [['Informal', 0, 1], ['Institutional', 2, 4]];
+    const yb = y0 + 40;
+    c.save();
+    c.strokeStyle = '#A9CFB4'; c.lineWidth = 1.2;
+    c.fillStyle = '#365A44'; c.font = '600 11px "IBM Plex Mono", monospace'; c.textAlign = 'center';
+    groups.forEach(([label, a, b]) => {
+      const l = x.getPixelForValue(a) - step * 0.42, r = x.getPixelForValue(b) + step * 0.42;
+      c.beginPath(); c.moveTo(l, yb - 5); c.lineTo(l, yb); c.lineTo(r, yb); c.lineTo(r, yb - 5); c.stroke();
+      c.fillText(label.toUpperCase(), (l + r) / 2, yb + 15);
+    });
+    c.restore();
+  }
+};
+
+/* ±1 SE error bars, then values above bars in the bar's color (gold darkened for contrast) */
+const errAndValues = {
+  id: 'errAndValues',
+  afterDatasetsDraw(chart) {
+    const c = chart.ctx, y = chart.scales.y;
+    const inkFor = { 'Non-endorser': '#4A525E', 'Endorser': '#A3470F' };
+    c.save();
+    chart.data.datasets.forEach((ds, di) => {
+      const meta = chart.getDatasetMeta(di);
+      if (meta.hidden) return;
+      meta.data.forEach((bar, i) => {
+        const r = rowFor(activeClaim, ds.label, sourceOrder[i]);
+        const top = y.getPixelForValue(r.trust_mean + r.trust_se);
+        const bot = y.getPixelForValue(Math.max(0, r.trust_mean - r.trust_se));
+        const x = bar.x, cap = 4;
+        c.strokeStyle = '#2B2620'; c.lineWidth = 1.4;
+        c.beginPath(); c.moveTo(x, top); c.lineTo(x, bot);
+        c.moveTo(x - cap, top); c.lineTo(x + cap, top);
+        c.moveTo(x - cap, bot); c.lineTo(x + cap, bot); c.stroke();
+        c.fillStyle = inkFor[ds.label];
+        c.font = '600 ' + (window.innerWidth < 560 ? 10 : 12) + 'px "IBM Plex Mono", monospace';
+        c.textAlign = 'center'; c.textBaseline = 'bottom';
+        c.fillText(r.trust_mean.toFixed(2), x, top - 4);
+      });
+    });
+    c.restore();
+  }
+};
+
+let trustChart;
+const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function initChart() {
+  trustChart = new Chart(document.getElementById('trustChart'), {
+    type: 'bar',
+    data: {
+      labels: window.innerWidth < 560 ? ['Anecdote','Social','News','Gov.','Journal'] : sourceLabels,
+      datasets: ['Non-endorser','Endorser'].map(seg => ({
+        label: seg, data: seriesFor(activeClaim, seg),
+        backgroundColor: segColors[seg], borderRadius: 4, maxBarThickness: 46,
+        categoryPercentage: 0.72, barPercentage: 0.9
+      }))
+    },
+    plugins: [typeBrackets, errAndValues],
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      layout: { padding: { bottom: 34 } },
+      animation: reduceMotion ? false : { duration: 900, easing: 'easeOutCubic' },
+      interaction: { mode: 'nearest', intersect: true },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { family: 'Source Sans 3', size: 13, weight: 600 }, color: '#2B2620', maxRotation: 0, autoSkip: false } },
+        y: { min: 0, max: 2.5, ticks: { stepSize: 0.5, font: { family: 'IBM Plex Mono', size: 11 } },
+             title: { display: true, text: 'Mean trust (0\u20133)', font: { family: 'IBM Plex Mono', size: 12 } },
+             grid: { color: '#E7EEE9' } }
+      },
+      plugins: { legend: { display: false }, tooltip: { enabled: false } },
+      onHover: (evt, els) => {
+        if (!els.length) return;
+        const el = els[0], ds = trustChart.data.datasets[el.datasetIndex];
+        const r = rowFor(activeClaim, ds.label, sourceOrder[el.index]);
+        document.getElementById('hoverReadout').innerHTML =
+          `<span class="val">${ds.label}s</span>, ${sourceLabels[el.index].toLowerCase()} (${activeClaim.toLowerCase()} claim): mean trust <span class="val">${r.trust_mean.toFixed(2)}</span> &plusmn; ${r.trust_se.toFixed(2)} SE &middot; n = ${r.n}`;
+      }
+    }
+  });
+}
+if (reduceMotion || !('IntersectionObserver' in window)) { initChart(); }
+else {
+  const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { initChart(); io.disconnect(); } }, { threshold: 0.35 });
+  io.observe(document.getElementById('trustChart'));
+}
+
+/* Scroll-spy for sticky path nav */
+const pathItems = document.querySelectorAll('.path-item');
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) pathItems.forEach(item => item.classList.toggle('active', item.dataset.target === entry.target.id));
+  });
+}, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+['sec-challenge','sec-method','sec-insights'].forEach(id => { const s = document.getElementById(id); if (s) spy.observe(s); });
+pathItems.forEach(item => item.addEventListener('click', e => {
+  e.preventDefault();
+  document.getElementById(item.dataset.target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}));
 </script>
 
-<script type='text/javascript'>
-  (function(){
-    var divElement = document.getElementById('viz1787975298530');
-    var vizElement = divElement.getElementsByTagName('object')[0];
-    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-    else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='100%';vizElement.style.height=(divElement.offsetWidth*0.75)+'px';}
-    else { vizElement.style.width='100%';vizElement.style.minHeight='2000px';vizElement.style.maxHeight=(divElement.offsetWidth*1.77)+'px';}
-    var scriptElement = document.createElement('script');
-    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
-    vizElement.parentNode.insertBefore(scriptElement, vizElement);
-  })();
-</script>
+<script>
+/* Scroll-in motion: charts draw in and big numbers count up when they enter view.
+   Skipped entirely when the visitor's system asks for reduced motion (or without IntersectionObserver),
+   so content always shows in its final state. */
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var targets = document.querySelectorAll('[data-animate]');
+  var counters = document.querySelectorAll('[data-count]');
+  if (reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  document.documentElement.classList.add('motion');
 
+  function parse(el){
+    var text = el.getAttribute('data-count');
+    var m = text.match(/^([^0-9]*)([0-9][0-9,]*\.?[0-9]*)(.*)$/);
+    if (!m) return null;
+    var numStr = m[2];
+    return { text:text, prefix:m[1], suffix:m[3],
+             target:parseFloat(numStr.replace(/,/g,'')),
+             decimals:(numStr.split('.')[1] || '').length,
+             commas:numStr.indexOf(',') > -1 };
+  }
+  function fmt(c, v){
+    var s = c.commas
+      ? v.toLocaleString('en-US', {minimumFractionDigits:c.decimals, maximumFractionDigits:c.decimals})
+      : v.toFixed(c.decimals);
+    return c.prefix + s + c.suffix;
+  }
+  function countUp(el){
+    var c = parse(el); if (!c) return;
+    var start = null, dur = 1100;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      el.textContent = fmt(c, c.target * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step); else el.textContent = c.text;
+    }
+    requestAnimationFrame(step);
+  }
+  counters.forEach(function(el){ var c = parse(el); if (c) el.textContent = fmt(c, 0); });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      if (el.hasAttribute('data-count')) countUp(el);
+      else el.classList.add('in-view');
+      io.unobserve(el);
+    });
+  }, { threshold: 0.35 });
+  targets.forEach(function(el){ io.observe(el); });
+  counters.forEach(function(el){ io.observe(el); });
+})();
+</script>
 </body>
 </html>
